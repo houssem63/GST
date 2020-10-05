@@ -1,11 +1,11 @@
 module.exports=(db,type)=>{
-    return db.define('societes',{
-        ID:{
-            type:type.INTEGER,
+    return db.define('clients',{
+        ID:{ 
+             type:type.INTEGER,
             autoIncrement:true,
             primaryKey:true
         },
-       
+      
         Rs:{
             type:type.STRING
         },
@@ -18,34 +18,36 @@ module.exports=(db,type)=>{
         Fax:{
             type:type.INTEGER
         },
-        Email:{
+        Email:{ 
             type:type.STRING,
             allowNull: false,
-            unique:true,
-            
-            isEmail: true, 
+            unique: true,
+            isEmail: true
         },
         Site:{
             type:type.STRING
         },
-        Matfiscale :{
+        NomPC:{
             type:type.STRING
         },
-        Sigle:{
+        PrenomPC:{
             type:type.STRING
         },
-        MotDePasse:{
+        TelPersonnelContact:{
+            type:type.INTEGER
+        },
+        FaxPersonnelContact:{
+            type:type.INTEGER
+        },
+        AdresseEmailPersonnel:{
+            type:type.STRING,
+            isEmail: true
+        },
+        MatFiscal:{
             type:type.STRING
         },
-        Status:{
-            type:type.BOOLEAN
-        },
-        DateExpiration:{
-            type:type.DATE
-        },login:{
-            type:type.STRING
+        Regfiscale:{
+            type:type.INTEGER
         }
-
-
     })
 }
