@@ -7,6 +7,7 @@ const PORT = process.env.PORT || 5000;
 const app = express();
 require('./DB/db')
 const Societe = require('./routes/societe');
+const Personnel = require('./routes/personel');
 
 app.use((req, res, next) => {
     res.setHeader("Access-Control-Allow-Origin", "*");
@@ -20,6 +21,8 @@ app.use((req, res, next) => {
   app.use("/images", express.static(path.join("images")))
   app.use(express.urlencoded({ extended: false }));
   app.use('/api/societe', Societe);
+  app.use('/api/personnel', Personnel);
+
   const server = app.listen(PORT, (req, res, next) => { console.log(`Server started on port ${PORT}`) })
   app.get('/', (req, res) => {
     res.send(`Server started on port ${PORT}`);

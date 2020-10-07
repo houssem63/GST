@@ -21,7 +21,7 @@ module.exports=(db,type)=>{
         Email:{
             type:type.STRING,
             allowNull: false,
-            unique:true,
+            
             
             isEmail: true, 
         },

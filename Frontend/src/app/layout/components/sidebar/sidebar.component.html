@@ -8,6 +8,11 @@
             <i class="fa fa-fw fa-bar-chart-o"></i>&nbsp;
             <span>{{ 'Charts' | translate }}</span>
         </a>
+        <a [routerLink]="['/personnel']" [routerLinkActive]="['router-link-active']" class="list-group-item">
+            <i class="fa fa-user"></i>&nbsp;
+            <span>{{ 'Staff' | translate }}</span>
+        </a>
+
         <a [routerLink]="['/tables']" [routerLinkActive]="['router-link-active']" class="list-group-item">
             <i class="fa fa-fw fa-table"></i>&nbsp;
             <span>{{ 'Tables' | translate }}</span>
@@ -85,11 +90,7 @@
                                 {{ 'French' | translate }}
                             </a>
                         </li>
-                        <li>
-                            <a href="javascript:void(0)" (click)="changeLang('ur')">
-                                {{ 'Urdu' | translate }}
-                            </a>
-                        </li>
+
                         <li>
                             <a href="javascript:void(0)" (click)="changeLang('es')">
                                 {{ 'Spanish' | translate }}
@@ -100,14 +101,15 @@
                                 {{ 'Italian' | translate }}
                             </a>
                         </li>
-                        <li>
-                            <a href="javascript:void(0)" (click)="changeLang('fa')">
-                                {{ 'Farsi' | translate }}
-                            </a>
-                        </li>
+
                         <li>
                             <a href="javascript:void(0)" (click)="changeLang('de')">
                                 {{ 'German' | translate }}
+                            </a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0)" (click)="changeLang('ar')">
+                                {{ 'Arabe' | translate }}
                             </a>
                         </li>
                     </ul>

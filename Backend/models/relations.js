@@ -39,7 +39,7 @@ HistoriqueEmbauches.belongsTo(Poste)
 Societe.hasMany(Poste)
 Poste.belongsTo(Societe)
 
-db.sync({force:true}).then(()=>{
+db.sync({force:false}).then(()=>{
     console.log('table created !!!!!!')
 })
 module.exports={

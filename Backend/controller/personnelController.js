@@ -35,8 +35,12 @@ module.exports={
             })
     },
     Getall:(req,res)=>{
-        Personnel.findAll().then((responce)=>{
-            res.status(200).json({societe :responce})
+        Personnel.findAll({
+            where :{
+                societeID:req.params.id
+            }
+        }).then((responce)=>{
+            res.status(200).json({personnel :responce})
         }).catch((err)=>{
             res.status(500).json({err:'error server' + err})
         })

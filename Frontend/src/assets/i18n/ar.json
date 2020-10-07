@@ -1,0 +1,31 @@
+{
+    "Dashboard": "لوحة القيادة",
+    "Staff" :"العاملين",
+    "Download Now": "تحميل",
+    "Language": "لغة",
+    "English": "الإنجليزية",
+    "French": "فرنسي",
+
+    "Spanish": "الأسبانية",
+    "Italian": "إيطالي",
+
+    "German": "ألمانية",
+"Arabe":"العربية",
+    "Search" : "البحث عن",
+    "Settings" : "الإعدادات",
+    "Profile" : "الملف الشخصي",
+    "Inbox" : "صندوق الاستقبال",
+    "Log Out" : "ربط - خارج",
+    "Pending Task" : "في انتظار المهمة",
+    "In queue" : "Dans la queue",
+    "Mail" : "Courrier",
+    "View All" : "انظر كل شيء",
+    "More Themes" : "More Themes",
+    "Collapse Sidebar" : "طي الشريط الجانبي",
+    "Full Name": "Nom complet",
+    "Email": "Email",
+    "Password": "كلمة السر",
+    "Repeat Password": "Répéter le mot de passe",
+    "Register": "تسجيل",
+    "Log in": "تسجيل الدخول"
+}

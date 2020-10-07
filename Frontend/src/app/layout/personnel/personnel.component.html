@@ -1,0 +1,89 @@
+<div [@routerTransition]>
+    <app-page-header [heading]="'Personnel'" [icon]="'fa-user'"></app-page-header>
+
+
+
+
+
+<mat-card><mat-form-field >
+          <input matInput type="text" (keyup)="doFilter($event.target.value)" placeholder="Filter">
+        </mat-form-field>
+    <table mat-table [dataSource]="dataSource" matSort>
+
+        <!--- Note that these columns can be defined in any order.
+              The actual rendered columns are set as a property on the row definition" -->
+
+        <!-- Position Column -->
+        <ng-container matColumnDef="ID">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header > ID   </th>
+          <td mat-cell *matCellDef="let element"> {{element.ID}} </td>
+        </ng-container>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="cin">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Cin </th>
+          <td mat-cell *matCellDef="let element"> {{element.cin}} </td>
+        </ng-container>
+
+        <!-- Weight Column -->
+        <ng-container matColumnDef="Nom">
+          <th mat-header-cell *matHeaderCellDef > Nom </th>
+          <td mat-cell *matCellDef="let element"> {{element.Nom}} </td>
+        </ng-container>
+
+        <!-- Symbol Column -->
+        <ng-container matColumnDef="Prenom">
+          <th mat-header-cell *matHeaderCellDef> Prenom </th>
+          <td mat-cell *matCellDef="let element"> {{element.Prenom}} </td>
+        </ng-container>
+        <ng-container matColumnDef="Date_de_naissance">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Date de naissance </th>
+            <td mat-cell *matCellDef="let element"> {{element.Date_de_naissance |date}} </td>
+          </ng-container>
+          <ng-container matColumnDef="Adresse">
+            <th mat-header-cell *matHeaderCellDef> Adresse </th>
+            <td mat-cell *matCellDef="let element"> {{element.Adresse}} </td>
+          </ng-container>
+          <ng-container matColumnDef="Tel">
+            <th mat-header-cell *matHeaderCellDef> Tel </th>
+            <td mat-cell *matCellDef="let element"> {{element.Tel}} </td>
+          </ng-container>
+          <ng-container matColumnDef="Fax">
+            <th mat-header-cell *matHeaderCellDef> Fax </th>
+            <td mat-cell *matCellDef="let element"> {{element.Fax}} </td>
+          </ng-container>
+          <ng-container matColumnDef="Email">
+            <th mat-header-cell *matHeaderCellDef> Email </th>
+            <td mat-cell *matCellDef="let element"> {{element.Email}} </td>
+          </ng-container>
+          <ng-container matColumnDef="NumCNSS">
+            <th mat-header-cell *matHeaderCellDef> NumCNSS </th>
+            <td mat-cell *matCellDef="let element"> {{element.NumCNSS}} </td>
+          </ng-container>
+          <ng-container matColumnDef="SituationFamilialle">
+            <th mat-header-cell *matHeaderCellDef> SituationFamilialle </th>
+            <td mat-cell *matCellDef="let element"> {{element.SituationFamilialle}} </td>
+          </ng-container>
+          <ng-container matColumnDef="edit">
+            <th mat-header-cell *matHeaderCellDef > edit </th>
+            <td mat-cell *matCellDef="let element">
+                <button mat-icon-button class="btn btn-warning" (click)="edit(element.ID)" aria-label="Example icon button with a home icon">
+                    <mat-icon>edit</mat-icon>
+                  </button>
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="Supprimer">
+            <th mat-header-cell *matHeaderCellDef> Supprimer </th>
+            <td mat-cell *matCellDef="let element">
+                <button mat-icon-button  class="btn btn-danger" (click)="supprimer(element.ID)" aria-label="Example icon button with a home icon">
+                    <mat-icon >delete</mat-icon>
+                  </button>
+            </td>
+          </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+
+
+</mat-card>
+

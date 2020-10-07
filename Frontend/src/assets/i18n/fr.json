@@ -36,5 +36,6 @@
     "Password": "mot de passe",
     "Repeat Password": "Répéter le mot de passe",
     "Register": "registre",
-    "Log in": "S'identifier"
+    "Log in": "S'identifier",
+    "Staff" :"Personnel"
 }

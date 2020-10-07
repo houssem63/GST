@@ -1,2 +1,12 @@
 // shared css for the login and signup page
 @import "../login/login.component.scss";
+.image-preview {
+    height: 5rem;
+    margin: 1rem 0 ;
+}
+.image-preview img{
+    height: 100%;
+}
+small {
+    color: red;
+}

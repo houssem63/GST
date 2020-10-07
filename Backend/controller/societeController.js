@@ -3,11 +3,24 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken')
 module.exports={
     ajouter:async(req,res)=>{
-        global.societe ;
+        console.log(req.file)
+     global.filename;
+        const url = req.protocol + "://" + req.get("host");
+   if(!req.file.filename){
+       this.filename=null
+   }else{
+        this.filename=url + "/images/" + req.file.filename
+   }
+       global.societe ;
         const findsociete = await Societe.findAll({where:{login:req.body.login}})
-        console.log(findsociete)
+        
         if(findsociete[0]){
-          return  res.json({messge:'login deja utilise'})
+          return  res.json({msg:'login deja utilise',ok:false})
+        }
+        const findsocieteEmail = await Societe.findAll({where:{Email:req.body.Email}})
+        
+        if(findsocieteEmail[0]){
+          return  res.json({msg:'Email deja utilise',ok:false})
         }
     const hash=await bcrypt.hash(req.body.MotDePasse, 10)
     console.log(hash)
@@ -20,7 +33,7 @@ module.exports={
                    Email:req.body.Email,
                    Site:req.body.Site,
                    Matfiscale:req.body.Matfiscale,
-                   Sigle:req.body.Sigle,
+                   Sigle:this.filename,
                    MotDePasse:hash,
                    Status:req.body.Status,
                    DateExpiration:req.body.DateExpiration,
@@ -30,9 +43,9 @@ module.exports={
             }
         
         Societe.create(this.societe).then((resq)=>{
-            res.status(200).json({resq})
+            res.status(200).json({ok:true,msg:'inscriptionavec succes'})
         }).catch((err)=>{
-            console.log(err.messge)
+            console.log(err)
             res.status(500).json({err:'error server' + err})
         })
     },
@@ -67,19 +80,20 @@ module.exports={
         })
     },
     Getbyid:(req,res)=>{
+        console.log(req.params.id)
         Societe.findAll({
             where :{
                 ID:req.params.id
             }
         }).then((responce)=>{
-            res.status(200).json({societe :responce})
+            res.status(200).json({societe :responce[0].dataValues})
         }).catch((err)=>{
             res.status(500).json({err:'error server' + err})
         })
     },
     auth: async (req, res, next) => {
         
-
+console.log(req.body)
         try {
            
             let fetchsociete;
@@ -89,7 +103,7 @@ module.exports={
                 },raw: true,
                 nest: true})
             if (!societe[0] ) {
-                return res.json({ msg: "login incorrect" , ok : false});
+                return res.json({ msg: "login ou mot de passe incorrect" , ok : false});
             }
             fetchsociete = societe;
 
@@ -97,15 +111,20 @@ module.exports={
 
 
             if (!pass) {
-                return res.json({ msg: "mot de passe  incorrect" , ok : false })
+                return res.json({ msg: "login ou mot de passe incorrect" , ok : false })
+            }
+            const status= societe[0].Status
+            console.log(status)
+            if (status===0){
+                return res.json({msg:"votre compte n'est pas activer",ok :false})
             }
             const token = jwt.sign({ email: fetchsociete[0].Email }, process.env.SECRET,
                 { expiresIn: "5h" }
             );
-           /* let afficheuser;
-            afficheuser = { _id: fetchcandiat._id, nom: fetchcandiat.nom, prenom: fetchcandiat.prenom, job: fetchcandiat.job }
-*/
-            res.status(200).json({ token: token, expiresIn: "14400",ok:true })
+            let societeId;
+            societeId = { id: fetchsociete[0].ID }
+let societeData=fetchsociete[0]
+            res.status(200).json({ token: token, societeId:societeId,societeData:societeData ,expiresIn: "14400",ok:true,msg:'connecter avce succes' })
         }
         catch (err) {
             res.json({ err: "mot de passe ou email incorrect" +err , ok : false})

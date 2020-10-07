@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
+import { Societe } from 'src/app/models/societe';
+import { LoginService } from 'src/app/services/login.service';
+import { SocieteService } from 'src/app/services/societe-service.service';
 
 @Component({
     selector: 'app-header',
@@ -9,8 +12,11 @@ import { TranslateService } from '@ngx-translate/core';
 })
 export class HeaderComponent implements OnInit {
     public pushRightClass: string;
-
-    constructor(private translate: TranslateService, public router: Router) {
+societe :Societe;
+private IDSociete;
+    constructor(private translate: TranslateService, public router: Router,
+        private loginservice:LoginService,
+        private societeservice : SocieteService) {
 
         this.router.events.subscribe(val => {
             if (
@@ -24,9 +30,13 @@ export class HeaderComponent implements OnInit {
     }
 
     ngOnInit() {
+this.IDSociete=localStorage.getItem('societeId')
         this.pushRightClass = 'push-right';
+   this.societeservice.getOneSociete(this.IDSociete).subscribe((res)=>{
+       console.log(res.societe)
+       this.societe=res.societe
+   })
     }
-
     isToggled(): boolean {
         const dom: Element = document.querySelector('body');
         return dom.classList.contains(this.pushRightClass);
@@ -43,7 +53,7 @@ export class HeaderComponent implements OnInit {
     }
 
     onLoggedout() {
-        localStorage.removeItem('isLoggedin');
+     this.loginservice.logout()
     }
 
     changeLang(language: string) {
