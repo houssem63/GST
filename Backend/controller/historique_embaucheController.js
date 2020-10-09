@@ -35,8 +35,12 @@ module.exports={
             })
     },
     Getall:(req,res)=>{
-        HistoriqueEmbauches.findAll().then((responce)=>{
-            res.status(200).json({societe :responce})
+        HistoriqueEmbauches.findAll({
+            where :{
+                societeID:req.params.id
+            }
+        }).then((responce)=>{
+            res.status(200).json({HistoriqueEmbauches :responce})
         }).catch((err)=>{
             res.status(500).json({err:'error server' + err})
         })
@@ -47,7 +51,7 @@ module.exports={
                 ID:req.params.id
             }
         }).then((responce)=>{
-            res.status(200).json({societe :responce})
+            res.status(200).json({Historique :responce[0]})
         }).catch((err)=>{
             res.status(500).json({err:'error server' + err})
         })

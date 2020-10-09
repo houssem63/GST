@@ -1,6 +1,6 @@
 export interface Personnel{
     ID?: string;
-    cin:number;
+    Cin:number;
     Nom:string;
     Prenom:string;
     Date_de_naissance:Date;
@@ -10,5 +10,5 @@ export interface Personnel{
     Email:string;
     NumCNSS:number;
     SituationFamilialle:string;
-    CopierPermis:string;
+    CopierPermis?:string;
 }

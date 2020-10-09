@@ -1,0 +1,41 @@
+.dropdown-toggle::after {
+    display:none;
+}
+btn1 {
+
+margin-left: 50px;
+
+  }
+  table {
+    width: 100%;
+  }
+  .coloredit {
+    color: #FFD700;
+  }
+  .coloresupprimer{
+      color: red;
+  }
+  th.mat-header-cell, td.mat-cell {
+    text-align: center;
+    border: 1px solid #CCC;
+    padding: 0 !important;
+}
+th.mat-sort-header-sorted {
+    color: red;
+  }
+  table {
+
+    overflow-x: auto;
+    overflow-y: hidden;
+    min-width: 500px;
+}
+th.mat-header-cell {
+
+    max-width: 300px;
+}
+button{
+    margin-right: 2%;
+}
+ul#menu li {
+    display:inline;
+  }

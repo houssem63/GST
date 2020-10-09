@@ -8,6 +8,8 @@ const app = express();
 require('./DB/db')
 const Societe = require('./routes/societe');
 const Personnel = require('./routes/personel');
+const Poste = require('./routes/poste');
+const HistoriqueEmbauche = require('./routes/historique_embauche');
 
 app.use((req, res, next) => {
     res.setHeader("Access-Control-Allow-Origin", "*");
@@ -22,6 +24,8 @@ app.use((req, res, next) => {
   app.use(express.urlencoded({ extended: false }));
   app.use('/api/societe', Societe);
   app.use('/api/personnel', Personnel);
+  app.use('/api/poste', Poste);
+  app.use('/api/HistoriqueEmbauche', HistoriqueEmbauche);
 
   const server = app.listen(PORT, (req, res, next) => { console.log(`Server started on port ${PORT}`) })
   app.get('/', (req, res) => {

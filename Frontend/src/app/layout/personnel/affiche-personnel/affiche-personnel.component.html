@@ -1,0 +1,18 @@
+<h1 mat-dialog-title>Hi {{ID}}</h1>
+<div mat-dialog-content>
+
+<p>Nom :{{personnel?.Nom}}</p>
+<p>Prenom: {{personnel?.Prenom}}</p>
+<p>Cin :{{personnel?.Cin}}</p>
+<p>Date de naissance :{{personnel?.Date_de_naissance|date}}</p>
+<p>NumCNSS :{{personnel?.NumCNSS}}</p>
+<p>SituationFamilialle :{{personnel?.SituationFamilialle}}</p>
+<p>Email:{{personnel?.Email}}</p>
+<p>Tel :{{personnel?.Tel}}</p>
+<p>Fax:{{personnel?.Fax}}</p>
+
+
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()" style="float: left;" cdkFocusInitial>Ok</button>
+</div>

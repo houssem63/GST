@@ -3,10 +3,10 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken')
 module.exports={
     ajouter:async(req,res)=>{
-        console.log(req.file)
+        console.log(req.body)
      global.filename;
         const url = req.protocol + "://" + req.get("host");
-   if(!req.file.filename){
+   if(!req.file){
        this.filename=null
    }else{
         this.filename=url + "/images/" + req.file.filename

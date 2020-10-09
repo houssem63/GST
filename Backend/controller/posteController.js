@@ -5,7 +5,7 @@ module.exports={
         console.log(body)
         Poste.create(body).then((resq)=>{
             console.log(resq)
-            res.status(200).json({resq})
+            res.status(200).json({poste:resq})
         }).catch((err)=>{
             console.log(err)
             res.status(500).json({err:'error server' + err.message})
@@ -25,18 +25,24 @@ module.exports={
     },
     Update:(req,res)=>{
         const body =req.body
+        console.log(body)
         Poste.update(body, {
             where: {
               ID: req.params.id
             }}).then((responce)=>{
                 res.status(200).json({msg:'Societe edit avec succes'})
             }).catch((err)=>{
+                console.log(err)
                 res.status(500).json({err:'error server' + err})
             })
     },
     Getall:(req,res)=>{
-        Poste.findAll().then((responce)=>{
-            res.status(200).json({societe :responce})
+        Poste.findAll({
+            where :{
+                societeID:req.params.id
+            }
+        }).then((responce)=>{
+            res.status(200).json({poste :responce})
         }).catch((err)=>{
             res.status(500).json({err:'error server' + err})
         })

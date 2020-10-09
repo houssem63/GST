@@ -1,0 +1,13 @@
+
+<h1 mat-dialog-title>Hi {{ID}}</h1>
+<div mat-dialog-content>
+
+<p>DateEmbauche :{{Historiqueembauche?.DateEmbauche |date}}</p>
+<p>DateSortie: {{Historiqueembauche?.DateSortie |date}}</p>
+<p>Salaire :{{Historiqueembauche?.Salaire}}</p>
+
+
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()" style="float: left;" cdkFocusInitial>Ok</button>
+</div>

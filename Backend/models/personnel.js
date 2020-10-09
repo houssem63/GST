@@ -6,7 +6,7 @@ module.exports=(db,type)=>{
             primaryKey:true
         },
         
-        cin:{
+        Cin:{
             type:type.INTEGER,
         },
         Nom:{

@@ -38,7 +38,8 @@ HistoriqueEmbauches.belongsTo(Poste)
 //relation entre societe et poste
 Societe.hasMany(Poste)
 Poste.belongsTo(Societe)
-
+Societe.hasMany(HistoriqueEmbauches)
+HistoriqueEmbauches.belongsTo(Societe)
 db.sync({force:false}).then(()=>{
     console.log('table created !!!!!!')
 })

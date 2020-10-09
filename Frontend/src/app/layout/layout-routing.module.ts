@@ -16,7 +16,11 @@ const routes: Routes = [
             { path: 'grid', loadChildren: () => import('./grid/grid.module').then(m => m.GridModule) },
             { path: 'components', loadChildren: () => import('./bs-component/bs-component.module').then(m => m.BsComponentModule) },
             { path: 'blank-page', loadChildren: () => import('./blank-page/blank-page.module').then(m => m.BlankPageModule) },
-            { path: 'personnel', loadChildren: () => import('./personnel/personnel.module').then(m => m.PersonnelModule) }
+            { path: 'personnel', loadChildren: () => import('./personnel/personnel.module').then(m => m.PersonnelModule) },
+            { path: 'profile', loadChildren: () => import('./profile/profile.module').then(m => m.ProfileModule) },
+            { path: 'poste', loadChildren: () => import('./poste/poste.module').then(m => m.PosteModule) },
+            { path: 'historiqueembauche', loadChildren: () => import('./historique-embauche/historique-embauche.module')
+            .then(m => m.HistoriqueEmbaucheModule) }
 
         ]
     }

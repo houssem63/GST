@@ -7,6 +7,8 @@ import { LayoutRoutingModule } from './layout-routing.module';
 import { LayoutComponent } from './layout.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { HeaderComponent } from './components/header/header.component';
+import { PosteComponent } from './poste/poste.component';
+import { HistoriqueEmbaucheComponent } from './historique-embauche/historique-embauche.component';
 
 @NgModule({
     imports: [

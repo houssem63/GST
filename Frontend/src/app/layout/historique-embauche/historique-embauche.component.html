@@ -1,0 +1,65 @@
+<div [@routerTransition]>
+    <app-page-header [heading]="'Historique embauche'" [icon]="'fa-user'"></app-page-header>
+
+
+    <mat-card><mat-form-field >
+        <input matInput type="text" (keyup)="doFilter($event.target.value)" placeholder="Filter">
+      </mat-form-field>
+      <a mat-icon-button style="float: right;" routerLink="/historiqueembauche/ajoute"  class="btn btn-success" matTooltip="Ajouter personnel "
+       aria-label="Example icon button with a home icon">
+        <mat-icon >add</mat-icon>
+  </a>
+  <table mat-table [dataSource]="dataSource" matSort>
+
+      <!--- Note that these columns can be defined in any order.
+            The actual rendered columns are set as a property on the row definition" -->
+
+      <!-- Position Column -->
+      <ng-container matColumnDef="ID">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header > ID   </th>
+        <td mat-cell *matCellDef="let element"> {{element.ID}} </td>
+      </ng-container>
+      <ng-container matColumnDef="DateEmbauche">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header > DateEmbauche   </th>
+        <td mat-cell *matCellDef="let element"> {{element.DateEmbauche |date}} </td>
+      </ng-container>
+
+      <!-- Name Column -->
+      <ng-container matColumnDef="DateSortie">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> DateSortie </th>
+        <td mat-cell *matCellDef="let element"> {{element.DateSortie |date}} </td>
+      </ng-container>
+
+      <!-- Weight Column -->
+      <ng-container matColumnDef="Salaire">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header > Salaire </th>
+        <td mat-cell *matCellDef="let element"> {{element.Salaire}} </td>
+      </ng-container>
+
+
+        <ng-container matColumnDef="Actions">
+          <th mat-header-cell *matHeaderCellDef > Actions </th>
+          <td mat-cell *matCellDef="let element">
+              <button mat-icon-button class="btn btn-primary" (click)="openDialog(element.ID)"  matTooltip="Afficher personnel information"
+              (click)="edit(element.ID)">
+                  <mat-icon>remove_red_eye</mat-icon>
+                </button>
+              <a mat-icon-button [routerLink]="['/personnel/edit/',element?.ID]" class="btn btn-warning" matTooltip="Edit personnel information"
+                aria-label="Example icon button with a home icon">
+                  <mat-icon>edit</mat-icon>
+              </a>
+                <button mat-icon-button  class="btn btn-danger" matTooltip="Supprimer personnel "
+                (click)="supprimer(element.ID)" aria-label="Example icon button with a home icon">
+                  <mat-icon >delete</mat-icon>
+                </button>
+          </td>
+        </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
+
+</mat-card>
+
+

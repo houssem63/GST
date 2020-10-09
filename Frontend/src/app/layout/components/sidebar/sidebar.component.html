@@ -12,7 +12,14 @@
             <i class="fa fa-user"></i>&nbsp;
             <span>{{ 'Staff' | translate }}</span>
         </a>
-
+        <a [routerLink]="['/poste']" [routerLinkActive]="['router-link-active']" class="list-group-item">
+            <i class="fa fa-user"></i>&nbsp;
+            <span>{{ 'Poste' | translate }}</span>
+        </a>
+        <a [routerLink]="['/historiqueembauche']" [routerLinkActive]="['router-link-active']" class="list-group-item">
+            <i class="fa fa-user"></i>&nbsp;
+            <span>{{ 'historiqueembauche' | translate }}</span>
+        </a>
         <a [routerLink]="['/tables']" [routerLinkActive]="['router-link-active']" class="list-group-item">
             <i class="fa fa-fw fa-table"></i>&nbsp;
             <span>{{ 'Tables' | translate }}</span>

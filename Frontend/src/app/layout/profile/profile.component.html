@@ -1,0 +1,25 @@
+<mat-card>
+    <table>
+        <tr>
+            <td>      <img [src]="societe?.Sigle" style="border-bottom: 1px solid black;
+            border-right: 1px solid black;
+            margin-top:-80%" >   </td>
+            <td></td>
+   <td>
+      <h4><strong>RS:</strong>{{societe?.Rs}}</h4>
+      <h4><strong>Adresse:</strong>{{societe?.Adresse}}</h4>
+      <h4><strong>Telephone:</strong> {{societe?.Tel}}</h4>
+      <h4><strong>Fax:</strong> {{societe?.Fax}}</h4>
+      <h4><strong>Email:</strong>{{societe?.Email}}</h4>
+      <h4><strong>Site:</strong>{{societe?.Site}}</h4>
+      <h4><strong>Matfiscale:</strong>{{societe?.Matfiscale}}</h4>
+   </td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>            <button class="btn btn-warning" (click)="openDialog(societe?.ID)"> Edit</button>
+            </td>
+        </tr>
+    </table>
+
+</mat-card>

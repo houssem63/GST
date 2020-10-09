@@ -1,9 +1,34 @@
 const { Personnel } =require('../models/relations')
 module.exports={
-    ajouter:(req,res)=>{
+    ajouter:async(req,res)=>{
         const body=req.body
-        console.log(body)
-        Personnel.create(body).then((resq)=>{
+        console.log(req.body)
+        const url = req.protocol + "://" + req.get("host");
+        global.filename;
+
+        if(!req.file){
+            this.filename=null
+        }else{
+             this.filename=url + "/images/" + req.file.filename
+        }
+        global.personnel ;
+        this.personnel = {
+            Cin:req.body.Cin,
+           Nom:req.body.Nom,
+           Prenom:req.body.Prenom,
+           Date_de_naissance:req.body.Date_de_naissance, 
+           Adresse:req.body.Adresse,
+           Tel:req.body.Tel,
+          
+           Fax:req.body.Fax,
+           Email:req.body.Email,
+           NumCNSS:req.body.NumCNSS,
+           CopierPermis:this.filename,
+           SituationFamilialle:req.body.SituationFamilialle,
+           societeID:req.body.societeID
+   
+           }
+       Personnel.create(this.personnel).then((resq)=>{
             console.log(resq)
             res.status(200).json({resq})
         }).catch((err)=>{
@@ -25,11 +50,37 @@ module.exports={
     },
     Update:(req,res)=>{
         const body =req.body
-        Personnel.update(body, {
+        console.log(req.body)
+        const url = req.protocol + "://" + req.get("host");
+        global.filename;
+
+        if(!req.file){
+            this.filename=null
+        }else{
+             this.filename=url + "/images/" + req.file.filename
+        }
+        this.personnel = {
+            Cin:req.body.Cin,
+           Nom:req.body.Nom,
+           Prenom:req.body.Prenom,
+           Date_de_naissance:req.body.Date_de_naissance, 
+           Adresse:req.body.Adresse,
+           Tel:req.body.Tel,
+          
+           Fax:req.body.Fax,
+           Email:req.body.Email,
+           NumCNSS:req.body.NumCNSS,
+           CopierPermis:this.filename,
+           SituationFamilialle:req.body.SituationFamilialle,
+           societeID:req.body.societeID
+   
+           }
+        Personnel.update(this.personnel, {
             where: {
               ID: req.params.id
             }}).then((responce)=>{
-                res.status(200).json({msg:'Societe edit avec succes'})
+                console.log(responce)
+                res.status(200).json({msg:'Personnel edit avec succes',personnel:this.personnel})
             }).catch((err)=>{
                 res.status(500).json({err:'error server' + err})
             })
@@ -46,12 +97,13 @@ module.exports={
         })
     },
     Getonebyid:(req,res)=>{
+        console.log(req.params.id)
         Personnel.findAll({
             where :{
                 ID:req.params.id
             }
         }).then((responce)=>{
-            res.status(200).json({societe :responce})
+            res.status(200).json({personnel :responce[0]})
         }).catch((err)=>{
             res.status(500).json({err:'error server' + err})
         })
