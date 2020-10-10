@@ -11,6 +11,9 @@ const routes: Routes = [
     },
     {
         path:'ajoute',component:AjouteHistoriqueEmbaucheComponent
+    },
+    {
+        path:'edit/:id',component:AjouteHistoriqueEmbaucheComponent
     }
 
 ]

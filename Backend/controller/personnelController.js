@@ -12,6 +12,16 @@ module.exports={
              this.filename=url + "/images/" + req.file.filename
         }
         global.personnel ;
+        const cin = await Personnel.findAll({where:{Cin:req.body.Cin}})
+        
+        if(cin[0]){
+          return  res.json({msg:'Cin deja utilise',ok:false})
+        }
+        const Email = await Personnel.findAll({where:{Email:req.body.Email}})
+        
+        if(Email[0]){
+          return  res.json({msg:'Email deja utilise',ok:false})
+        }
         this.personnel = {
             Cin:req.body.Cin,
            Nom:req.body.Nom,
@@ -30,7 +40,7 @@ module.exports={
            }
        Personnel.create(this.personnel).then((resq)=>{
             console.log(resq)
-            res.status(200).json({resq})
+            res.status(200).json({resq,msg:'ajoute avec succes' ,ok :true})
         }).catch((err)=>{
             console.log(err)
             res.status(500).json({err:'error server' + err.message})

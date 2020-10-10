@@ -15,6 +15,8 @@ export class AjouteEditPersonnelComponent implements OnInit {
     form;
     imagePreview: string;
     private societeId;
+    msg;
+    ok;
     CinPattern = '[0-9]{8}';
     private mode = 'create';
     private personnelID;
@@ -27,6 +29,10 @@ export class AjouteEditPersonnelComponent implements OnInit {
     ) {}
 
     ngOnInit(): void {
+        this.personnelservice.getmsgetat().subscribe((res) => {
+            this.msg = res.msg;
+            this.ok = res.ok;
+        });
         this.societeId = localStorage.getItem('societeId');
         this.form = new FormGroup({
             Cin: new FormControl(null, [
@@ -110,7 +116,6 @@ export class AjouteEditPersonnelComponent implements OnInit {
         if (this.form.invalid) {
             return;
         }
-        console.log(this.societeId);
         if (this.mode === 'create') { this.personnelservice
             .addpersonnel(
                 this.form.value.Cin,
@@ -138,7 +143,7 @@ this.personnelservice.updatePersonnel(this.form.value.Cin,
     this.form.value.NumCNSS,
     this.form.value.CopierPermis,
     this.form.value.SituationFamilialle,
-    this.societeId, this.personnelID)
+    this.societeId, this.personnelID);
             }
     }
     onImagePicked(e) {

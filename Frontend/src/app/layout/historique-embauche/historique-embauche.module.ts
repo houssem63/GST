@@ -22,6 +22,11 @@ import { HistoriqueEmbaucheComponent } from './historique-embauche.component';
 import { HistoriqueEmbaucheRoutingModule } from './historique-embauche-routing.module';
 import { AfficheComponent } from './affiche/affiche.component';
 import { AjouteHistoriqueEmbaucheComponent } from './ajoute-historique-embauche/ajoute-historique-embauche.component';
+import { AjouteHistoriqueEmbaucheRoutingModule } from './ajoute-historique-embauche/ajoute-historiqueEmbauche-routing.module';
+import {MatSelectModule} from '@angular/material/select';
+import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
+import { PipePipe } from 'src/app/pipe/pipe.pipe';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
 
 @NgModule({
     imports: [
@@ -31,8 +36,10 @@ import { AjouteHistoriqueEmbaucheComponent } from './ajoute-historique-embauche/
          MatTableModule,
          ReactiveFormsModule,
          MatExpansionModule,
-         FormsModule,
-         MatCardModule,
+         FormsModule,MatAutocompleteModule,
+         MatCardModule, MatSelectModule,MatSelectModule,
+         MatFormFieldModule,
+         NgxMatSelectSearchModule,
          NgbDropdownModule,
          MatFormFieldModule,
           MatInputModule,
@@ -43,6 +50,6 @@ import { AjouteHistoriqueEmbaucheComponent } from './ajoute-historique-embauche/
          PageHeaderModule],
          exports: [
             MatSortModule],
-    declarations: [HistoriqueEmbaucheComponent, AfficheComponent, AjouteHistoriqueEmbaucheComponent]
+    declarations: [HistoriqueEmbaucheComponent, AfficheComponent, AjouteHistoriqueEmbaucheComponent,PipePipe]
 })
 export class HistoriqueEmbaucheModule {}

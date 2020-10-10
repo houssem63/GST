@@ -11,6 +11,7 @@ const BACKEND_URL = environment.apiUrl + '/personnel/';
 })
 export class PerosnnelService {
     personnel: Personnel[] = [];
+    msg = new Subject<{msg:string ,ok :boolean}>();
 subpersonnel = new Subject<Personnel[]>();
   constructor(private http: HttpClient , private route: Router) { }
   getallpersonnel(id) {
@@ -49,10 +50,14 @@ subpersonnel = new Subject<Personnel[]>();
     personneldata.append('SituationFamilialle', SituationFamilialle);
     personneldata.append('societeID', societeID);
 
- this.http.post<{personnel: Personnel}>(BACKEND_URL + 'add', personneldata) .subscribe((res) => {
-    this.personnel.push(res.personnel);
+ this.http.post<{personnel: Personnel , msg :string ,ok :boolean}>(BACKEND_URL + 'add', personneldata) .subscribe((res) => {
+     console.log(res);
+     this.msg.next({msg:res.msg , ok :res.ok})
+     if (res.ok === true) {
+        this.personnel.push(res.personnel);
     this.subpersonnel.next([...this.personnel]);
     this.route.navigate(['/personnel']);
+     }
 
 });
 }
@@ -104,6 +109,8 @@ updatePersonnel(Cin: number,
    getpersoonelsub() {
    return    this.subpersonnel.asObservable();
    }
-
+getmsgetat(){
+    return this.msg.asObservable()
+}
 }
 

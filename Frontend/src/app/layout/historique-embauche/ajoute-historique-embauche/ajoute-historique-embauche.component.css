@@ -1,30 +1,12 @@
-table {
+.example-form {
+    min-width: 150px;
+    max-width: 500px;
     width: 100%;
   }
-  .coloredit {
-    color: #FFD700;
-  }
-  .coloresupprimer{
-      color: red;
-  }
-  th.mat-header-cell, td.mat-cell {
-    text-align: center;
-    border: 1px solid #CCC;
-    padding: 0 !important;
-}
-th.mat-sort-header-sorted {
-    color: red;
-  }
-  table {
 
-    overflow-x: auto;
-    overflow-y: hidden;
-    min-width: 500px;
-}
-th.mat-header-cell {
-
-    max-width: 300px;
-}
-button{
-    margin-right: 2%;
-}
+  .example-full-width {
+    width: 100%;
+  }
+  .example-container .mat-form-field + .mat-form-field {
+    margin-left: 8px;
+  }

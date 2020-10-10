@@ -15,13 +15,13 @@ export class LoginService {
   private token: string;
   private tokenTimer: any;
   private societeId: string;
-  private societe :Societe;
+  private societe: Societe;
   private authStatusListener = new Subject<boolean>();
 
   constructor( private http: HttpClient, private route: Router) { }
   login( login: string , MotDePasse: string) {
     const authdata: Authmodel = { login  , MotDePasse };
-    this.http.post<{token: string , societeData:any,societeId: any,
+    this.http.post<{token: string , societeData: any, societeId: any,
          expiresIn: number, msg: string, ok: boolean}>(BACKEND_URL + 'login', authdata)
 .subscribe((response) => {
     this.authmessage.next({message: response.msg , etat: response.ok});

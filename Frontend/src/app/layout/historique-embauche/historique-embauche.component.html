@@ -2,14 +2,17 @@
     <app-page-header [heading]="'Historique embauche'" [icon]="'fa-user'"></app-page-header>
 
 
-    <mat-card><mat-form-field >
-        <input matInput type="text" (keyup)="doFilter($event.target.value)" placeholder="Filter">
+    <mat-card><mat-form-field *ngIf="HistoriqueEmbauches.length !=0" >
+        <input matInput type="text" (keyup)="doFilter($event.target.value)"  placeholder="Filter">
       </mat-form-field>
-      <a mat-icon-button style="float: right;" routerLink="/historiqueembauche/ajoute"  class="btn btn-success" matTooltip="Ajouter personnel "
+      <a mat-icon-button style="float: right;"  routerLink="/historiqueembauche/ajoute"  class="btn btn-success" matTooltip="Ajouter personnel "
        aria-label="Example icon button with a home icon">
         <mat-icon >add</mat-icon>
   </a>
-  <table mat-table [dataSource]="dataSource" matSort>
+  <div *ngIf="HistoriqueEmbauches.length ==0" style="margin-top: 3%;">
+      pas des historique encore
+  </div>
+  <table mat-table [dataSource]="dataSource" matSort *ngIf="HistoriqueEmbauches.length !=0">
 
       <!--- Note that these columns can be defined in any order.
             The actual rendered columns are set as a property on the row definition" -->
@@ -44,7 +47,7 @@
               (click)="edit(element.ID)">
                   <mat-icon>remove_red_eye</mat-icon>
                 </button>
-              <a mat-icon-button [routerLink]="['/personnel/edit/',element?.ID]" class="btn btn-warning" matTooltip="Edit personnel information"
+              <a mat-icon-button [routerLink]="['/historiqueembauche/edit/',element?.ID]" class="btn btn-warning" matTooltip="Edit personnel information"
                 aria-label="Example icon button with a home icon">
                   <mat-icon>edit</mat-icon>
               </a>

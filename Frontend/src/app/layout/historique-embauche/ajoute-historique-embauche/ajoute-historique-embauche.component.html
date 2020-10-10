@@ -1,1 +1,72 @@
-<p>ajoute-historique-embauche works!</p>
+<div class="container">
+<div class="row">
+    <div class="col-md-6">
+        <p class="alert-danger" *ngIf='msg !=null'>{{msg}}</p>
+<form class="example-form">
+    <mat-form-field class="example-full-width">
+      <input type="text"
+             placeholder="Personnel cin"
+             aria-label="Number"
+             matInput
+             [formControl]="myControlpersonnel"
+             [matAutocomplete]="autopersonnel">
+      <mat-autocomplete autoActiveFirstOption #autopersonnel="matAutocomplete" >
+        <mat-option *ngFor="let personnel of filteredOptionspersonnel | async" [value]="personnel.Cin">
+          <p (click)="personnelchoix(personnel)">{{personnel.Cin}}</p>
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+  </form></div>
+  <div class="col-md-6">
+    <form class="example-form">
+        <mat-form-field class="example-full-width">
+          <input type="text"
+                 placeholder="Poste"
+                 aria-label="Number"
+                 matInput
+                 [formControl]="myControlposte"
+                 [matAutocomplete]="autoposte">
+          <mat-autocomplete autoActiveFirstOption #autoposte="matAutocomplete">
+            <mat-option *ngFor="let poste of filteredOptionsposte | async" [value]="poste.Libelle">
+              <p (click)='choixposte(poste)'>{{poste.Libelle}}</p>
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+      </form>
+  </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+<h4>personnel nom :{{personel?.Nom}}</h4>
+
+<h4>personnel prenom :{{personel?.Prenom}}</h4>
+
+    </div>
+    <div class="col-md-6">
+        <h4>poste :{{poste?.Libelle}}</h4>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="example-container" [formGroup]="form" (submit)="enregiste()">
+        <mat-form-field appearance="fill">
+            <mat-label>Input</mat-label>
+            <input matInput type="date" formControlName="DateEmbauche">
+          </mat-form-field>
+
+          <mat-form-field appearance="fill">
+            <mat-label>Input</mat-label>
+            <input matInput type="date"  formControlName="DateSortie">
+          </mat-form-field>
+          <mat-form-field appearance="fill">
+            <mat-label>Amount</mat-label>
+            <input matInput type="number" class="example-right-align" formControlName="Salaire">
+            <span matPrefix>DT&nbsp;</span>
+            <span matSuffix>.00</span>
+          </mat-form-field>
+          </div>
+          <button mat-raised-button color="primary" type="submit" (click)="enregiste()">Primary</button>
+
+    </div>
+</div>
+</div>

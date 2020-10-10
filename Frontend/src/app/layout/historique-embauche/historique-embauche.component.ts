@@ -32,6 +32,7 @@ export class HistoriqueEmbaucheComponent implements OnInit,AfterViewInit {
         this.HistoriqueEmbauches = res;
         this.dataSource.data = this.HistoriqueEmbauches;
     });
+
   }
   ngAfterViewInit(): void {
     this.dataSource.sort = this.sort;
@@ -44,6 +45,7 @@ public doFilter = (value: string) => {
     this.dataSource.filter = value.trim().toLocaleLowerCase();
   }
   supprimer(id) {
+      this.Historiqueservice.delete(id);
 }
 openDialog(id): void {
    const dialogRef = this.dialog.open(AfficheComponent, {
