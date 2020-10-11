@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Societe } from 'src/app/models/societe';
+import { User } from 'src/app/models/usermodel';
 import { SocieteService } from 'src/app/services/societe-service.service';
+import { UserService } from 'src/app/services/user.service';
 import { EditProfileComponent } from './edit-profile/edit-profile.component';
 
 @Component({
@@ -11,13 +13,13 @@ import { EditProfileComponent } from './edit-profile/edit-profile.component';
 })
 export class ProfileComponent implements OnInit {
 
-  constructor(private societeserivce: SocieteService,public dialog: MatDialog) { }
-societeId;
-societe: Societe;
+  constructor(private userservice: UserService,public dialog: MatDialog) { }
+IDuser;
+user: User;
   ngOnInit(): void {
-      this.societeId = localStorage.getItem('societeId');
-      this.societeserivce.getOneSociete(this.societeId).subscribe((res) => {
-this.societe = res.societe;
+      this.IDuser = localStorage.getItem('societeId');
+      this.userservice.getOneuser(this.IDuser).subscribe((res) => {
+this.user = res.user;
       });
   }
   openDialog(id): void {

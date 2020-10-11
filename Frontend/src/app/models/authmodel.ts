@@ -1,5 +1,5 @@
 export interface Authmodel {
-    login: string;
+    Login: string;
 MotDePasse: string;
 
 }

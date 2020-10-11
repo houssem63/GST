@@ -5,7 +5,7 @@ import { Authmodel } from '../models/authmodel';
 import { environment } from '../../environments/environment';
 import { Subject } from 'rxjs';
 import { Societe } from '../models/societe';
-const BACKEND_URL = environment.apiUrl + '/societe/';
+const BACKEND_URL = environment.apiUrl + '/user/';
 @Injectable({
   providedIn: 'root'
 })
@@ -19,11 +19,12 @@ export class LoginService {
   private authStatusListener = new Subject<boolean>();
 
   constructor( private http: HttpClient, private route: Router) { }
-  login( login: string , MotDePasse: string) {
-    const authdata: Authmodel = { login  , MotDePasse };
-    this.http.post<{token: string , societeData: any, societeId: any,
+  login( Login: string , MotDePasse: string) {
+    const authdata: Authmodel = { Login  , MotDePasse };
+    this.http.post<{token: string , userData: any, userId: any,
          expiresIn: number, msg: string, ok: boolean}>(BACKEND_URL + 'login', authdata)
 .subscribe((response) => {
+    console.log(response)
     this.authmessage.next({message: response.msg , etat: response.ok});
     const token = response.token;
     this.token = token;
@@ -31,8 +32,8 @@ export class LoginService {
       const expiresInDuration = response.expiresIn;
       this.setAuthTimer(expiresInDuration);
       this.isAuthenticated = true;
-      this.societe = response.societeData;
-     this.societeId = response.societeId.id;
+      this.societe = response.userData;
+     this.societeId = response.userId.id;
       this.authStatusListener.next(true);
       const now = new Date();
       const expirationDate = new Date(now.getTime() + expiresInDuration * 1000);

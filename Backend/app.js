@@ -6,7 +6,7 @@ const bodyParser = require('body-parser')
 const PORT = process.env.PORT || 5000;
 const app = express();
 require('./DB/db')
-const Societe = require('./routes/societe');
+const User = require('./routes/user');
 const Personnel = require('./routes/personel');
 const Poste = require('./routes/poste');
 const HistoriqueEmbauche = require('./routes/historique_embauche');
@@ -22,7 +22,7 @@ app.use((req, res, next) => {
   app.use(express.json());
   app.use("/images", express.static(path.join("images")))
   app.use(express.urlencoded({ extended: false }));
-  app.use('/api/societe', Societe);
+  app.use('/api/user', User);
   app.use('/api/personnel', Personnel);
   app.use('/api/poste', Poste);
   app.use('/api/HistoriqueEmbauche', HistoriqueEmbauche);

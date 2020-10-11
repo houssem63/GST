@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
-import { Societe } from 'src/app/models/societe';
+import { User } from 'src/app/models/usermodel';
 import { LoginService } from 'src/app/services/login.service';
 import { SocieteService } from 'src/app/services/societe-service.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
     selector: 'app-header',
@@ -12,11 +13,11 @@ import { SocieteService } from 'src/app/services/societe-service.service';
 })
 export class HeaderComponent implements OnInit {
     public pushRightClass: string;
-societe :Societe;
-private IDSociete;
+user :User;
+private IDuser;
     constructor(private translate: TranslateService, public router: Router,
         private loginservice:LoginService,
-        private societeservice : SocieteService) {
+        private userservice : UserService) {
 
         this.router.events.subscribe(val => {
             if (
@@ -30,11 +31,11 @@ private IDSociete;
     }
 
     ngOnInit() {
-this.IDSociete=localStorage.getItem('societeId')
+this.IDuser=localStorage.getItem('societeId')
         this.pushRightClass = 'push-right';
-   this.societeservice.getOneSociete(this.IDSociete).subscribe((res)=>{
-       console.log(res.societe)
-       this.societe=res.societe
+   this.userservice.getOneuser(this.IDuser).subscribe((res)=>{
+       console.log(res.user)
+       this.user=res.user
    })
     }
     isToggled(): boolean {

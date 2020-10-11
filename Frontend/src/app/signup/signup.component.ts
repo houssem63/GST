@@ -2,8 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Societe } from '../models/societe';
+import { User } from '../models/usermodel';
 import { routerTransition } from '../router.animations';
 import { SocieteInscriptionService } from '../services/societe-inscription.service';
+import { UserService } from '../services/user.service';
 
 @Component({
     selector: 'app-signup',
@@ -12,26 +14,41 @@ import { SocieteInscriptionService } from '../services/societe-inscription.servi
     animations: [routerTransition()]
 })
 export class SignupComponent implements OnInit {
-    constructor(private inscriptionsocieteservice: SocieteInscriptionService,private route :Router) {}
-form;
-imagePreview: string;
+    constructor(private userService: UserService , private route: Router) {}
+    formsociete;
+    formpersonnel;
+    formclient;
+imagePreviewclient: string;
+imagePreviewpersonnel: string;
+imagePreviewsociete: string;
+imagePreviewcopierpermis: string;
+SocieteID;
 message ;
+Userfunction = 'Societe';
     etat: boolean;
+    CinPattern = '[0-9]{8}';
+societes: User[] = [];
     ngOnInit() {
-        this.form = new FormGroup({
+        this.userService.getallsociete().subscribe((res) => {
+this.societes = res.societe;
+        });
+        this.formsociete = new FormGroup({
             Rs: new FormControl(null, {
                 validators: [Validators.required]
               }),
               Adresse: new FormControl(null, {
                 validators: [Validators.required]
               }),
-              Tel: new FormControl(null, {
-                validators: [Validators.required,Validators.minLength(8)
-                ]
-              }),
-              Fax: new FormControl(null, {
-                validators: [Validators.required,Validators.minLength(8),Validators.maxLength(8)]
-              }),
+              Tel: new FormControl(null, [
+                Validators.required,
+                Validators.minLength(8),
+                Validators.pattern(this.CinPattern),
+            ]),
+            Fax: new FormControl(null, [
+                Validators.required,
+                Validators.minLength(8),
+                Validators.pattern(this.CinPattern),
+            ]),
               Email: new FormControl(null, {
                 validators: [Validators.required,Validators.email]
               }),
@@ -41,67 +58,253 @@ message ;
               Matfiscale: new FormControl(null, {
                 validators: [Validators.required]
               }),
-              Sigle: new FormControl(null, {
+              Image: new FormControl(null, {
                 validators: []
               }),
               MotDePasse: new FormControl(null, {
                 validators: [Validators.required]
               }),
-              login: new FormControl(null, {
+              Login: new FormControl(null, {
                 validators: [Validators.required]
-              }),
-            })
+              })
+
+            });
+            this.formclient = new FormGroup({
+                Rs: new FormControl(null, {
+                    validators: [Validators.required]
+                  }),
+                Adresse: new FormControl(null, {
+                    validators: [Validators.required]
+                  }),
+                  Tel: new FormControl(null, [
+                    Validators.required,
+                    Validators.minLength(8),
+                    Validators.pattern(this.CinPattern),
+                ]),
+                Fax: new FormControl(null, [
+                    Validators.required,
+                    Validators.minLength(8),
+                    Validators.pattern(this.CinPattern),
+                ]),
+                Email: new FormControl(null, {
+                    validators: [Validators.required,Validators.email]
+                  }),
+                Site: new FormControl(null, {
+                    validators: [Validators.required]
+                  }),
+                NomPC: new FormControl(null, {
+                    validators: [Validators.required]
+                  }),
+                PrenomPC: new FormControl(null, {
+                    validators: [Validators.required]
+                  }),
+                TelPersonnelContact: new FormControl(null, {
+                    validators: [Validators.required,
+                        Validators.minLength(8),
+                        Validators.pattern(this.CinPattern),]
+                  }),
+                FaxPersonnelContact: new FormControl(null, {
+                    validators: [Validators.required,
+                        Validators.minLength(8),
+                        Validators.pattern(this.CinPattern),]
+                  }),
+                AdresseEmailPersonnel: new FormControl(null, {
+                    validators: [Validators.required,Validators.email]
+                  }),
+                  Matfiscale: new FormControl(null, {
+                    validators: [Validators.required]
+                  }),
+                Regfiscale: new FormControl(null, {
+                    validators: [Validators.required]
+                  }), Login: new FormControl(null, {
+                    validators: [Validators.required],
+                }),
+                MotDePasse: new FormControl(null, {
+                    validators: [Validators.required],
+                }),   Image: new FormControl(null, {
+                    validators: []
+                  }) ,
+                  SocieteID: new FormControl(null, {
+                    validators: [Validators.required],
+                }),
+
+            });
+            this.formpersonnel = new FormGroup({
+                Cin: new FormControl(null, [
+                    Validators.required,
+                    Validators.minLength(8),
+                    Validators.pattern(this.CinPattern),
+                ]),
+                Nom: new FormControl(null, [Validators.required]),
+                Prenom: new FormControl(null, {
+                    validators: [Validators.required],
+                }),
+                DateDeNaissance: new FormControl(null, {
+                    validators: [Validators.required],
+                }),
+                Adresse: new FormControl(null, {
+                    validators: [Validators.required],
+                }),
+                Tel: new FormControl(null, [
+                    Validators.required,
+                    Validators.minLength(8),
+                    Validators.pattern(this.CinPattern),
+                ]),
+                Fax: new FormControl(null, [
+                    Validators.required,
+                    Validators.minLength(8),
+                    Validators.pattern(this.CinPattern),
+                ]),
+                Email: new FormControl(null, [
+                    Validators.required,
+                    Validators.email,
+                ]),
+                NumCNSS: new FormControl(null, {
+                    validators: [ Validators.pattern('[0-9]')],
+                }),
+                CopierPermis: new FormControl(null, {
+                    validators: [],
+                }),
+                SituationFamilialle: new FormControl(null, {
+                    validators: [Validators.required],
+                }),
+                Login: new FormControl(null, {
+                    validators: [Validators.required],
+                }),
+                MotDePasse: new FormControl(null, {
+                    validators: [Validators.required],
+                }),
+                Image: new FormControl(null, {
+                    validators: []
+                  }),
+                SocieteID: new FormControl(null, {
+                    validators: [Validators.required],
+                }),
+            });
     }
-
-    get Rs() { return this.form.get('Rs'); }
-    get Adresse() { return this.form.get('Adresse'); }
-    get Tel() { return this.form.get('Tel'); }
-    get Fax() { return this.form.get('Fax'); }
-    get Email() { return this.form.get('Email'); }
-    get Matfiscale() { return this.form.get('Matfiscale'); }
-    get Site() { return this.form.get('Site'); }
-    get MotDePasse() { return this.form.get('MotDePasse'); }
-    get login() { return this.form.get('login'); }
-
-    inscription() {
-
-        if (this.form.invalid) {
+    inscriptionpersonnel() {
+if (this.formpersonnel.invalid) {
+    return;
+}
+this.userService.inscriptionpersonnel(
+   Number(this.formpersonnel.value.Cin) ,
+    this.formpersonnel.value.Nom,
+     this.formpersonnel.value.Prenom,
+      this.formpersonnel.value.DateDeNaissance,
+   this.formpersonnel.value.Adresse,
+  Number( this.formpersonnel.value.Tel) ,
+  Number(this.formpersonnel.value.Fax)   ,
+    this.formpersonnel.value.Email,
+  Number(this.formpersonnel.value.NumCNSS)   ,
+     this.formpersonnel.value.CopierPermis,
+     this.formpersonnel.value.SituationFamilialle,
+     this.formpersonnel.value.Login,
+     this.formpersonnel.value.MotDePasse,
+     this.formpersonnel.value.Image,
+this.formpersonnel.value.SocieteID,
+this.Userfunction
+     );
+    }
+    inscriptionclient() {
+        if (this.formclient.invalid) {
             return;
     }
-console.log(this.form.value)
-this.inscriptionsocieteservice.inscription(this.form.value.Rs,
-    this.form.value.Adresse,
-     this.form.value.Tel,
-   this.form.value.Fax,
-    this.form.value.Email,
-    this.form.value.Site,
-     this.form.value.Matfiscale,
-    this.form.value.Sigle,
-     this.form.value.MotDePasse,
+    console.log(this.formclient.value.SocieteID)
+    this.userService.inscriptionclient(this.formclient.value.Rs,
+        this.formclient.value.Adresse,
+        this.formclient.value.Tel,
+        this.formclient.value.Fax,
+        this.formclient.value.Email,
+        this.formclient.value.Site,
+        this.formclient.value.NomPC,
+        this.formclient.value.PrenomPC,
+        this.formclient.value.TelPersonnelContact,
+        this.formclient.value.FaxPersonnelContact,
+        this.formclient.value.AdresseEmailPersonnel,
+        this.formclient.value.Matfiscale,
+        this.formclient.value.Regfiscale,
+        this.formclient.value.Login,
+        this.formclient.value.MotDePasse,
+        this.formclient.value.Image,
+        this.formclient.value.SocieteID,
+        this.Userfunction,
+    );
+    }
+
+
+    inscriptionsociete() {
+
+        if (this.formsociete.invalid) {
+            return;
+    }
+this.userService.inscriptionsociete(this.formsociete.value.Rs,
+    this.formsociete.value.Adresse,
+     this.formsociete.value.Tel,
+   this.formsociete.value.Fax,
+    this.formsociete.value.Email,
+    this.formsociete.value.Site,
+     this.formsociete.value.Matfiscale,
+    this.formsociete.value.Image,
+     this.formsociete.value.MotDePasse,
     false,
-     this.form.value.login)
-     this.inscriptionsocieteservice.getinscriptionmessage().subscribe((res) => {
+     this.formsociete.value.Login, this.Userfunction);
+
+    /* this.inscriptionsocieteservice.getinscriptionmessage().subscribe((res) => {
         this.message = res.msg;
         console.log(res)
         this.etat = res.etat;
-        this.form.reset();
+        this.formsociete.reset();
         setTimeout(() => {
          this.route.navigate(['/login']);
         }, 1000);
 
-    });
+    });*/
 
     }
 
-    onImagePicked(e) {
+    imagesociete(e) {
         const file = (e.target as HTMLInputElement).files[0];
-        console.log(file)
-        this.form.patchValue({ Sigle: file });
-        this.form.get('Sigle').updateValueAndValidity();
+        this.formsociete.patchValue({ Image: file });
+        this.formsociete.get('Image').updateValueAndValidity();
         const reader = new FileReader();
         reader.onload = () => {
-          this.imagePreview = reader.result as string;
+          this.imagePreviewsociete = reader.result as string;
         };
         reader.readAsDataURL(file);
+    }
+
+    imagepersonnel(e) {
+        const file = (e.target as HTMLInputElement).files[0];
+        this.formpersonnel.patchValue({ Image: file });
+        this.formpersonnel.get('Image').updateValueAndValidity();
+        const reader = new FileReader();
+        reader.onload = () => {
+          this.imagePreviewpersonnel = reader.result as string;
+        };
+        reader.readAsDataURL(file);
+    }
+    imageclient(e) {
+        const file = (e.target as HTMLInputElement).files[0];
+        this.formclient.patchValue({ Image: file });
+        this.formclient.get('Image').updateValueAndValidity();
+        const reader = new FileReader();
+        reader.onload = () => {
+          this.imagePreviewclient = reader.result as string;
+        };
+        reader.readAsDataURL(file);
+    }
+    copierpermis(e) {
+        const file = (e.target as HTMLInputElement).files[0];
+        this.formpersonnel.patchValue({ CopierPermis: file });
+        this.formpersonnel.get('CopierPermis').updateValueAndValidity();
+        const reader = new FileReader();
+        reader.onload = () => {
+          this.imagePreviewcopierpermis = reader.result as string;
+        };
+        reader.readAsDataURL(file);
+    }
+    select(e) {
+        console.log(e.value);
+        this.Userfunction = e.value;
     }
 }

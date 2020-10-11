@@ -1,11 +1,19 @@
 <div class="login-page" [@routerTransition]>
     <div class="row justify-content-md-center">
         <div class="col-md-4">
-            <img class="user-avatar" src="assets/images/logo.png" width="150px" />
-            <h1>SB Admin BS4 Angular8</h1>
+              <div>
+                    <label>Float label: </label>
+                    <mat-radio-group >
+                      <mat-radio-button value="Societe" checked (change)="select($event)">Societe</mat-radio-button>
+                      <mat-radio-button value="Client" (change)="select($event)" >Client</mat-radio-button>
+                      <mat-radio-button value="Personnel" (change)="select($event)" >Personnel</mat-radio-button>
 
-            <form role="form"  [formGroup]="form" (submit)="inscription()" >
-                <h4 class="alert " *ngIf="message !=null" [ngClass]="{'alert-success':etat,'alert-danger':etat==false}">{{message}}</h4>
+                    </mat-radio-group>
+                    <h4 class="alert " *ngIf="message !=null" [ngClass]="{'alert-success':etat,'alert-danger':etat==false}">{{message}}</h4>
+
+                  </div>
+            <form role="form"  [formGroup]="formsociete" (submit)="inscriptionsociete()" *ngIf="Userfunction=='Societe'" >
+
 
                 <div class="form-content">
                     <div class="form-group">
@@ -13,17 +21,22 @@
                         <input type="text" class="form-control input-underline input-lg"
                         formControlName="Rs"
                         id="" placeholder="{{ 'Rs' | translate }}">
-                        <small  *ngIf="Rs.invalid && (Rs.dirty || Rs.touched)">Rs est obligatoire.</small>
-
+<div *ngIf="formsociete.get('Rs').hasError('required')&&formsociete.get('Rs').touched">
+                       <small>  RS est <strong>obligatoire</strong>
+                       </small>
                     </div>
+                    </div>
+
 
                     <div class="form-group">
                         <label class="form-control">Adresse</label>
                         <input type="text"
                         formControlName="Adresse"
                         class="form-control input-underline input-lg" id="" placeholder="{{ 'Adresse' | translate }}">
-                        <small  *ngIf="Adresse.invalid && (Adresse.dirty || Adresse.touched)" >Adresse est obligatoire.</small>
-
+                        <div *ngIf="formsociete.get('Adresse').hasError('required')&&formsociete.get('Adresse').touched">
+                            <small>  Adresse est <strong>obligatoire</strong>
+                            </small>
+                         </div>
                     </div>
                     <div class="form-group">
                         <label class="form-control">Telephone</label>
@@ -31,9 +44,21 @@
                         formControlName="Tel"
                         minlength="8"
                         maxlength="8"
+
                         class="form-control input-underline input-lg" id="" placeholder="{{ 'Tel' | translate }}">
-                        <small  *ngIf="Tel.errors?.required && (Tel.dirty || Tel.touched)">telephone est obligatoire.</small>
-                        <small  *ngIf="Tel.errors?.minlength">Le telephone doit comporter au moins 8 caractères.</small>
+                        <div *ngIf="formsociete.get('Tel').hasError('required')&&formsociete.get('Tel').touched">
+                            <small>  Tel est <strong>obligatoire</strong>
+                            </small>
+                         </div>
+                         <div *ngIf="formsociete.get('Tel').hasError('minlength')&&formsociete.get('Tel').touched">
+                            <small>  Le Tel doit comporter au moins 8 caractères.
+                            </small>
+                         </div>
+                         <div *ngIf="formsociete.get('Tel').hasError('pattern')&&formsociete.get('Tel').touched">
+                            <small>                      Le Tel doit content que des number.
+
+                            </small>
+                         </div>
 
                     </div>
                     <div class="form-group">
@@ -43,18 +68,34 @@
                         minlength="8"
                         maxlength="8"
                         class="form-control input-underline input-lg" id="" placeholder="{{ 'Fax' | translate }}">
-                        <small  *ngIf="Fax.errors?.required && (Fax.dirty || Fax.touched)">Fax est obligatoire.</small>
-                        <small  *ngIf="Fax.errors?.minlength">Le fax doit comporter au moins 8 caractères.
-                            .</small>
+<div *ngIf="formsociete.get('Fax').hasError('required')&&formsociete.get('Fax').touched">
+                            <small>  Adresse est <strong>obligatoire</strong>
+                            </small>
+                         </div>
+                         <div *ngIf="formsociete.get('Fax').hasError('minlength')&&formsociete.get('Fax').touched">
+                            <small>  Le Fax doit comporter au moins 8 caractères.
+                            </small>
+                         </div>
+                         <div *ngIf="formsociete.get('Fax').hasError('pattern')&&formsociete.get('Fax').touched">
+                            <small>                      Le Fax doit content que des number.
 
+                            </small>
+                         </div>
                     </div>
                     <div class="form-group">
                         <label class="form-control">Email</label>
                         <input type="email"
                         formControlName="Email"
                         class="form-control input-underline input-lg" id="" placeholder="{{ 'Email' | translate }}">
-                        <small *ngIf="Email.errors?.required && (Email.dirty || Email.touched)">Email est obligatoire.</small>
-                        <small  *ngIf="Fax.errors?.email  ">Email est incorrect.</small>
+                        <div *ngIf="formsociete.get('Email').hasError('required')&&formsociete.get('Email').touched">
+                            <small>  Email est <strong>obligatoire</strong>
+                            </small>
+                         </div>
+                         <div *ngIf="formsociete.get('Email').hasError('email')&&formsociete.get('Email').touched">
+                            <small>   S'il vous plaît, mettez une adresse email valide
+
+                            </small>
+                         </div>
 
                     </div>
                     <div class="form-group">
@@ -62,44 +103,482 @@
                         <input type="text"
                         formControlName="Site"
                         class="form-control input-underline input-lg" id="" placeholder="{{ 'Site' | translate }}">
-                        <small  *ngIf="Site.errors?.required && (Site.dirty || Site.touched)">Site est obligatoire.</small>
-
+                        <div *ngIf="formsociete.get('Site').hasError('required')&&formsociete.get('Site').touched">
+                            <small>  Site est <strong>obligatoire</strong>
+                            </small>
+                         </div>
                     </div>
                     <div class="form-group">
                         <label class="form-control"> Matfiscale</label>
                         <input type="text"
                         formControlName="Matfiscale"
                         class="form-control input-underline input-lg" id="" placeholder="{{ 'Matfiscale' | translate }}">
-                        <small  *ngIf="Matfiscale.errors?.required && (Matfiscale.dirty || Matfiscale.touched)">Matfiscale est obligatoire.</small>
-
+                        <div *ngIf="formsociete.get('Matfiscale').hasError('required')&&formsociete.get('Matfiscale').touched">
+                            <small>  Matfiscale est <strong>obligatoire</strong>
+                            </small>
+                         </div>
                     </div>
                     <div class="form-group">
                         <label class="form-control">Login</label>
                         <input type="text"
-                        formControlName="login"
+                        formControlName="Login"
                         class="form-control input-underline input-lg" id="" placeholder="{{ 'login' | translate }}">
-                        <small  *ngIf="login.errors?.required && (login.dirty || login.touched)">login est obligatoire.</small>
-
+                        <div *ngIf="formsociete.get('Login').hasError('required')&&formsociete.get('Login').touched">
+                            <small>  Login est <strong>obligatoire</strong>
+                            </small>
+                         </div>
                     </div>
 
                     <div class="form-group">
                         <label class="form-control">Mot de passe</label>
                         <input type="password" formControlName="MotDePasse"
                         class="form-control input-underline input-lg" id="" placeholder="{{ 'Password' | translate }}">
-                        <small  *ngIf="MotDePasse.errors?.required && (MotDePasse.dirty || MotDePasse.touched)" >Mot De Passe est obligatoire.</small>
-
+                        <div *ngIf="formsociete.get('MotDePasse').hasError('required')&&formsociete.get('MotDePasse').touched">
+                            <small>  MotDePasse est <strong>obligatoire</strong>
+                            </small>
+                         </div>
                     </div>
                     <div class="form-group">
-                        <button  type="button" class="btn btn-warning" style="margin-bottom: 10px;" (click)="filePicker.click()">Choisir Sigle
+                        <button  type="button" class="btn btn-warning" style="margin-bottom: 10px;" (click)="filePickersociete.click()">Choisir Sigle
                 </button>
-                        <input type="file" #filePicker (change)="onImagePicked($event)" style="visibility: hidden;">
-                        <div class="image-preview" *ngIf="imagePreview !== '' && imagePreview && form.get('Sigle').valid">
-                            <img [src]="imagePreview" [alt]="form.value.title">
+                        <input type="file" #filePickersociete (change)="imagesociete($event)" style="visibility: hidden;">
+                        <div class="image-preview" *ngIf="imagePreviewsociete !== '' && imagePreviewsociete && formsociete.get('Image').valid">
+                            <img [src]="imagePreviewsociete" [alt]="formsociete.value.title">
                           </div>
                     </div>
 
                 </div>
-                <button class="btn rounded-btn" (submit)="inscription()">{{ 'Register' | translate }}</button>&nbsp;
+
+                <button class="btn rounded-btn" (submit)="inscriptionsociete()">{{ 'Register' | translate }}</button>&nbsp;
+                <a class="btn rounded-btn" [routerLink]="['/login']">{{ 'Log in' | translate }}</a>
+            </form>
+            <form role="form"  [formGroup]="formclient" (submit)="inscriptionclient()" *ngIf="Userfunction=='Client'">
+                <div class="form-content">
+                    <div class="form-group">
+                        <label class="form-control">RS</label>
+                        <input type="text" class="form-control input-underline input-lg"
+                        formControlName="Rs"
+                        id="" placeholder="{{ 'Rs' | translate }}">
+                        <div *ngIf="formclient.get('Rs').hasError('required') && formclient.get('Rs').touched">
+                            <small>  RS est <strong>obligatoire</strong>
+                            </small>
+                         </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-control">Adresse</label>
+                        <input type="text"
+                        formControlName="Adresse"
+                        class="form-control input-underline input-lg" id="" placeholder="{{ 'Adresse' | translate }}">
+                        <div *ngIf="formclient.get('Adresse').hasError('required')&& formclient.get('Adresse').touched">
+                            <small>  Adresse est <strong>obligatoire</strong>
+                            </small>
+                         </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-control">Telephone</label>
+                        <input type="tel"
+                        formControlName="Tel"
+                        minlength="8"
+                        maxlength="8"
+                        class="form-control input-underline input-lg" id="" placeholder="{{ 'Tel' | translate }}">
+                        <div *ngIf="formclient.get('Tel').hasError('required')&& formclient.get('Tel').touched">
+                            <small>  Tel est <strong>obligatoire</strong>
+                            </small>
+                         </div>
+                         <div *ngIf="formclient.get('Tel').hasError('minlength')&& formclient.get('Tel').touched">
+                            <small>  Le Tel doit comporter au moins 8 caractères.
+                            </small>
+                         </div>
+                         <div *ngIf="formclient.get('Tel').hasError('pattern')&& formclient.get('Tel').touched">
+                            <small>                      Le Tel doit content que des number.
+
+                            </small>
+                         </div>
+
+                    </div>
+                    <div class="form-group">
+                        <label class="form-control">Fax</label>
+                        <input type="tel"
+                        formControlName="Fax"
+                        minlength="8"
+                        maxlength="8"
+                        class="form-control input-underline input-lg" id="" placeholder="{{ 'Fax' | translate }}">
+                        <div *ngIf="formclient.get('Fax').hasError('required')&& formclient.get('Fax').touched">
+                            <small>  Fax est <strong>obligatoire</strong>
+                            </small>
+                         </div>
+                         <div *ngIf="formclient.get('Fax').hasError('minlength')&& formclient.get('Fax').touched">
+                            <small>  Le Fax doit comporter au moins 8 caractères.
+                            </small>
+                         </div>
+                         <div *ngIf="formclient.get('Fax').hasError('pattern')&& formclient.get('Fax').touched">
+                            <small>                      Le Fax doit content que des number.
+
+                            </small>
+                         </div>
+
+                    </div>
+                    <div class="form-group">
+                        <label class="form-control">Email</label>
+                        <input type="email"
+                        formControlName="Email"
+                        class="form-control input-underline input-lg" id="" placeholder="{{ 'Email' | translate }}">
+
+                        <div *ngIf="formclient.get('Email').hasError('required')&&formclient.get('Email').touched">
+                            <small>  Email est <strong>obligatoire</strong>
+                            </small>
+                         </div>
+                         <div *ngIf="formclient.get('Email').hasError('email')&&formclient.get('Email').touched">
+                            <small>   S'il vous plaît, mettez une adresse email valide
+
+                            </small>
+                         </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-control">Site</label>
+                        <input type="text"
+                        formControlName="Site"
+                        class="form-control input-underline input-lg" id="" placeholder="{{ 'Site' | translate }}">
+                        <div *ngIf="formclient.get('Site').hasError('required')&&formclient.get('Site').touched">
+                            <small>  Email est <strong>obligatoire</strong>
+                            </small>
+                         </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-control">NomPC</label>
+                        <input type="text" class="form-control input-underline input-lg"
+                        formControlName="NomPC"
+                        id="" placeholder="{{ 'NomPC' | translate }}">
+                        <div *ngIf="formclient.get('NomPC').hasError('required')&&formclient.get('NomPC').touched">
+                            <small>  NomPC est <strong>obligatoire</strong>
+                            </small>
+                         </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-control">PrenomPC</label>
+                        <input type="text" class="form-control input-underline input-lg"
+                        formControlName="PrenomPC"
+                        id="" placeholder="{{ 'PrenomPC' | translate }}">
+                        <div *ngIf="formclient.get('PrenomPC').hasError('required')&&formclient.get('PrenomPC').touched">
+                            <small>  PrenomPC est <strong>obligatoire</strong>
+                            </small>
+                         </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-control">TelPersonnelContact</label>
+                        <input type="tel" class="form-control input-underline input-lg"
+                        formControlName="TelPersonnelContact" minlength="8"
+                        maxlength="8"
+                        id="" placeholder="{{ 'TelPersonnelContact' | translate }}">
+                        <div *ngIf="formclient.get('TelPersonnelContact').hasError('required')&& formclient.get('TelPersonnelContact').touched">
+                            <small>  Tel est <strong>obligatoire</strong>
+                            </small>
+                         </div>
+                         <div *ngIf="formclient.get('TelPersonnelContact').hasError('minlength')&&  formclient.get('TelPersonnelContact').touched">
+                            <small>  Le Tel doit comporter au moins 8 caractères.
+                            </small>
+                         </div>
+                         <div *ngIf="formclient.get('TelPersonnelContact').hasError('pattern')&& formclient.get('TelPersonnelContact').touched">
+                            <small>                      Le Tel doit content que des number.
+
+                            </small>
+                         </div>
+                    </div>
+                      <div class="form-group">
+                        <label class="form-control">FaxPersonnelContact</label>
+                        <input type="tel" class="form-control input-underline input-lg"
+                        formControlName="FaxPersonnelContact" minlength="8"
+                        maxlength="8"
+                        id="" placeholder="{{ 'FaxPersonnelContact' | translate }}">
+                        <div *ngIf="formclient.get('FaxPersonnelContact').hasError('required')&& formclient.get('FaxPersonnelContact').touched">
+                            <small>  FaxPersonnelContact est <strong>obligatoire</strong>
+                            </small>
+                         </div>
+                         <div *ngIf="formclient.get('FaxPersonnelContact').hasError('minlength')&&  formclient.get('FaxPersonnelContact').touched">
+                            <small>  Le FaxPersonnelContact doit comporter au moins 8 caractères.
+                            </small>
+                         </div>
+                         <div *ngIf="formclient.get('FaxPersonnelContact').hasError('pattern')&& formclient.get('FaxPersonnelContact').touched">
+                            <small>                      Le Fax Personnel Contact doit content que des number.
+
+                            </small>
+                         </div>
+                    </div>  <div class="form-group">
+                        <label class="form-control">AdresseEmailPersonnel</label>
+                        <input type="text" class="form-control input-underline input-lg"
+                        formControlName="AdresseEmailPersonnel"
+                        id="" placeholder="{{ 'AdresseEmailPersonnel' | translate }}">
+                        <div *ngIf="formclient.get('AdresseEmailPersonnel').hasError('required')&& formclient.get('AdresseEmailPersonnel').touched">
+                            <small>  AdresseEmailPersonnel est <strong>obligatoire</strong>
+                            </small>
+                         </div>
+                         <div *ngIf="formclient.get('AdresseEmailPersonnel').hasError('email')&& formclient.get('AdresseEmailPersonnel').touched">
+                            <small>   S'il vous plaît, mettez une adresse email valide
+
+                            </small>
+                         </div>
+                    </div>  <div class="form-group">
+                        <label class="form-control">MatFiscal</label>
+                        <input type="text" class="form-control input-underline input-lg"
+                        formControlName="Matfiscale"
+                        id="" placeholder="{{ 'Matfiscale' | translate }}">
+                        <div *ngIf="formclient.get('Matfiscale').hasError('required')&& formclient.get('Matfiscale').touched">
+                            <small>  Matfiscale est <strong>obligatoire</strong>
+                            </small>
+                         </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-control">Regfiscale</label>
+                        <input type="number" class="form-control input-underline input-lg"
+                        formControlName="Regfiscale"
+                        id="" placeholder="{{ 'Regfiscale' | translate }}">
+                        <div *ngIf="formclient.get('Regfiscale').hasError('required')&& formclient.get('Regfiscale').touched">
+                            <small>  Regfiscale est <strong>obligatoire</strong>
+                            </small>
+                         </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-control">Societe</label>
+                        <select  class="form-control" formControlName="SocieteID" aria-placeholder="SituationFamilialle" required id="exampleFormControlSelect2" >
+                            <option *ngFor="let societe of societes"  [value]="societe.ID">{{societe.Rs}} </option>
+
+                          </select>
+                          <div *ngIf="formclient.get('SocieteID').hasError('required')&& formclient.get('SocieteID').touched">
+                            <small>  Societe est <strong>obligatoire</strong>
+                            </small>
+                         </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-control">Login</label>
+                        <input type="text"
+                        formControlName="Login"
+                        class="form-control input-underline input-lg" id="" placeholder="{{ 'login' | translate }}">
+                        <div *ngIf="formclient.get('Login').hasError('required')&& formclient.get('Login').touched">
+                            <small>  Login est <strong>obligatoire</strong>
+                            </small>
+                         </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-control">Mot de passe</label>
+                        <input type="password" formControlName="MotDePasse"
+                        class="form-control input-underline input-lg" id="" placeholder="{{ 'Password' | translate }}">
+                        <div *ngIf="formclient.get('MotDePasse').hasError('required')&& formclient.get('MotDePasse').touched">
+                            <small>  MotDePasse est <strong>obligatoire</strong>
+                            </small>
+                         </div>
+                    </div>
+                    <div class="form-group">
+                        <button  type="button" class="btn btn-warning" style="margin-bottom: 10px;" (click)="filePickerclient.click()">Choisir Sigle
+                </button>
+                        <input type="file" #filePickerclient (change)="imageclient($event)" style="visibility: hidden;">
+                        <div class="image-preview" *ngIf="imagePreviewclient !== '' && imagePreviewclient && formclient.get('Image').valid">
+                            <img [src]="imagePreviewclient" >
+                          </div>
+                    </div>
+
+                </div>
+                <button class="btn rounded-btn" (submit)="inscriptionclient()">{{ 'Register' | translate }}</button>&nbsp;
+                <a class="btn rounded-btn" [routerLink]="['/login']">{{ 'Log in' | translate }}</a>
+            </form>
+            <form role="form"  [formGroup]="formpersonnel" (submit)="inscriptionpersonnel()" *ngIf="Userfunction=='Personnel'">
+                <div class="form-content">
+                    <div class="form-group">
+                        <label class="form-control">Cin</label>
+                        <input  class="form-control input-underline input-lg"
+                        formControlName="Cin"
+                        maxlength="number" minlength="number" minlength=8 maxlength=8
+                        id="" placeholder="{{ 'Cin' | translate }}">
+                        <div *ngIf="formpersonnel.get('Cin').hasError('required')&& formpersonnel.get('Cin').touched">
+                            <small>  Cin est <strong>obligatoire</strong>
+                            </small>
+                         </div>
+                         <div *ngIf="formpersonnel.get('Cin').hasError('minlength')&& formpersonnel.get('Cin').touched">
+                            <small>  Le Cin doit comporter au moins 8 caractères.
+                            </small>
+                         </div>
+                         <div *ngIf="formpersonnel.get('Cin').hasError('pattern')&&  formpersonnel.get('Cin').touched">
+                            <small>                      Le Cin doit content que des number.
+
+                            </small>
+                         </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-control">Nom</label>
+                        <input type="text"
+                        formControlName="Nom"
+                        class="form-control input-underline input-lg" id="" placeholder="{{ 'Nom' | translate }}">
+                        <div *ngIf="formpersonnel.get('Nom').hasError('required')&& formpersonnel.get('Nom').touched">
+                            <small>  Nom est <strong>obligatoire</strong>
+                            </small>
+                         </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-control"> Prenom</label>
+                        <input type="text"
+                        formControlName="Prenom"
+                        class="form-control input-underline input-lg" id="" placeholder="{{ 'Prenom' | translate }}">
+                        <div *ngIf="formpersonnel.get('Prenom').hasError('required')&& formpersonnel.get('Prenom').touched">
+                            <small>  Prenom est <strong>obligatoire</strong>
+                            </small>
+                         </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-control"> DateDeNaissance</label>
+                        <input type="date"
+                        formControlName="DateDeNaissance"
+                        class="form-control input-underline input-lg" id="" placeholder="{{ 'DateDeNaissance' | translate }}">
+                        <div *ngIf="formpersonnel.get('DateDeNaissance').hasError('required')&& formpersonnel.get('DateDeNaissance').touched">
+                            <small>  DateDeNaissance est <strong>obligatoire</strong>
+                            </small>
+                         </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-control">Adresse</label>
+                        <input type="text"
+                        formControlName="Adresse"
+                        class="form-control input-underline input-lg" id="" placeholder="{{ 'Adresse' | translate }}">
+                        <div *ngIf="formpersonnel.get('Adresse').hasError('required')&& formpersonnel.get('Adresse').touched">
+                            <small>  Adresse est <strong>obligatoire</strong>
+                            </small>
+                         </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-control">Telephone</label>
+                        <input type="tel"
+                        formControlName="Tel"
+                        minlength="8"
+                        maxlength="8"
+                        class="form-control input-underline input-lg" id="" placeholder="{{ 'Tel' | translate }}">
+
+                        <div *ngIf="formpersonnel.get('Tel').hasError('required')&& formpersonnel.get('Tel').touched">
+                            <small>  Tel est <strong>obligatoire</strong>
+                            </small>
+                         </div>
+                         <div *ngIf="formpersonnel.get('Tel').hasError('minlength')&& formpersonnel.get('Tel').touched">
+                            <small>  Le Tel doit comporter au moins 8 caractères.
+                            </small>
+                         </div>
+                         <div *ngIf="formpersonnel.get('Tel').hasError('pattern')&&  formpersonnel.get('Tel').touched">
+                            <small>                      Le Tel doit content que des number.
+
+                            </small>
+                         </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-control">Fax</label>
+                        <input type="tel"
+                        formControlName="Fax"
+                        minlength="8"
+                        maxlength="8"
+                        class="form-control input-underline input-lg" id="" placeholder="{{ 'Fax' | translate }}">
+
+                        <div *ngIf="formpersonnel.get('Fax').hasError('required')&& formpersonnel.get('Fax').touched">
+                            <small>  Fax est <strong>obligatoire</strong>
+                            </small>
+                         </div>
+                         <div *ngIf="formpersonnel.get('Fax').hasError('minlength')&& formpersonnel.get('Fax').touched">
+                            <small>  Le Fax doit comporter au moins 8 caractères.
+                            </small>
+                         </div>
+                         <div *ngIf="formpersonnel.get('Fax').hasError('pattern')&&  formpersonnel.get('Fax').touched">
+                            <small>                      Le Fax doit content que des number.
+
+                            </small>
+                         </div>
+
+                    </div>
+                    <div class="form-group">
+                        <label class="form-control">Email</label>
+                        <input type="email"
+                        formControlName="Email"
+                        class="form-control input-underline input-lg" id="" placeholder="{{ 'Email' | translate }}">
+                        <div *ngIf="formpersonnel.get('Email').hasError('required')&& formpersonnel.get('Email').touched">
+                            <small>  Email est <strong>obligatoire</strong>
+                            </small>
+                         </div>
+                         <div *ngIf="formpersonnel.get('Email').hasError('email')&& formpersonnel.get('Email').touched">
+                            <small>   S'il vous plaît, mettez une adresse email valide
+
+                            </small>
+                         </div>
+
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-control">NumCNSS</label>
+                        <input type="number" formControlName="NumCNSS"
+                        class="form-control input-underline input-lg" id="" placeholder="{{ 'NumCNSS' | translate }}">
+                        <div *ngIf="formpersonnel.get('NumCNSS').hasError('pattern')&& formpersonnel.get('NumCNSS').touched">
+                            <small>   Le Fax doit content que des number.
+                            </small>
+                         </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-control">SituationFamilialle</label>
+                        <select  class="form-control" formControlName="SituationFamilialle" aria-placeholder="SituationFamilialle" required id="exampleFormControlSelect2">
+                            <option value="marié">marié </option>
+                            <option value="pacsé">pacsé </option>
+                            <option value="divorcé">divorcé </option>
+                            <option value="séparé">séparé</option>
+                            <option value="célibataire">célibataire </option>
+                            <option value="veuf">veuf </option>
+                          </select>
+                          <div *ngIf="formpersonnel.get('SituationFamilialle').hasError('required')&& formpersonnel.get('SituationFamilialle').touched">
+                            <small>  SituationFamilialle est <strong>obligatoire</strong>
+                            </small>
+                         </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-control">Societe</label>
+                        <select  class="form-control" formControlName="SocieteID"  aria-placeholder="SituationFamilialle" required id="exampleFormControlSelect2" >
+                            <option *ngFor="let societe of societes" [value]="societe.ID">{{societe.Rs}} </option>
+
+                          </select>
+                          <div *ngIf="formpersonnel.get('SocieteID').hasError('required')&& formpersonnel.get('SocieteID').touched">
+                            <small>  Societe est <strong>obligatoire</strong>
+                            </small>
+                         </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-control">Login</label>
+                        <input type="text"
+                        formControlName="Login"
+                        class="form-control input-underline input-lg" id="" placeholder="{{ 'login' | translate }}">
+                        <div *ngIf="formpersonnel.get('Login').hasError('required')&& formpersonnel.get('Login').touched">
+                            <small>  Login est <strong>obligatoire</strong>
+                            </small>
+                         </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-control">Mot de passe</label>
+                        <input type="password" formControlName="MotDePasse"
+                        class="form-control input-underline input-lg" id="" placeholder="{{ 'Password' | translate }}">
+                        <div *ngIf="formpersonnel.get('MotDePasse').hasError('required')&& formpersonnel.get('MotDePasse').touched">
+                            <small>  MotDePasse est <strong>obligatoire</strong>
+                            </small>
+                         </div>
+                    </div>
+                    <div class="form-group">
+                        <button  type="button" class="btn btn-warning"  (click)="filePickerpersonnel.click()">Personnel image
+                        </button>
+                        <input type="file" #filePickerpersonnel (change)="imagepersonnel($event)" style="visibility: hidden;">
+                        <div class="image-preview" *ngIf="imagePreviewpersonnel !== '' && imagePreviewpersonnel && formpersonnel.get('Image').valid">
+                            <img [src]="imagePreviewpersonnel" >
+                          </div>
+                    </div>
+                     <div class="form-group">
+                        <button  type="button" class="btn btn-warning"  (click)="Copierpermis.click()">Copierpermis
+                </button>
+                        <input type="file" #Copierpermis (change)="copierpermis($event)" style="visibility: hidden;">
+                        <div class="image-preview" *ngIf="imagePreviewcopierpermis !== '' && imagePreviewcopierpermis && formpersonnel.get('CopierPermis').valid">
+                            <img [src]="imagePreviewcopierpermis" >
+                          </div>
+                    </div>
+                </div>
+                <button class="btn rounded-btn" (submit)="inscriptionpersonnel()">{{ 'Register' | translate }}</button>&nbsp;
                 <a class="btn rounded-btn" [routerLink]="['/login']">{{ 'Log in' | translate }}</a>
             </form>
         </div>

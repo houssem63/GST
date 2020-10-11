@@ -1,4 +1,4 @@
-$topnav-background-color: #222;
+$topnav-background-color: #4169E1;
 .sidebar {
     border-radius: 0;
     position: fixed;
@@ -27,7 +27,7 @@ $topnav-background-color: #222;
             background: $topnav-background-color;
             border: 0;
             border-radius: 0;
-            color: #999;
+            color: black;
             text-decoration: none;
             .fa {
                 margin-right: 10px;
@@ -167,7 +167,7 @@ $topnav-background-color: #222;
     padding: 12px;
     bottom: 0;
     color: #999;
-    background: #212529;
+    background: #4169E1;
     i {
         font-size: 23px;
     }
