@@ -141,10 +141,18 @@
                     <div class="form-group">
                         <button  type="button" class="btn btn-warning" style="margin-bottom: 10px;" (click)="filePickersociete.click()">Choisir Sigle
                 </button>
+
                         <input type="file" #filePickersociete (change)="imagesociete($event)" style="visibility: hidden;">
+
+                        <mat-icon  aria-label="Example home icon">home</mat-icon>
+
                         <div class="image-preview" *ngIf="imagePreviewsociete !== '' && imagePreviewsociete && formsociete.get('Image').valid">
-                            <img [src]="imagePreviewsociete" [alt]="formsociete.value.title">
-                          </div>
+                            <mat-card>
+
+                                <img [src]="imagePreviewsociete" [alt]="formsociete.value.title">
+                            </mat-card>
+                            </div>
+
                     </div>
 
                 </div>
@@ -568,6 +576,8 @@
                         <div class="image-preview" *ngIf="imagePreviewpersonnel !== '' && imagePreviewpersonnel && formpersonnel.get('Image').valid">
                             <img [src]="imagePreviewpersonnel" >
                           </div>
+
+
                     </div>
                      <div class="form-group">
                         <button  type="button" class="btn btn-warning"  (click)="Copierpermis.click()">Copierpermis

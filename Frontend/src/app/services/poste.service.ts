@@ -11,11 +11,12 @@ const BACKEND_URL = environment.apiUrl + '/poste/';
 export class PosteService {
     subposte = new Subject<Poste[]>();
     poste: Poste[] = [];
-
+postedata;
   constructor(private http :HttpClient) { }
   getallposte(id) {
     this.http.get<{poste: Poste[]}>(BACKEND_URL + `getall/${id}`).subscribe((res) =>  {
       this.poste = res.poste;
+      this.postedata = res.poste;
        this.subposte.next([...this.poste]);
     });
  }
@@ -43,6 +44,9 @@ edit(poste:Poste,id:string){
         updateposte[oldposte] = poste;
         this.poste = updateposte;
         this.subposte.next([...this.poste]);
-    })
+    });
+}
+getpostedata(){
+    return this.postedata;
 }
 }

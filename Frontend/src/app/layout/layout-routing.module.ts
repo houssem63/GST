@@ -19,8 +19,7 @@ const routes: Routes = [
             { path: 'personnel', loadChildren: () => import('./personnel/personnel.module').then(m => m.PersonnelModule) },
             { path: 'profile', loadChildren: () => import('./profile/profile.module').then(m => m.ProfileModule) },
             { path: 'poste', loadChildren: () => import('./poste/poste.module').then(m => m.PosteModule) },
-            { path: 'historiqueembauche', loadChildren: () => import('./historique-embauche/historique-embauche.module')
-            .then(m => m.HistoriqueEmbaucheModule) }
+
 
         ]
     }

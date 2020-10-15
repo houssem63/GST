@@ -1,0 +1,46 @@
+<span *ngIf="msg !=null" class="alert " [ngClass]="{'alert-success':ok,'alert-danger':ok==false}">{{msg}}</span>
+
+<div class="example-container" [formGroup]="form" (submit)="change()">
+    <mat-form-field appearance="fill">
+      <mat-label>Enter your password</mat-label>
+      <input matInput [type]="hide ? 'password' : 'text'" formControlName="actuelMotDePasse">
+      <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+      <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+      </button>
+      <mat-error *ngIf="form.get('actuelMotDePasse').hasError('required')">
+        actuelMotDePasse est <strong>obligatoire</strong>
+    </mat-error>
+    </mat-form-field>
+<br>
+    <mat-form-field appearance="fill">
+        <mat-label>Enter your password</mat-label>
+        <input matInput [type]="hide ? 'password' : 'text'" formControlName="nouvelleMotDePasse">
+        <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+        <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </button>
+        <mat-error *ngIf="form.get('nouvelleMotDePasse').hasError('required')">
+            nouvelleMotDePasse est <strong>obligatoire</strong>
+        </mat-error>
+      </mat-form-field>
+      <br>
+      <mat-form-field appearance="fill">
+        <mat-label>Enter your password</mat-label>
+        <input matInput [type]="hide ? 'password' : 'text'" (input)="valid($event)" formControlName="retappernouvelleMotDePasse">
+        <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+        <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </button>
+        <mat-error *ngIf="form.get('retappernouvelleMotDePasse').hasError('required')">
+            nouvelleMotDePasse est <strong>obligatoire</strong>
+        </mat-error>
+        <mat-error *ngIf="form.get('retappernouvelleMotDePasse').errors">
+            nouvelleMotDePasse est <strong>inco</strong>
+        </mat-error>
+      </mat-form-field>
+      <br>
+      <button type="button" (click)="change()">change</button>
+  </div>
+
+{{form.get('retappernouvelleMotDePasse').value }}
+<mat-error *ngIf="form.errors">
+    nouvelleMotDePasse est <strong>inco</strong>
+</mat-error>

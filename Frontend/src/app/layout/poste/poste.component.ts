@@ -57,7 +57,7 @@ private societeID;
         console.log(this.form.value)
         const poste :Poste={
             Libelle :this.form.get('Libelle').value,
-            societeID:this.societeID
+            userID:this.societeID
         }
         this.posteService.add(poste)
         this.form.reset()
@@ -70,10 +70,10 @@ private societeID;
         })
     }
     edite(){
-        const poste:Poste={
+       const poste:Poste={
             ID:this.PosteeditID,
             Libelle : this.form1.get('Libelle1').value,
-            societeID:this.societeID
+            userID:this.societeID
         }
         this.posteService.edit(poste,this.PosteeditID)
     }

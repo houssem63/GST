@@ -1,104 +1,159 @@
-const { Personnel } =require('../models/relations')
+const { User ,HistoriqueEmbauches} =require('../models/relations')
+const bcrypt = require('bcryptjs');
+
 module.exports={
     ajouter:async(req,res)=>{
-        const body=req.body
-        console.log(req.body)
-        const url = req.protocol + "://" + req.get("host");
-        global.filename;
+     global.personnelimage;
+     global.copierpermis;
 
-        if(!req.file){
-            this.filename=null
-        }else{
-             this.filename=url + "/images/" + req.file.filename
-        }
-        global.personnel ;
-        const cin = await Personnel.findAll({where:{Cin:req.body.Cin}})
+
+       const url = req.protocol + "://" + req.get("host");
+   if(!req.files['Image']){
+       
+       this.personnelimage="https://secure.gravatar.com/avatar/03723a218a9152e9bad38a84058e21d7?s=192&d=mm&r=g%202x"
+       
+   }else{
+    
+        this.personnelimage=url + "/images/" + req.files['Image'][0].filename;
         
-        if(cin[0]){
-          return  res.json({msg:'Cin deja utilise',ok:false})
-        }
-        const Email = await Personnel.findAll({where:{Email:req.body.Email}})
+   }
+   if(!req.files['CopierPermis']){
+       
+       this.copierpermis=null
+       
+   }else{
+    
+        this.copierpermis=url + "/images/" + req.files['CopierPermis'][0].filename
         
-        if(Email[0]){
+   }
+
+       global.user ;
+        const finduser = await User.findAll({where:{Login:req.body.Login}})
+        
+        if(finduser[0]){
+          return  res.json({msg:'login deja utilise',ok:false})
+        }
+        const findEmail = await User.findAll({where:{Email:req.body.Email}})
+        
+        if(findEmail[0]){
           return  res.json({msg:'Email deja utilise',ok:false})
         }
-        this.personnel = {
-            Cin:req.body.Cin,
-           Nom:req.body.Nom,
-           Prenom:req.body.Prenom,
-           Date_de_naissance:req.body.Date_de_naissance, 
-           Adresse:req.body.Adresse,
-           Tel:req.body.Tel,
-          
-           Fax:req.body.Fax,
-           Email:req.body.Email,
-           NumCNSS:req.body.NumCNSS,
-           CopierPermis:this.filename,
-           SituationFamilialle:req.body.SituationFamilialle,
-           societeID:req.body.societeID
-   
-           }
-       Personnel.create(this.personnel).then((resq)=>{
-            console.log(resq)
-            res.status(200).json({resq,msg:'ajoute avec succes' ,ok :true})
+    const hash=await bcrypt.hash(req.body.MotDePasse, 10)
+            if(hash){
+                this.user = {
+                    Rs:req.body.Rs,
+                   Adresse:req.body.Adresse,
+                   Tel:req.body.Tel,
+                   Fax:req.body.Fax,
+                   Email:req.body.Email,
+                   Site:req.body.Site,
+                   Matfiscale:req.body.Matfiscale,
+                   Image:this.personnelimage,
+                   MotDePasse:hash,
+                   Status:req.body.Status,
+                   DateExpiration:req.body.DateExpiration,
+                   Login:req.body.Login,
+                   Cin:req.body.Cin,
+                   Nom:req.body.Nom,
+                Prenom:req.body.Prenom,
+                DateDeNaissance:req.body.DateDeNaissance,  
+                NumCNSS:req.body.NumCNSS,
+                SituationFamilialle:req.body.SituationFamilialle,
+                
+                CopierPermis:this.copierpermis, 
+                Rs:req.body.Rs,
+                 NomPC:req.body.NomPC,
+                PrenomPC:req.body.PrenomPC,
+                TelPersonnelContact:req.body.TelPersonnelContact,
+                FaxPersonnelContact:req.body.FaxPersonnelContact,
+                AdresseEmailPersonnel:req.body.AdresseEmailPersonnel,
+                MatFiscal:req.body.MatFiscal,
+                Regfiscale:req.body.Regfiscale,
+                Function:req.body.Function,
+                SocieteID:req.body.SocieteID,
+           
+             
+        } 
+       
+            }
+        
+        User.create(this.user).then((resq)=>{
+            res.status(200).json({ok:true,msg:'inscriptionavec succes'})
         }).catch((err)=>{
-            console.log(err)
-            res.status(500).json({err:'error server' + err.message})
+           
+            res.status(500).json({err:'error server' + err})
         })
     },
-    Delete:(req,res)=>{
-    
-        Personnel.destroy({
+    Delete:async(req,res)=>{
+    try{
+       await  User.destroy({
             where: {
               ID: req.params.id
             }
-          }).then((responce)=>{
-              res.status(200).json({msg:'Societe suprimer avec succes'})
-          }).catch((err)=>{
-              res.status(500).json({err:'error server' + err})
           })
+        await HistoriqueEmbauches.destroy({where:{PersonnelID :req.params.id}})
+               res.status(200).json({msg:'Societe suprimer avec succes'})   
+    }
+     catch(e){
+         console.log(e)
+     }
+           
+              
+          
     },
     Update:(req,res)=>{
-        const body =req.body
-        console.log(req.body)
+     
+        global.personnelimage;
+        global.copierpermis;
         const url = req.protocol + "://" + req.get("host");
-        global.filename;
-
-        if(!req.file){
-            this.filename=null
+        if(!req.files['Image']){
+            
+            this.personnelimage="https://secure.gravatar.com/avatar/03723a218a9152e9bad38a84058e21d7?s=192&d=mm&r=g%202x"
+            
         }else{
-             this.filename=url + "/images/" + req.file.filename
+         
+             this.personnelimage=url + "/images/" + req.files['Image'][0].filename;
+             
+        }if(!req.files['CopierPermis']){
+       
+            this.copierpermis=req.body.CopierPermis
+            
+        }else{
+         
+             this.copierpermis=url + "/images/" + req.files['CopierPermis'][0].filename
+             
         }
         this.personnel = {
             Cin:req.body.Cin,
            Nom:req.body.Nom,
            Prenom:req.body.Prenom,
-           Date_de_naissance:req.body.Date_de_naissance, 
+           DateDeNaissance:req.body.DateDeNaissance, 
            Adresse:req.body.Adresse,
            Tel:req.body.Tel,
-          
+          Image:this.personnelimage,
            Fax:req.body.Fax,
            Email:req.body.Email,
            NumCNSS:req.body.NumCNSS,
-           CopierPermis:this.filename,
+           CopierPermis:this.copierpermis,
            SituationFamilialle:req.body.SituationFamilialle,
            societeID:req.body.societeID
    
            }
-        Personnel.update(this.personnel, {
+        User.update(this.personnel, {
             where: {
               ID: req.params.id
             }}).then((responce)=>{
-                console.log(responce)
+                
                 res.status(200).json({msg:'Personnel edit avec succes',personnel:this.personnel})
             }).catch((err)=>{
                 res.status(500).json({err:'error server' + err})
             })
     },
     Getall:(req,res)=>{
-        Personnel.findAll({
+        User.findAll({
             where :{
-                societeID:req.params.id
+                societeID:req.params.id,
+                 Function : 'Personnel'
             }
         }).then((responce)=>{
             res.status(200).json({personnel :responce})
@@ -108,7 +163,7 @@ module.exports={
     },
     Getonebyid:(req,res)=>{
         console.log(req.params.id)
-        Personnel.findAll({
+        User.findAll({
             where :{
                 ID:req.params.id
             }

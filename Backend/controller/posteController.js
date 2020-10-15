@@ -39,7 +39,7 @@ module.exports={
     Getall:(req,res)=>{
         Poste.findAll({
             where :{
-                societeID:req.params.id
+                userID:req.params.id
             }
         }).then((responce)=>{
             res.status(200).json({poste :responce})

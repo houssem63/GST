@@ -33,9 +33,10 @@ private IDuser;
     ngOnInit() {
 this.IDuser=localStorage.getItem('societeId')
         this.pushRightClass = 'push-right';
-   this.userservice.getOneuser(this.IDuser).subscribe((res)=>{
-       console.log(res.user)
-       this.user=res.user
+   this.userservice.getOneuser(this.IDuser)
+   this.userservice.getoneusersubscribe().subscribe((res)=>{
+
+       this.user = res;
    })
     }
     isToggled(): boolean {

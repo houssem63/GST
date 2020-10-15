@@ -1,9 +1,10 @@
-export interface HistoriqueEmbauche{
-    ID?:string;
-    DateEmbauche:Date,
-    DateSortie:Date,
-    Salaire	:number,
-    personnelID?:string;
-    posteID?:string
-    societeID?:string
+export interface HistoriqueEmbauche {
+    ID?: string;
+    DateEmbauche: Date;
+    DateSortie: Date;
+    Salaire: number;
+    PersonnelID?: string;
+    posteID?: string;
+    userID?: string;
+    PosteNom?: string;
 }

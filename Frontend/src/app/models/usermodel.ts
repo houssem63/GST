@@ -17,7 +17,7 @@ export interface User {
     Prenom?: string;
     DateDeNaissance?: Date;
     NumCNSS?: number;
-
+SituationFamilialle?:string;
     CopierPermis?: string;
     NomPC?: string;
     PrenomPC?: string;
@@ -26,6 +26,7 @@ export interface User {
     AdresseEmailPersonnel?: string;
 
     Regfiscale?: number;
-    function?: string;
+    Function?: string;
     SocieteID?: number;
+    Embaucheetat? :boolean;
 }

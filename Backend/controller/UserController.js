@@ -1,9 +1,10 @@
-const { User } =require('../models/relations')
+const { User ,HistoriqueEmbauches} =require('../models/relations')
+
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken')
 module.exports={
     ajouter:async(req,res)=>{
-        console.log(req.body)
+        console.log(req.body.Login)
      global.personnelimage;
      global.copierpermis;
 //console.log(req.files['Image'][0])
@@ -86,21 +87,33 @@ module.exports={
             res.status(500).json({err:'error server' + err})
         })
     },
-    Delete:(req,res)=>{
+    Delete:async(req,res)=>{
     
-        User.destroy({
+ try{
+ const responce=    await   User.destroy({
             where: {
               ID: req.params.id
             }
-          }).then((responce)=>{
-              res.status(200).json({msg:'Societe suprimer avec succes'})
-          }).catch((err)=>{
-              res.status(500).json({err:'error server' + err})
           })
+         
+              console.log('id '+req.params.id)
+             await HistoriqueEmbauches.destroy({where:{
+                PersonnelID :req.params.id
+             }}) 
+          
+             
+ }    catch(e){
+     console.log(e)
+ }
+            
+         
     },
     Update:(req,res)=>{
         const body =req.body
-        User.update(body, {
+        console.log(body)
+        console.log(req.body)
+  
+       User.update(body, {
             where: {
               ID: req.params.id
             }}).then((responce)=>{
@@ -132,9 +145,8 @@ module.exports={
             res.status(500).json({err:'error server' + err})
         })
     },
+ 
     auth: async (req, res, next) => {
-        
-console.log(req.body)
         try {
            
              global.fetchuser;
@@ -144,34 +156,36 @@ console.log(req.body)
                 },raw: true,
                 nest: true})
                 
+
             if (!user[0] ) {
                 return res.json({ msg: "login ou mot de passe incorrect" , ok : false});
             }
             this.fetchuser = user;
-
+            
             const pass = await bcrypt.compare(req.body.MotDePasse, user[0].MotDePasse)
-
 
             if (!pass) {
                 return res.json({ msg: "login ou mot de passe incorrect" , ok : false })
             }
-            console.log(this.fetchuser[0].SocieteID)
            global.status;
-            if(this.fetchuser[0].Function =='Societe'){
-                this.status = await User.findAll({where :{
-                ID:this.fetchuser[0].ID    
+      
+   if(this.fetchuser[0].Function ==='Societe'){
+                this.status = await User.findAll({ where :{
+                ID: Number(this.fetchuser[0].ID    ) 
                 }})
-                console.log('societe')
+               
+                console.log(this.status[0]  )
+
             }else{
-                this.satuts = await User.findAll({  where :{
+                this.status = await User.findAll({  where :{
                     ID :this.fetchuser[0].SocieteID
                 }})
               
-
+                console.log(this.status)
             }
-              console.log(this.satuts[0].Status)
+              console.log(this.status[0])
             
-            if (this.satuts[0].Status===false){
+            if (this.status[0].Status===false){
                 return res.json({msg:"votre compte n'est pas activer",ok :false})
             }else{
                 const token = jwt.sign({ email: this.fetchuser[0].Email }, process.env.SECRET,
@@ -189,5 +203,39 @@ console.log(req.body)
         };
 
     },
+    updateimage :(req,res)=>{
+        console.log(req.files['Image'])
+        const url = req.protocol + "://" + req.get("host");
+        const image =url + "/images/" + req.files['Image'][0].filename;
+        const bady ={Image :image}
+        User.update(bady, {
+            where: {
+              ID: req.params.id
+            }}).then((responce)=>{
+                console.log(responce)
+                res.status(200).json({imagepath :image, msg:'Societe edit avec succes'})
+            }).catch((err)=>{
+                res.status(500).json({err:'error server' + err})
+            })
+    },
+    changemotdpasse:async (req,res)=>{
+        console.log(req.body)
+    const user= await   User.findAll({where :{
+            ID :req.params.id
+        }})
+console.log(user[0])
+      const test=await  bcrypt.compare(req.body.actuelMotDePasse, user[0].MotDePasse)
+      console.log(test)
+      if(!test){
+          return res.json({msg:'mot de passe actual incorrect',ok:false})
+      }
+    const hach =await  bcrypt.hash(req.body.nouvelleMotDePasse, 10)
 
+    User.update({MotDePasse:hach}, {
+        where: {
+          ID: req.params.id
+        }}).then((responce)=>{
+            res.json({msg:'mot de passe changer',ok :true})
+        })
+    }
 }

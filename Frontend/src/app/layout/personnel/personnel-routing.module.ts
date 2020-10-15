@@ -1,18 +1,17 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AffichePersonnelComponent } from './affiche-personnel/affiche-personnel.component';
-import { AjouteEditPersonnelComponent } from './ajoute-edit-personnel/ajoute-edit-personnel.component';
+import { AjouteEditComponent } from './ajoute-edit/ajoute-edit.component';
 import { PersonnelComponent } from './personnel.component';
 
 const routes: Routes = [
     {
         path: '', component: PersonnelComponent
+    },{
+        path :'ajoute' ,component :AjouteEditComponent
     },
     {
-        path: 'ajoute', component: AjouteEditPersonnelComponent
-    },
-    {
-        path: 'edit/:id', component: AjouteEditPersonnelComponent
+        path :'edit/:id' ,component :AjouteEditComponent
     }
 
 ]

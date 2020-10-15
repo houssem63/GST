@@ -4,113 +4,140 @@ import { Router } from '@angular/router';
 import { Observable, Subject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Personnel } from '../models/personnel';
+import { User } from 'src/app/models/usermodel';
+import { HistoriqueEmbaucheService } from './historique-embauche.service';
+
 const BACKEND_URL = environment.apiUrl + '/personnel/';
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class PerosnnelService {
-    personnel: Personnel[] = [];
-    msg = new Subject<{msg:string ,ok :boolean}>();
-subpersonnel = new Subject<Personnel[]>();
-  constructor(private http: HttpClient , private route: Router) { }
-  getallpersonnel(id) {
-     this.http.get<{personnel: Personnel[]}>(BACKEND_URL + `getall/${id}`).subscribe((res) =>  {
-       this.personnel = res.personnel;
-        this.subpersonnel.next([...this.personnel]);
-     });
-  }
-  getonepersonnel(id) {
+    personnel: User[] = [];
+    msg = new Subject<{ msg: string, ok: boolean }>();
+    subpersonnel = new Subject<User[]>();
+    constructor(private http: HttpClient, private embaucheservice: HistoriqueEmbaucheService, private route: Router) { }
+    getallpersonnel(id) {
+        this.http.get<{ personnel: User[] }>(BACKEND_URL + `getall/${id}`).subscribe((res) => {
+            res.personnel.map(p => {
+                this.embaucheservice.gethistoriquedeonepersonnel(p.ID).subscribe( res => {
+                    console.log(res.historique[(res.historique.length) - 1]?.DateSortie);
+                    if (res.historique[(res.historique.length) - 1]?.DateSortie === null) {
+                        p.Embaucheetat = false;
+                    } else { p.Embaucheetat = true; }
 
-      return this.http.get<{personnel: Personnel}>(BACKEND_URL + `getonebyid/${id}`);
-  }
-  addpersonnel(Cin: number,
-    Nom: string,
-     Prenom: string,
-     Date_de_naissance: Date,
-     Adresse: string,
-     Tel: number,
-     Fax: number,
-     Email: string,
-    NumCNSS: number,
-     Permis_Copie: File,
-     SituationFamilialle: string,
-   societeID: string) {
-    const personneldata = new FormData();
-    personneldata.append('Cin', Cin.toString());
-    personneldata.append('Nom', Nom);
-    personneldata.append('Prenom', Prenom);
-    personneldata.append('Date_de_naissance', Date_de_naissance.toString());
-    personneldata.append('Adresse', Adresse);
-    personneldata.append('Tel', Tel.toString());
-    personneldata.append('Fax', Fax.toString());
-    personneldata.append('Email', Email);
-    personneldata.append('NumCNSS', NumCNSS.toString());
-    personneldata.append('CopierPermis', Permis_Copie);
-    personneldata.append('SituationFamilialle', SituationFamilialle);
-    personneldata.append('societeID', societeID);
 
- this.http.post<{personnel: Personnel , msg :string ,ok :boolean}>(BACKEND_URL + 'add', personneldata) .subscribe((res) => {
-     console.log(res);
-     this.msg.next({msg:res.msg , ok :res.ok})
-     if (res.ok === true) {
-        this.personnel.push(res.personnel);
-    this.subpersonnel.next([...this.personnel]);
-    this.route.navigate(['/personnel']);
-     }
+                });
+            });
+            this.personnel = res.personnel;
+            this.subpersonnel.next([...this.personnel]);
+        });
+    }
+    getonepersonnel(id) {
 
-});
-}
+        return this.http.get<{ personnel: User }>(BACKEND_URL + `getonebyid/${id}`);
+    }
+    inscriptionpersonnel(
+        Cin: number,
+        Nom: string,
+        Prenom: string,
+        DateDeNaissance: Date,
+        Adresse: string,
+        Tel: number,
+        Fax: number,
+        Email: string,
+        NumCNSS: number,
+        CopierPermis: File,
+        SituationFamilialle: string,
+        Login: string,
+        MotDePasse: string,
+        Image: File,
+        SocieteID: number,
+        UserFunction,
+    ) {
 
-updatePersonnel(Cin: number,
-    Nom: string,
-     Prenom: string,
-     Date_de_naissance: Date,
-     Adresse: string,
-     Tel: number,
-     Fax: number,
-     Email: string,
-    NumCNSS: number,
-     Permis_Copie: File,
-     SituationFamilialle: string,
-   societeID: string, personnelId: string) {
-    const personneldata = new FormData();
-    personneldata.append('Cin', Cin.toString());
-    personneldata.append('Nom', Nom);
-    personneldata.append('Prenom', Prenom);
-    personneldata.append('Date_de_naissance', Date_de_naissance.toString());
-    personneldata.append('Adresse', Adresse);
-    personneldata.append('Tel', Tel.toString());
-    personneldata.append('Fax', Fax.toString());
-    personneldata.append('Email', Email);
-    personneldata.append('NumCNSS', NumCNSS.toString());
-    personneldata.append('CopierPermis', Permis_Copie);
-    personneldata.append('SituationFamilialle', SituationFamilialle);
-    personneldata.append('societeID', societeID);
-     this.http.put<{personnel: Personnel}>(BACKEND_URL + `update/${personnelId}`, personneldata)
-     .subscribe((res) => {
-        const updatepersonnel = [...this.personnel];
-        const oldpersonnel = updatepersonnel.findIndex(p => p.ID === res.personnel.ID);
-        updatepersonnel[oldpersonnel] = res.personnel;
-        this.personnel = updatepersonnel;
-        this.subpersonnel.next([...this.personnel]);
-        this.route.navigate(['/personnel']);
-     });
+        const personneldata = new FormData();
+        personneldata.append('Cin', Cin.toString());
 
-   }
-   delete(id) {
-   this.http.delete<{personnel: Personnel}>(BACKEND_URL + `delete/${id}`).subscribe((res) => {
-    const personnelupdate = this.personnel.filter(v => v.ID !== id);
-    this.personnel = personnelupdate;
-    this.subpersonnel.next([...this.personnel]);
-   });
+        personneldata.append('Nom', Nom);
+        personneldata.append('Prenom', Prenom);
+        personneldata.append('DateDeNaissance', DateDeNaissance.toString());
 
-   }
-   getpersoonelsub() {
-   return    this.subpersonnel.asObservable();
-   }
-getmsgetat(){
-    return this.msg.asObservable()
-}
+        personneldata.append('Adresse', Adresse);
+        personneldata.append('Tel', Tel.toString());
+        personneldata.append('Fax', Fax.toString());
+        personneldata.append('Email', Email);
+        personneldata.append('NumCNSS', NumCNSS.toString());
+        personneldata.append('CopierPermis', CopierPermis);
+        personneldata.append('SituationFamilialle', SituationFamilialle);
+        personneldata.append('MotDePasse', MotDePasse);
+        personneldata.append('Login', Login);
+        personneldata.append('Image', Image);
+        personneldata.append('SocieteID', SocieteID.toString());
+        personneldata.append('Function', UserFunction);
+        this.http
+            .post<{ msg: string; ok: boolean }>(
+                BACKEND_URL + 'add',
+                personneldata
+            )
+            .subscribe((res) => {
+                console.log(res);
+            });
+    }
+
+    updatePersonnel(Cin: number,
+        Nom: string,
+        Prenom: string,
+        DateDeNaissance: Date,
+        Adresse: string,
+        Tel: number,
+        Fax: number,
+        Email: string,
+        NumCNSS: number,
+        Permis_Copie: File,
+        image: File,
+        SituationFamilialle: string,
+        societeID: string, personnelId: string) {
+        const personneldata = new FormData();
+        personneldata.append('Cin', Cin.toString());
+        personneldata.append('Nom', Nom);
+        personneldata.append('Prenom', Prenom);
+        personneldata.append('DateDeNaissance', DateDeNaissance.toString());
+        personneldata.append('Adresse', Adresse);
+        personneldata.append('Tel', Tel.toString());
+        personneldata.append('Fax', Fax.toString());
+        personneldata.append('Email', Email);
+        personneldata.append('NumCNSS', NumCNSS.toString());
+        personneldata.append('CopierPermis', Permis_Copie);
+        personneldata.append('Image', image);
+
+        personneldata.append('SituationFamilialle', SituationFamilialle);
+        personneldata.append('societeID', societeID);
+        this.http.put<{ personnel: User }>(BACKEND_URL + `update/${personnelId}`, personneldata)
+            .subscribe((res) => {
+                const updatepersonnel = [...this.personnel];
+                const oldpersonnel = updatepersonnel.findIndex(p => p.ID === res.personnel.ID);
+                updatepersonnel[oldpersonnel] = res.personnel;
+                this.personnel = updatepersonnel;
+                this.subpersonnel.next([...this.personnel]);
+                this.route.navigate(['/personnel']);
+            });
+
+    }
+    delete(id) {
+        this.http.delete<{ personnel: User }>(BACKEND_URL + `delete/${id}`).subscribe((res) => {
+            const personnelupdate = this.personnel.filter(v => v.ID !== id);
+            this.personnel = personnelupdate;
+            this.subpersonnel.next([...this.personnel]);
+        });
+
+    }
+    getpersoonelsub() {
+        return this.subpersonnel.asObservable();
+    }
+    getmsgetat() {
+        return this.msg.asObservable();
+    }
+
 }
 

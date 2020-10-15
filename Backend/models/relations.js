@@ -6,8 +6,10 @@ const banqueModel=require('./banque')
 const comptemodel=require('./compte')
 const historiqueEmbauchesmodel=require('./historiqueEmbauche')
 const postemodel=require('./poste')
-const User =userModel(db,Sequelize)
+const rolemodel=require('./role')
 
+const User =userModel(db,Sequelize)
+const Role=rolemodel(db,Sequelize)
 const Banque =banqueModel(db,Sequelize)
 const Compte =comptemodel(db,Sequelize)
 const HistoriqueEmbauches=historiqueEmbauchesmodel(db,Sequelize)
@@ -30,8 +32,15 @@ HistoriqueEmbauches.belongsTo(Poste)
 //relation entre societe et poste
 User.hasMany(Poste)
 Poste.belongsTo(User)
-User.hasMany(HistoriqueEmbauches)
-HistoriqueEmbauches.belongsTo(User)
+//relation entre User et role
+User.belongsToMany(Role, {
+    through: "user_role",
+as: "roles",
+foreignKey: "user_id"})
+Role.belongsToMany(User,{
+    through: "user_role",
+as: "users",
+foreignKey: "role_id"})
 db.sync({force:false}).then(()=>{
     console.log('table created !!!!!!')
 })

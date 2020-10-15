@@ -5,7 +5,7 @@ module.exports={
         console.log(body)
         Compte.create(body).then((resq)=>{
             console.log(resq)
-            res.status(200).json({resq})
+            res.status(200).json({compte:resq})
         }).catch((err)=>{
             console.log(err)
             res.status(500).json({err:'error server' + err.message})
@@ -35,8 +35,10 @@ module.exports={
             })
     },
     Getall:(req,res)=>{
-        Compte.findAll().then((responce)=>{
-            res.status(200).json({societe :responce})
+        Compte.findAll({where:{
+            userID :req.params.id
+        }}).then((responce)=>{
+            res.status(200).json({compte :responce})
         }).catch((err)=>{
             res.status(500).json({err:'error server' + err})
         })

@@ -15,7 +15,9 @@ import { UserService } from '../services/user.service';
 })
 export class SignupComponent implements OnInit {
     constructor(private userService: UserService , private route: Router) {}
-    formsociete;
+
+    hide = true;
+formsociete;
     formpersonnel;
     formclient;
 imagePreviewclient: string;

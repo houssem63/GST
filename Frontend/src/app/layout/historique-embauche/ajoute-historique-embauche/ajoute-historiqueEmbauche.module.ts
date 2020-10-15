@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
+import { MatFormFieldModule } from '@angular/material/form-field';
 import {MatCardModule} from '@angular/material/card';
 
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
@@ -10,24 +10,22 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { PageHeaderModule } from './../../../shared';
 
 import { AjouteHistoriqueEmbaucheRoutingModule } from './ajoute-historiqueEmbauche-routing.module';
-import { AjouteHistoriqueEmbaucheComponent } from './ajoute-historique-embauche.component';
 
 import {MatSelectModule} from '@angular/material/select';
-import { PipePipe } from 'src/app/pipe/pipe.pipe';
-import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import { MatInputModule } from '@angular/material/input';
 
-import { MatFormFieldModule } from '@angular/material/form-field';
+
+import {MatIconModule} from '@angular/material/icon';
 
 @NgModule({
     imports: [
         CommonModule,
-        AjouteHistoriqueEmbaucheRoutingModule,
-        MatAutocompleteModule,
-         FormsModule,ReactiveFormsModule,
+        AjouteHistoriqueEmbaucheRoutingModule,MatSelectModule,
+         FormsModule,ReactiveFormsModule,MatIconModule,MatInputModule,
          MatCardModule,
          MatFormFieldModule,
          PageHeaderModule],
 
-    declarations: [AjouteHistoriqueEmbaucheComponent,PipePipe]
+    declarations: []
 })
 export class AjouteHistoriqueEmbaucheModule {}

@@ -1,4 +1,4 @@
 export interface Banque{
     ID?:string,
-    Libelle:string
+    libelle:string
 }

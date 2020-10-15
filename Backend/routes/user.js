@@ -8,5 +8,8 @@ router.delete('/delete/:id',UserController.Delete)
 router.get('/getallsociete',UserController.Getallsociete)
 router.get('/getonebyid/:id',UserController.Getbyid)
 router.put('/update/:id',UserController.Update)
+router.put('/updateimage/:id',personnelimage,UserController.updateimage)
+router.put('/changemotdpasse/:id',UserController.changemotdpasse)
+
 router.post('/login',UserController.auth)
 module.exports =router

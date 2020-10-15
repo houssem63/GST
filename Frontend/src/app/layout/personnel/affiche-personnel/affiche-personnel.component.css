@@ -1,0 +1,11 @@
+table {
+
+    overflow-x: auto;
+    overflow-y: hidden;
+    min-width: 200px;
+}
+th, td {
+    text-align: center;
+    border: 1px solid #CCC;
+    padding: 0 !important;
+}

@@ -7,6 +7,8 @@ import { routerTransition } from 'src/app/router.animations';
 import { PerosnnelService } from 'src/app/services/perosnnel.service';
 import { ConfirmDialogComponent, ConfirmDialogModel } from '../confirm-dialog/confirm-dialog.component';
 import { AffichePersonnelComponent } from './affiche-personnel/affiche-personnel.component';
+import { User } from 'src/app/models/usermodel';
+import { AjouteHistoriqueEmbaucheComponent } from '../historique-embauche/ajoute-historique-embauche/ajoute-historique-embauche.component';
 
 @Component({
   selector: 'app-personnel',
@@ -17,12 +19,15 @@ import { AffichePersonnelComponent } from './affiche-personnel/affiche-personnel
 
 export class PersonnelComponent implements OnInit, AfterViewInit {
     panelOpenState = false;
-    personnel: Personnel[] = [];
+    personnel: User[] = [];
 private societeID;
-
+popoverTitle = 'Popover title';
+popoverMessage = 'Vous etes sure';
+confirmClicked = false;
+cancelClicked = false;
     displayedColumns: string[] = ['ID', 'cin', 'Nom', 'Prenom',
-    'Email', 'Actions'];
-    dataSource = new MatTableDataSource<Personnel>();
+    'Email', 'Embauche','Actions'];
+    dataSource = new MatTableDataSource<User>();
     result = '';
     files: File[] = [];
 
@@ -52,7 +57,7 @@ this.personnelservice.delete(id);
 }
 openDialog(id): void {
     const dialogRef = this.dialog.open(AffichePersonnelComponent, {
-      width: '450px',
+      width: '850px',
       data: {ID: id}
     });
 
@@ -62,5 +67,14 @@ openDialog(id): void {
     });
   }
 
+  dialogembauche(id){
+      const dialogRef = this.dialog.open(AjouteHistoriqueEmbaucheComponent, {
+    width: '550px',
+    data: {ID: id}
+  });
 
+  dialogRef.afterClosed().subscribe(result => {
+    console.log('The dialog was closed');
+
+  });}
 }

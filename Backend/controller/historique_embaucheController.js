@@ -1,8 +1,19 @@
 const { HistoriqueEmbauches } =require('../models/relations')
 module.exports={
-    ajouter:(req,res)=>{
+    ajouter: async(req,res)=>{
         const body=req.body
         console.log(body)
+   const Embauches =await HistoriqueEmbauches.findAll({where :
+           { PersonnelID:req.body.PersonnelID}
+        })
+        console.log(Embauches)
+        if(Embauches.length != 0){
+            if(Embauches[(Embauches.length)-1].DateSortie ===null){
+return res.json({msg:'vous etes encore travaille'})
+            }
+        }
+            
+        
         HistoriqueEmbauches.create(body).then((resq)=>{
             console.log(resq)
             res.status(200).json({resq})
@@ -35,6 +46,7 @@ module.exports={
             })
     },
     Getall:(req,res)=>{
+        console.log(req.params.id)
         HistoriqueEmbauches.findAll({
             where :{
                 societeID:req.params.id
@@ -54,6 +66,15 @@ module.exports={
             res.status(200).json({Historique :responce[0]})
         }).catch((err)=>{
             res.status(500).json({err:'error server' + err})
+        })
+    },
+    gethistoriquedeonepersonnel:(req,res)=>{
+        HistoriqueEmbauches.findAll({
+            where :{
+                PersonnelID:req.params.id
+            }
+        }).then(responce=>{
+            res.json({historique : responce})
         })
     }
 

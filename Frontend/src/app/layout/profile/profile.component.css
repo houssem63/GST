@@ -1,0 +1,31 @@
+
+ th, td{
+    text-align: center;
+    padding: 0 !important;
+}
+
+  table {
+
+    overflow-x: auto;
+    overflow-y: hidden;
+    min-width: 500px;
+}
+.example-action-buttons {
+    padding-bottom: 20px;
+  }
+
+  .example-headers-align .mat-expansion-panel-header-title,
+  .example-headers-align .mat-expansion-panel-header-description {
+    flex-basis: 0;
+  }
+
+  .example-headers-align .mat-expansion-panel-header-description {
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .example-headers-align .mat-form-field + .mat-form-field {
+    margin-left: 8px;
+  }
+
+

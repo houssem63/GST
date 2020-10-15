@@ -3,9 +3,9 @@ import { CommonModule } from '@angular/common';
 import {MatButtonModule} from '@angular/material/button';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {MatCardModule} from '@angular/material/card';
-import {MatIconModule} from '@angular/material/icon';
 import { MatSortModule } from '@angular/material/sort';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {MatIconModule} from '@angular/material/icon';
 
 import { PersonnelRoutingModule } from './personnel-routing.module';
 import { PersonnelComponent } from './personnel.component';
@@ -16,17 +16,22 @@ import { MatInputModule } from '@angular/material/input';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatDialogModule} from '@angular/material/dialog';
 import { AffichePersonnelComponent } from './affiche-personnel/affiche-personnel.component';
-import { AjouteEditPersonnelComponent } from './ajoute-edit-personnel/ajoute-edit-personnel.component';
-import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 import { NgxDropzoneModule } from 'ngx-dropzone';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import { AjouteHistoriqueEmbaucheComponent } from '../historique-embauche/ajoute-historique-embauche/ajoute-historique-embauche.component';
+import { AjouteEditComponent } from './ajoute-edit/ajoute-edit.component';
+import {MatSelectModule} from '@angular/material/select';
+import { ConfirmationPopoverModule } from 'angular-confirmation-popover';
 
 @NgModule({
     imports: [
-        CommonModule,
+        CommonModule,ConfirmationPopoverModule.forRoot({
+            confirmButtonType: 'danger', // set defaults here
+          }),
          PersonnelRoutingModule,
-         MatIconModule,
+         MatIconModule,MatAutocompleteModule,
          MatTableModule,
-         ReactiveFormsModule,
+         ReactiveFormsModule,MatSelectModule,
          MatExpansionModule,
          FormsModule,
          MatCardModule,
@@ -39,6 +44,6 @@ import { NgxDropzoneModule } from 'ngx-dropzone';
          PageHeaderModule],
          exports: [
             MatSortModule],
-    declarations: [PersonnelComponent,AffichePersonnelComponent, AjouteEditPersonnelComponent]
+    declarations: [PersonnelComponent,AffichePersonnelComponent,AjouteHistoriqueEmbaucheComponent, AjouteEditComponent]
 })
 export class PersonnelModule {}

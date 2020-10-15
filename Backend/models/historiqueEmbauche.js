@@ -13,6 +13,9 @@ module.exports=(db,type)=>{
         },
         Salaire:{
             type:type.REAL
+        },
+        PersonnelID:{
+            type:type.INTEGER
         }
     })
 }
