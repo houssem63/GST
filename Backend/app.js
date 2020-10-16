@@ -12,6 +12,8 @@ const Poste = require('./routes/poste');
 const HistoriqueEmbauche = require('./routes/historique_embauche');
 const Banque = require('./routes/banque');
 const Compte = require('./routes/compte');
+const Client = require('./routes/client');
+
 
 app.use((req, res, next) => {
     res.setHeader("Access-Control-Allow-Origin", "*");
@@ -30,6 +32,7 @@ app.use((req, res, next) => {
   app.use('/api/HistoriqueEmbauche', HistoriqueEmbauche);
   app.use('/api/Banque', Banque);
   app.use('/api/Compte', Compte);
+  app.use('/api/Client', Client);
 
   const server = app.listen(PORT, (req, res, next) => { console.log(`Server started on port ${PORT}`) })
   app.get('/', (req, res) => {

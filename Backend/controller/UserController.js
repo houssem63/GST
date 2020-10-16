@@ -96,15 +96,13 @@ module.exports={
             }
           })
          
-              console.log('id '+req.params.id)
              await HistoriqueEmbauches.destroy({where:{
                 PersonnelID :req.params.id
              }}) 
           
              
  }    catch(e){
-     console.log(e)
- }
+res.status(500).json({err:e}) }
             
          
     },
@@ -174,16 +172,15 @@ module.exports={
                 ID: Number(this.fetchuser[0].ID    ) 
                 }})
                
-                console.log(this.status[0]  )
+           
 
             }else{
                 this.status = await User.findAll({  where :{
                     ID :this.fetchuser[0].SocieteID
                 }})
               
-                console.log(this.status)
             }
-              console.log(this.status[0])
+            
             
             if (this.status[0].Status===false){
                 return res.json({msg:"votre compte n'est pas activer",ok :false})

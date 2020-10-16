@@ -15,6 +15,7 @@ postedata;
   constructor(private http :HttpClient) { }
   getallposte(id) {
     this.http.get<{poste: Poste[]}>(BACKEND_URL + `getall/${id}`).subscribe((res) =>  {
+        console.log(res)
       this.poste = res.poste;
       this.postedata = res.poste;
        this.subposte.next([...this.poste]);

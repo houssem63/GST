@@ -2,12 +2,12 @@ table {
 
     overflow-x: auto;
     overflow-y: hidden;
-    min-width: 700px;
+    min-width: 100%;
     border: 1px solid rgb(47, 47, 114);
 }
 th.mat-header-cell {
 
-    max-width: 500px;
+    max-width: 100%;
 }
 th, td{
     text-align: center;

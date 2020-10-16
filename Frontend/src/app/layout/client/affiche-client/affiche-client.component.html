@@ -1,0 +1,41 @@
+<mat-card>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="col-md-12">
+
+                <div mat-dialog-content>
+
+                    <p>RS :{{client?.Rs}}</p>
+                    <p>Adresse: {{client?.Adresse}}</p>
+                    <p>Tel :{{client?.Tel}}</p>
+                    <p>Fax:{{client?.Fax}}</p>
+                    <p>Email:{{client?.Email}}</p>
+                    <p>Site :{{client?.Site}}</p>
+                    <p>NomPC:{{client?.NomPC}}</p>
+                    <p>PrenomPC :{{client?.PrenomPC}}</p>
+
+
+
+                </div>
+            </div>
+        </div>
+
+
+
+    <div class="row">
+        <div class="col-md-12">
+            <p>TelPersonnelContact :{{client?.TelPersonnelContact}}</p>
+            <p>FaxPersonnelContact :{{client?.FaxPersonnelContact}}</p>
+            <p>AdresseEmailPersonnel :{{client?.AdresseEmailPersonnel}}</p>
+            <p>Matfiscale :{{client?.Matfiscale}}</p>
+            <p>Regfiscale :{{client?.Regfiscale}}</p>
+            <p>Image:<br><img [src]='client?.Image' style="width: 20%;"></p>
+
+        </div>
+    </div>
+
+</div>
+    <div mat-dialog-actions>
+        <button mat-button (click)="onNoClick()" style="float: left;" cdkFocusInitial>Ok</button>
+    </div>
+</mat-card>

@@ -22,7 +22,12 @@ export class PerosnnelService {
             res.personnel.map(p => {
                 this.embaucheservice.gethistoriquedeonepersonnel(p.ID).subscribe( res => {
                     console.log(res.historique[(res.historique.length) - 1]?.DateSortie);
-                    if (res.historique[(res.historique.length) - 1]?.DateSortie === null) {
+                    let tablength; if(res.historique.length===0){
+                        tablength =0
+                    }else{
+                        tablength=((res.historique.length) - 1);
+                    }
+                    if (res.historique[tablength]?.DateSortie === null) {
                         p.Embaucheetat = false;
                     } else { p.Embaucheetat = true; }
 

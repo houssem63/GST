@@ -1,10 +1,12 @@
 const express=require('express');
 const router=express.Router();
 const ClientController =require('../controller/clientController')
-router.post('/add',ClientController.ajouter)
+const client_image =require('../middleware/personnelimage')
+
+router.post('/add',client_image,ClientController.ajouter)
 router.delete('/delete/:id',ClientController.Delete)
-router.get('/getall',ClientController.Getall)
+router.get('/getall/:id',ClientController.Getall)
 router.get('/getonebyid/:id',ClientController.Getonebyid)
-router.put('/update/:id',ClientController.Update)
+router.put('/update/:id',client_image,ClientController.Update)
 
 module.exports =router

@@ -7,6 +7,7 @@
         <div ngbDropdown class="d-inline-block" style=" left: 94%;">
           <button mat-icon-button id="dropdownForm1"  class="btn btn-success " matTooltip="Ajouter personnel " ngbDropdownToggle><mat-icon >add</mat-icon></button>
           <div ngbDropdownMenu aria-labelledby="dropdownForm1">
+
             <form class="px-4 py-3" [formGroup]="form" (submit)="enregiste()">
               <div class="form-group">
                 <label for="exampleDropdownFormEmail1">Libelle</label>
@@ -21,8 +22,10 @@
         </div>
 
       </div>
-
-    <mat-card style="position: relative;"><mat-form-field >
+      <mat-card *ngIf="poste.length ===0" style="margin-top: 4%;">
+        <h4>pas des personnel encore</h4>
+    </mat-card>
+    <mat-card style="position: relative;" *ngIf="poste.length !=0"><mat-form-field >
               <input matInput type="text" (keyup)="doFilter($event.target.value)" placeholder="Filter">
             </mat-form-field>
 

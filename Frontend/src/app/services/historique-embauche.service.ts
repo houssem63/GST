@@ -48,7 +48,12 @@ export class HistoriqueEmbaucheService {
     }
     edit(historique: HistoriqueEmbauche, id: string) {
         this.http.put(BACKEND_URL + `update/${id}`, historique).subscribe((res) => {
-            this.route.navigate(['/historiqueembauche']);
+            const updateembauche = [...this.HistoriqueEmbauche];
+            const oldembauche = updateembauche.findIndex(p => p?.ID === id);
+            updateembauche[oldembauche] = historique;
+            this.HistoriqueEmbauche = updateembauche;
+            this.HistoriqueEmbauchesub.next([...this.HistoriqueEmbauche]);
+           // this.route.navigate(['/historiqueembauche']);
         });
     }
     delete(id) {

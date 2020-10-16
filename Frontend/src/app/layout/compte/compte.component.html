@@ -1,22 +1,30 @@
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<mat-card><button mat-raised-button class="btn btn-success" (click)="openDialog()">Ajoute compte</button>
-    <table >
-        <th>
-            compte ID
-        </th>
-        <th>
-            compte RIB
-        </th>
-        <th>banque</th>
-        <tr  *ngFor="let compte of comptes"  >
-            <td>{{compte?.ID}}</td>
-            <td >{{compte?.RIB}}</td>
+    </head>
+    <body>
+        <mat-card><button mat-raised-button class="btn btn-success" (click)="openDialog()">Ajoute compte</button>
+            <table >
+                <th>
+                    compte ID
+                </th>
+                <th>
+                    compte RIB
+                </th>
+                <th>banque</th>
+                <tr  *ngFor="let compte of comptes"  >
+                    <td>{{compte?.ID}}</td>
+                    <td >{{compte?.RIB}}</td>
 
-            <td >{{compte?.banquenom}}
-                </td>
-        </tr>
-    </table>
+                    <td >{{compte?.banquenom}}
+                        </td>
+                </tr>
+            </table>
 
-</mat-card>
+        </mat-card>
 
 
+
+    </body>
+</html>

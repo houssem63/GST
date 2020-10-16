@@ -12,8 +12,8 @@ const BACKEND_URL = environment.apiUrl + "/user/";
 export class UserService {
     getoneUsersub = new Subject<User>();
     user: User;
-    motdepassesub =new Subject<{msg:string ,ok :boolean}>();
-    constructor(private http: HttpClient, private route: Router) {}
+    motdepassesub = new Subject<{ msg: string, ok: boolean }>();
+    constructor(private http: HttpClient, private route: Router) { }
     getallsociete() {
         return this.http.get<{ societe: User[] }>(
             BACKEND_URL + "getallsociete"
@@ -309,7 +309,7 @@ export class UserService {
         console.log(image);
         const userdata = new FormData();
 
-        userdata.append("Image", image);
+        userdata.append('Image', image);
         this.http
             .put<{ imagepath: any }>(
                 BACKEND_URL + `updateimage/${id}`,
@@ -321,14 +321,13 @@ export class UserService {
                 this.getoneUsersub.next(this.user);
             });
     }
-    changemotdepasse(actuelMotDePasse, nouvelleMotDePasse ,id){
-const change ={actuelMotDePasse, nouvelleMotDePasse}
-this.http.put<{msg:string ,ok :boolean}>(BACKEND_URL +`changemotdpasse/${id}`,change).subscribe((res)=>{
-    console.log(res)
-    this.motdepassesub.next({msg :res.msg,ok:res.ok})
-})
+    changemotdepasse(actuelMotDePasse, nouvelleMotDePasse, id) {
+        const change = { actuelMotDePasse, nouvelleMotDePasse }
+        this.http.put<{ msg: string, ok: boolean }>(BACKEND_URL + `changemotdpasse/${id}`, change).subscribe((res) => {
+            this.motdepassesub.next({ msg: res.msg, ok: res.ok });
+        });
     }
-    getmotdepassesub(){
-        return this.motdepassesub.asObservable()
+    getmotdepassesub() {
+        return this.motdepassesub.asObservable();
     }
 }

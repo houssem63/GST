@@ -1,0 +1,292 @@
+<div class="container" (submit)="ajoute()" [formGroup]="form">
+    <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-6">
+            <h4 class="alert " *ngIf="msg !=null" [ngClass]="{'alert-success':ok,'alert-danger':ok==false}">{{msg}}</h4>
+
+        </div>
+
+    </div>
+    <div role="form" class="row">
+
+        <div class="col-md-2 ">
+        </div>
+        <div class="col-md-4">
+
+            <mat-form-field appearance="fill">
+                <mat-label>Rs</mat-label>
+                <input matInput required formControlName="Rs">
+                <mat-error *ngIf="form.get('Rs').hasError('required')">
+                    Rs est <strong>obligatoire</strong>
+                </mat-error>
+            </mat-form-field>
+        </div>
+        <div class="col-md-4">
+            <mat-form-field appearance="fill">
+                <mat-label>Adresse</mat-label>
+                <input matInput required formControlName="Adresse">
+                <mat-error *ngIf="form.get('Adresse').hasError('required')">
+                    Adresse est <strong>obligatoire</strong>
+                </mat-error>
+            </mat-form-field>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-4">
+            <mat-form-field appearance="fill">
+                <mat-label>Telephone </mat-label>
+                <input formControlName="Tel" maxlength="number" minlength="number" minlength=8 maxlength=8 matInput
+                    required>
+                <mat-error *ngIf="form.get('Tel').hasError('required')">
+                    Telephone est <strong>obligatoire</strong>
+                </mat-error>
+                <mat-error *ngIf="form.get('Tel').hasError('minlength')">
+                    Le Telephone doit comporter au moins 8 caractères.
+                </mat-error>
+                <mat-error *ngIf="form.get('Tel').hasError('pattern')">
+                    Le Telephone doit content que des number.
+                </mat-error>
+            </mat-form-field>
+        </div>
+
+
+
+        <div class="col-md-4">
+            <mat-form-field appearance="fill">
+                <mat-label>Fax</mat-label>
+                <input formControlName="Fax" maxlength="number" minlength="number" minlength=8 maxlength=8 matInput
+                    required>
+
+                <mat-error *ngIf="form.get('Fax').hasError('required')">
+                    Fax est <strong>obligatoire</strong>
+                </mat-error>
+                <mat-error *ngIf="form.get('Fax').hasError('minlength')">
+                    Le Fax doit comporter au moins 8 caractères.
+                </mat-error>
+                <mat-error *ngIf="form.get('Fax').hasError('pattern')">
+                    Le Fax doit content que des number.
+                </mat-error>
+            </mat-form-field>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-2"></div>
+
+        <div class="col-md-4">
+            <mat-form-field appearance="fill">
+                <mat-label>Email</mat-label>
+                <input matInput formControlName="Email" required placeholder="Ex. pat@example.com">
+                <mat-error *ngIf="form.get('Email').hasError('email') && !form.get('Email').hasError('required')">
+                    S'il vous plaît, mettez une adresse email valide
+                </mat-error>
+                <mat-error *ngIf="form.get('Email').hasError('required')">
+                    Email est <strong>obligatoire</strong>
+                </mat-error>
+            </mat-form-field>
+        </div>
+        <div class="col-md-4">
+            <mat-form-field appearance="fill">
+                <mat-label>Site </mat-label>
+                <input matInput formControlName="Site" required>
+
+
+
+
+                <mat-error *ngIf="form.get('Site').hasError('required')">
+                    Le Site est obligatoire.
+                </mat-error>
+            </mat-form-field>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-2"></div>
+
+        <div class="col-md-4">
+
+            <mat-form-field appearance="fill">
+                <mat-label>NomPC </mat-label>
+                <input matInput formControlName="NomPC" required>
+
+
+
+
+                <mat-error *ngIf="form.get('NomPC').hasError('required')">
+                    Le NomPC est obligatoire.
+                </mat-error>
+            </mat-form-field>
+        </div>
+
+        <div class="col-md-4">
+            <mat-form-field appearance="fill">
+                <mat-label>PrenomPC </mat-label>
+                <input matInput formControlName="PrenomPC" required>
+
+
+
+
+                <mat-error *ngIf="form.get('PrenomPC').hasError('required')">
+                    Le PrenomPC est obligatoire
+                </mat-error>
+            </mat-form-field>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-2"></div>
+
+        <div class="col-md-4">
+            <mat-form-field appearance="fill">
+                <mat-label>TelPersonnelContact </mat-label>
+                <input formControlName="TelPersonnelContact" maxlength="number" minlength="number" minlength=8
+                    maxlength=8 matInput required>
+                <mat-error *ngIf="form.get('TelPersonnelContact').hasError('required')">
+                    Telephone est <strong>obligatoire</strong>
+                </mat-error>
+                <mat-error *ngIf="form.get('TelPersonnelContact').hasError('minlength')">
+                    Le Telephone doit comporter au moins 8 caractères.
+                </mat-error>
+                <mat-error *ngIf="form.get('TelPersonnelContact').hasError('pattern')">
+                    Le Telephone doit content que des number.
+                </mat-error>
+            </mat-form-field>
+        </div>
+
+
+        <div class="col-md-4">
+            <mat-form-field appearance="fill">
+                <mat-label>FaxPersonnelContact </mat-label>
+                <input formControlName="FaxPersonnelContact" maxlength="number" minlength="number" minlength=8
+                    maxlength=8 matInput required>
+                <mat-error *ngIf="form.get('FaxPersonnelContact').hasError('required')">
+                    FaxPersonnelContact est <strong>obligatoire</strong>
+                </mat-error>
+                <mat-error *ngIf="form.get('FaxPersonnelContact').hasError('minlength')">
+                    Le FaxPersonnelContact doit comporter au moins 8 caractères.
+                </mat-error>
+                <mat-error *ngIf="form.get('FaxPersonnelContact').hasError('pattern')">
+                    Le FaxPersonnelContact doit content que des number.
+                </mat-error>
+            </mat-form-field>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-2"></div>
+
+        <div class="col-md-4">
+            <mat-form-field appearance="fill">
+                <mat-label>AdresseEmailPersonnel</mat-label>
+                <input matInput formControlName="AdresseEmailPersonnel" required placeholder="Ex. pat@example.com">
+                <mat-error
+                    *ngIf="form.get('AdresseEmailPersonnel').hasError('email') && !form.get('AdresseEmailPersonnel').hasError('required')">
+                    S'il vous plaît, mettez une adresse email valide
+                </mat-error>
+                <mat-error *ngIf="form.get('AdresseEmailPersonnel').hasError('required')">
+                    Email est <strong>obligatoire</strong>
+                </mat-error>
+            </mat-form-field>
+        </div>
+        <div class="col-md-4">
+
+            <mat-form-field appearance="fill">
+                <mat-label>Matfiscale </mat-label>
+                <input matInput formControlName="Matfiscale" required>
+
+
+
+
+                <mat-error *ngIf="form.get('Matfiscale').hasError('required')">
+                    Le Matfiscale est obligatoire.
+                </mat-error>
+            </mat-form-field>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-2"></div>
+
+        <div class="col-md-4">
+            <mat-form-field appearance="fill">
+                <mat-label>Regfiscale </mat-label>
+                <input matInput formControlName="Regfiscale" required>
+
+
+
+
+                <mat-error *ngIf="form.get('Regfiscale').hasError('required')">
+                    Le Matfiscale doit content que des number.
+                </mat-error>
+            </mat-form-field>
+        </div>
+        <div class="col-md-4">
+            <mat-form-field appearance="fill">
+                <mat-label>Login </mat-label>
+                <input matInput formControlName="Login" required>
+
+
+
+
+                <mat-error *ngIf="form.get('Login').hasError('required')">
+                    Le Login est obligatoire.
+                </mat-error>
+            </mat-form-field>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-2"></div>
+
+        <div class="col-md-4">
+            <mat-form-field appearance="fill" *ngIf ="mode ==='create'">
+                <mat-label>Enter your password</mat-label>
+                <input matInput [type]="hide ? 'password' : 'text'" formControlName="MotDePasse">
+                <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+                    [attr.aria-pressed]="hide">
+                    <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+
+                </button>
+                <mat-error *ngIf="form.get('MotDePasse').hasError('required')">
+                    MotDePasse est <strong>obligatoire</strong>
+                </mat-error>
+            </mat-form-field>
+        </div>
+        <div class="col-md-4">
+
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-2"></div>
+
+
+
+
+
+
+    </div>
+    <div class="row">
+        <div class="col-md-2"></div>
+
+        <div class="col-md-4">
+            <button type="button" class="btn btn-warning" style="margin-bottom: 10px;"
+                (click)="filePickerpersonnel.click()" *ngIf='imagePreview ==null'>Client Image
+            </button>
+            <button type="button" class="btn btn-warning" style="margin-bottom: 10px;"
+            (click)="supprimerimage()" *ngIf='imagePreview != null'>suupprimer Image
+        </button>
+        </div>
+
+
+
+        <div class="col-md-4">
+            <input type="file" #filePickerpersonnel (change)="imageclient($event)" style="visibility: hidden;">
+            <div class="image-preview" *ngIf="imagePreview !== '' && imagePreview && form.get('Image').valid">
+                <img [src]="imagePreview">
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6"></div>
+        <div class="col-md-6"> <button class="btn btn-primary" (click)="ajoute()">enregistre</button></div>
+    </div>
+
+
+</div>

@@ -146,5 +146,8 @@ export class AjouteHistoriqueEmbaucheComponent implements OnInit {
                  this.historiqueservice.edit(this.historique, this.historiqueID);*/
         }
     }
-
+    change(e){
+        console.log(e)
+     //   this.poste =e.target.value
+    }
 }

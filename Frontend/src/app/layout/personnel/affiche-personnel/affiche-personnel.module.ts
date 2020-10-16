@@ -11,17 +11,21 @@ import { PageHeaderModule } from './../../../shared';
 import { AffichePersonnelRoutingModule } from './affiche-personnel-routing.module';
 import { AffichePersonnelComponent } from './affiche-personnel.component';
 
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
 
 @NgModule({
     imports: [
         CommonModule,
         AffichePersonnelRoutingModule,
          MatIconModule,
-         ,
+         MatInputModule ,MatSelectModule,
          MatExpansionModule
-         ,MatCardModule,
+         ,MatCardModule,FormsModule, ReactiveFormsModule ,
          MatButtonModule,MatSortModule,
-         , PageHeaderModule],
+         MatFormFieldModule , PageHeaderModule],
          exports: [
             MatSortModule],
     declarations: [AffichePersonnelComponent]

@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Personnel } from 'src/app/models/personnel';
 import { PerosnnelService } from 'src/app/services/perosnnel.service';
@@ -6,43 +6,140 @@ import { User } from 'src/app/models/usermodel';
 import { HistoriqueEmbaucheService } from 'src/app/services/historique-embauche.service';
 import { HistoriqueEmbauche } from 'src/app/models/historiqueembauche';
 import { PosteService } from 'src/app/services/poste.service';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Poste } from 'src/app/models/poste';
+import { DatePipe } from '@angular/common';
 
 @Component({
     selector: 'app-affiche-personnel',
     templateUrl: './affiche-personnel.component.html',
-    styleUrls: ['./affiche-personnel.component.css']
+    styleUrls: ['./affiche-personnel.component.css'],
+    providers: [DatePipe]
+
 })
-export class AffichePersonnelComponent implements OnInit {
+export class AffichePersonnelComponent implements OnInit, OnDestroy {
     personnel: User;
+    form;
+    postes: Poste[] = [];
+    poste: Poste[] = [];
+    msg;
+    posteselected;
+    societeID;
+    embauche: HistoriqueEmbauche;
+    PosteID = new FormControl('', [Validators.required]);
+    formactive = false;
     historique: HistoriqueEmbauche[] = [];
+    personnelID;
     constructor(public dialogRef: MatDialogRef<AffichePersonnelComponent>,
-        @Inject(MAT_DIALOG_DATA) public ID: any, private personnelservice: PerosnnelService,
+        @Inject(MAT_DIALOG_DATA) public ID: any, private personnelservice: PerosnnelService, private datePipe: DatePipe,
+
+        private historiqueservice: HistoriqueEmbaucheService,
+
         private embaucheservice: HistoriqueEmbaucheService, private posteservice: PosteService) { }
 
     ngOnInit(): void {
-        console.log(this.ID)
-        const personnelID = this.ID.ID
-        const societeID = localStorage.getItem('societeId')
-        this.personnelservice.getonepersonnel(personnelID).subscribe((res) => {
-            console.log(res)
+        this.personnelID = this.ID.ID;
+        const societeID = localStorage.getItem('societeId');
+        this.personnelservice.getonepersonnel(this.personnelID).subscribe((res) => {
             this.personnel = res.personnel;
-        })
-        this.embaucheservice.gethistoriquedeonepersonnel(personnelID).subscribe((res) => {
-            this.posteservice.getallposte(societeID)
-            this.posteservice.getpostesub().subscribe(responce => {
-                const postes = responce;
+        });
+        this.embaucheservice.gethistoriquedeonepersonnel(this.personnelID).subscribe((res) => {
+            this.posteservice.getallposte(societeID);
+
+
+            setTimeout(() => {
+                const poste = this.posteservice.getpostedata();
                 res.historique.map(h => {
-                    postes.map(p => {
+                    poste?.map(p => {
                         if (p.ID === h.posteID) {
                             h.PosteNom = p.Libelle;
-                            this.historique.push(h)
+                            this.historique.push(h);
                         }
-                    })
-                })
-            })
-        })
+                    });
+                }, 300);
+
+
+
+
+            });
+        });
+        this.societeID = localStorage.getItem('societeId');
+
+        this.posteservice.getallposte(this.societeID);
+        this.posteservice.getpostesub().subscribe((res) => {
+            this.postes = res;
+        });
+        this.form = new FormGroup({
+
+            DateEmbauche: new FormControl(null, [
+                Validators.required,
+
+            ]),
+            DateSortie: new FormControl(null, [
+
+
+            ]),
+            Salaire: new FormControl(null, [
+                Validators.required,
+
+            ]),
+        });
     }
     onNoClick(): void {
         this.dialogRef.close();
+    }
+    enregiste() {
+
+       this.poste= this.posteservice.getpostedata();
+       console.log(this.posteselected)
+       const p= this.poste.find(p=>Number(p.ID )=== Number(this.posteselected))
+       console.log(p)
+        const historique: HistoriqueEmbauche = {
+            ID: this.embauche?.ID,
+            DateEmbauche: this.form.value.DateEmbauche,
+            DateSortie: this.form.value.DateSortie,
+            Salaire: this.form.value.Salaire,
+            posteID: this.PosteID.value,
+            PersonnelID: this.embauche.PersonnelID,
+            userID: this.embauche.userID,
+           PosteNom: p.Libelle
+        };
+        console.log(historique)
+        const updateembauche = [...this.historique];
+        const oldembauche = updateembauche.findIndex(p => p?.ID === this.embauche?.ID,);
+        updateembauche[oldembauche] = historique;
+        this.historique = updateembauche;
+      this.historiqueservice.edit(historique, this.embauche.ID);
+      this.personnelservice.getallpersonnel(this.embauche.userID);
+      this.formactive =false;
+    }
+    edit(e: HistoriqueEmbauche) {
+        this.embauche = e;
+
+        this.formactive = true;
+        this.embaucheservice.getonehistorique(e.ID).subscribe(res => {
+            let datesortie;
+            const DateEmbauche = new Date(res.Historique.DateEmbauche);
+            if (res.Historique.DateSortie != null) {
+                const DateSortie = new Date(res.Historique.DateSortie);
+                datesortie = this.datePipe.transform(DateSortie, 'yyyy-MM-dd');
+            } else {
+                datesortie = null;
+            }
+
+
+            this.PosteID.patchValue(res.Historique.posteID);
+            this.form.setValue({
+                DateEmbauche: this.datePipe.transform(DateEmbauche, 'yyyy-MM-dd'),
+                DateSortie: datesortie,
+                Salaire: res.Historique.Salaire
+            });
+        });
+    }
+    ngOnDestroy() {
+    }
+    change(e){
+        console.log(e)
+this.posteselected = e;
     }
 }
