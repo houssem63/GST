@@ -44,10 +44,11 @@ cancelClicked = false;
   }
   ngAfterViewInit(): void {
     this.dataSource.sort = this.sort;
+
+
+
   }
-edit(id) {
-    console.log(id);
-}
+
 
 public doFilter = (value: string) => {
     this.dataSource.filter = value.trim().toLocaleLowerCase();
@@ -61,10 +62,7 @@ openDialog(id): void {
       data: {ID: id}
     });
 
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
 
-    });
   }
 
   dialogembauche(id){

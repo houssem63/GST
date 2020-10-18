@@ -13,16 +13,10 @@
 th.mat-sort-header-sorted {
     color: red;
   }
-  table {
 
-    overflow-x: auto;
-    overflow-y: hidden;
-    min-width: 100%;
-}
-th.mat-header-cell {
-
-    max-width: 100%;
-}
 button{
     margin-right: 2%;
 }
+.element-row:not(.expanded) {
+    cursor: pointer;
+  }

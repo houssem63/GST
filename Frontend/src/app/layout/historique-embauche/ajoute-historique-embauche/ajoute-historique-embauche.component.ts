@@ -108,12 +108,30 @@ export class AjouteHistoriqueEmbaucheComponent implements OnInit {
             const compare = (this.form.get('DateEmbauche').value < this.form.get('DateSortie').value);
             if (compare === false) {
                 this.msg = 'date embauche inferiuer de date sortie';
-            } else { this.msg = null; }
-        }
-
-        if (this.mode === 'create') {
+            } else {
+                this.msg = null; if (this.mode === 'create') {
 
 
+                    this.historique = {
+                        posteID: this.PosteID.value,
+                        DateEmbauche: this.form.get('DateEmbauche').value,
+                        DateSortie: this.form.get('DateSortie').value,
+                        Salaire: this.form.get('Salaire').value,
+                        PersonnelID: this.ID.ID,
+
+                        userID: this.societeID
+
+                    };
+
+                    this.historiqueservice.ajoute(this.historique);
+
+                    this.form.reset();
+
+                    this.personelservice.getallpersonnel(this.societeID);
+
+                }
+            }
+        } else{
             this.historique = {
                 posteID: this.PosteID.value,
                 DateEmbauche: this.form.get('DateEmbauche').value,
@@ -125,29 +143,17 @@ export class AjouteHistoriqueEmbaucheComponent implements OnInit {
 
             };
 
-
-
-
             this.historiqueservice.ajoute(this.historique);
 
             this.form.reset();
 
             this.personelservice.getallpersonnel(this.societeID);
-
-        } else {
-            /*   this.historique = {
-                   DateEmbauche : this.form.get('DateEmbauche').value,
-                     DateSortie : this.form.get('DateSortie').value,
-                       Salaire: this.form.get('Salaire').value,
-                      personnelID: this.personel.ID,
-                        posteID: this.poste.ID,
-                        societeID: this.societeID
-                 };
-                 this.historiqueservice.edit(this.historique, this.historiqueID);*/
         }
+
+
     }
-    change(e){
+    change(e) {
         console.log(e)
-     //   this.poste =e.target.value
+        //   this.poste =e.target.value
     }
 }

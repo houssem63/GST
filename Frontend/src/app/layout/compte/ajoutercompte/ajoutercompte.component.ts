@@ -42,26 +42,19 @@ export class AjoutercompteComponent implements OnInit {
         if (this.form.invalid) {
             return;
         }
-        this.banqueservice.getallbanque();
 
-        this.banqueservice.banquesub().subscribe((res) => {
-            res.map(b => {
-                if (Number(b.ID) === Number(this.form.value.banqueID)) {
-                    this.baquenom = b.libelle;
-                }
-            });
 
             const compte: Compte = {
                 RIB: this.form.value.RIB,
                 banqueID: this.form.value.banqueID,
                 userID: this.data.IDuser,
-                banquenom: this.baquenom
+
 
             };
 
             this.compteservice.ajoutercompte(compte);
 
-        });
+
 
     }
 }

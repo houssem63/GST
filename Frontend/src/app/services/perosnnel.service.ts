@@ -20,21 +20,27 @@ export class PerosnnelService {
     getallpersonnel(id) {
         this.http.get<{ personnel: User[] }>(BACKEND_URL + `getall/${id}`).subscribe((res) => {
             res.personnel.map(p => {
-                this.embaucheservice.gethistoriquedeonepersonnel(p.ID).subscribe( res => {
-                    console.log(res.historique[(res.historique.length) - 1]?.DateSortie);
-                    let tablength; if(res.historique.length===0){
-                        tablength =0
-                    }else{
-                        tablength=((res.historique.length) - 1);
+                this.embaucheservice.gethistoriquedeonepersonnel(p.ID).subscribe(his => {
+                    console.log(his.historique[(his.historique.length) - 1]);
+                    let tablength;
+                    console.log(his.historique.length)
+                     if (his.historique.length === 0) {
+                        tablength = 0;
+                        console.log(tablength)
+                    } else {
+                        tablength = ((his.historique.length) - 1);
+                        console.log(tablength)
                     }
-                    if (res.historique[tablength]?.DateSortie === null) {
+                    if (his.historique[tablength]?.DateSortie === null) {
                         p.Embaucheetat = false;
                     } else { p.Embaucheetat = true; }
+                    console.log(p)
 
 
                 });
             });
             this.personnel = res.personnel;
+            console.log(this.personnel)
             this.subpersonnel.next([...this.personnel]);
         });
     }

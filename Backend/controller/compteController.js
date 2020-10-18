@@ -1,15 +1,22 @@
-const { Compte } =require('../models/relations')
+const { Compte ,Banque } =require('../models/relations')
 module.exports={
-    ajouter:(req,res)=>{
-        const body=req.body
+    ajouter:async (req,res)=>{
+        try{const body=req.body
         console.log(body)
-        Compte.create(body).then((resq)=>{
-            console.log(resq)
-            res.status(200).json({compte:resq})
-        }).catch((err)=>{
-            console.log(err)
-            res.status(500).json({err:'error server' + err.message})
-        })
+const compte = await   Compte.create(body)
+console.log(compte.ID)
+const compteres = await Compte.findAll({where :{
+    ID :compte.ID
+},include :[Banque]})
+if(compteres){
+    res.json({ compte:compteres[0]})
+}        }catch(e){
+            console.log(e)
+        }
+        
+    
+           
+       
     },
     Delete:(req,res)=>{
     
@@ -37,7 +44,8 @@ module.exports={
     Getall:(req,res)=>{
         Compte.findAll({where:{
             userID :req.params.id
-        }}).then((responce)=>{
+        } ,include :[Banque]}).then((responce)=>{
+            console.log(responce[0])
             res.status(200).json({compte :responce})
         }).catch((err)=>{
             res.status(500).json({err:'error server' + err})
@@ -46,9 +54,11 @@ module.exports={
     Getonebyid:(req,res)=>{
         Compte.findAll({
             where :{
-                ID:req.params.id
+                ID:req.params.id,
+               
             }
         }).then((responce)=>{
+            console.log(responce)
             res.status(200).json({societe :responce})
         }).catch((err)=>{
             res.status(500).json({err:'error server' + err})

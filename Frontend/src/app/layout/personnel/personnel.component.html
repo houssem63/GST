@@ -1,21 +1,27 @@
 <div [@routerTransition]>
     <app-page-header [heading]="'Personnel'" [icon]="'fa-user'"></app-page-header>
 
-
-
-
-    <a mat-icon-button style="float: right;" routerLink="/personnel/ajoute"  class="btn btn-success" matTooltip="Ajouter personnel "
+<div class="row">
+    <div class="col-12">
+          <a mat-icon-button style="float: right;" routerLink="/personnel/ajoute"  class="btn btn-success" matTooltip="Ajouter personnel "
     aria-label="Example icon button with a home icon">
      <mat-icon >add</mat-icon>
 </a>
-<mat-card *ngIf="personnel.length ===0" style="margin-top: 4%;">
+    </div>
+</div>
+
+
+  <div class="row">
+      <div class="col-12">
+          <mat-card *ngIf="personnel.length ===0" style="margin-top: 4%;" class="container-fluid">
     <h4>pas des personnel encore</h4>
 </mat-card>
-<mat-card *ngIf="personnel.length !=0"><mat-form-field >
+<mat-card *ngIf="personnel.length !=0">
+    <mat-form-field >
           <input matInput type="text" (keyup)="doFilter($event.target.value)" placeholder="Filter">
         </mat-form-field>
-
-    <table mat-table [dataSource]="dataSource" matSort>
+ <div class="table-responsive">
+    <table mat-table [dataSource]="dataSource" matSort  class="table">
 
         <!--- Note that these columns can be defined in any order.
               The actual rendered columns are set as a property on the row definition" -->
@@ -62,11 +68,11 @@
             <th mat-header-cell *matHeaderCellDef > Actions </th>
             <td mat-cell *matCellDef="let element">
                 <button mat-icon-button class="btn btn-primary" (click)="openDialog(element.ID)"  matTooltip="Afficher personnel information"
-                (click)="edit(element.ID)">
+                >
                     <mat-icon>remove_red_eye</mat-icon>
                   </button>
                 <a mat-icon-button [routerLink]="['/personnel/edit/',element?.ID]" class="btn btn-warning" matTooltip="Edit personnel information"
-                 (click)="edit(element.ID)" aria-label="Example icon button with a home icon">
+                  aria-label="Example icon button with a home icon">
                     <mat-icon>edit</mat-icon>
                 </a>
                   <button mat-icon-button  class="btn btn-danger" matTooltip="Supprimer personnel "
@@ -87,8 +93,11 @@
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
       </table>
-
+</div>
 
 </mat-card>
+      </div>
+  </div>
+
 
 

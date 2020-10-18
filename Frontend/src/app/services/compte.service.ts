@@ -16,8 +16,9 @@ export class CompteService {
     constructor(private http: HttpClient, private route: Router) { }
     ajoutercompte(c: Compte) {
         this.http.post<{ compte: Compte }>(BACKEND_URL + 'add', c).subscribe((res) => {
-            c.ID = res.compte.ID;
-            this.comptes.push(c);
+            console.log(res)
+          //  c.ID = res.compte.ID;
+            this.comptes.push(res.compte);
             this.comptesub.next([...this.comptes]);
         });
     }

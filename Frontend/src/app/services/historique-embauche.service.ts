@@ -47,14 +47,16 @@ export class HistoriqueEmbaucheService {
         });
     }
     edit(historique: HistoriqueEmbauche, id: string) {
-        this.http.put(BACKEND_URL + `update/${id}`, historique).subscribe((res) => {
+       return this.http.put<{historique :HistoriqueEmbauche}>(BACKEND_URL + `update/${id}`, historique)
+       /*.subscribe((res) => {
+           console.log(res)
             const updateembauche = [...this.HistoriqueEmbauche];
-            const oldembauche = updateembauche.findIndex(p => p?.ID === id);
-            updateembauche[oldembauche] = historique;
+            const oldembauche = updateembauche.findIndex(p => p?.ID === res.historique.ID);
+            updateembauche[oldembauche] = res.historique;
             this.HistoriqueEmbauche = updateembauche;
             this.HistoriqueEmbauchesub.next([...this.HistoriqueEmbauche]);
            // this.route.navigate(['/historiqueembauche']);
-        });
+        });*/
     }
     delete(id) {
         this.http.delete(BACKEND_URL + `delete/${id}`).subscribe((res) => {

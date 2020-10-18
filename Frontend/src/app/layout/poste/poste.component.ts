@@ -18,6 +18,10 @@ export class PosteComponent implements OnInit,AfterViewInit {
     displayedColumns: string[] = ['ID', 'Libelle','Actions'];
     dataSource = new MatTableDataSource<Poste>();
     poste: Poste[] = [];
+    popoverTitle = 'Popover title';
+popoverMessage = 'Vous etes sure';
+confirmClicked = false;
+cancelClicked = false;
 form;
 form1;
 PosteeditID;

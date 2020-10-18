@@ -7,6 +7,7 @@ import {MatIconModule} from '@angular/material/icon';
 import { MatSortModule } from '@angular/material/sort';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
+import { ConfirmationPopoverModule } from 'angular-confirmation-popover';
 
 
 import { PageHeaderModule } from './../../shared';
@@ -23,7 +24,9 @@ import { PosteRoutingModule } from './poste-routing.module';
 @NgModule({
     imports: [
         CommonModule,
-        PosteRoutingModule,
+        PosteRoutingModule,ConfirmationPopoverModule.forRoot({
+            confirmButtonType: 'danger', // set defaults here
+        }),
          MatIconModule,
          MatTableModule,
          ReactiveFormsModule,

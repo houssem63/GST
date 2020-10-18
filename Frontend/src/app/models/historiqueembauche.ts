@@ -1,3 +1,5 @@
+import { Poste } from './poste';
+
 export interface HistoriqueEmbauche {
     ID?: string;
     DateEmbauche: Date;
@@ -7,4 +9,5 @@ export interface HistoriqueEmbauche {
     posteID?: string;
     userID?: string;
     PosteNom?: string;
+    poste ?: Poste;
 }

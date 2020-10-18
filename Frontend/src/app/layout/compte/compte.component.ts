@@ -21,9 +21,11 @@ export class CompteComponent implements OnInit {
     ngOnInit(): void {
 
         this.compteservice.getallcompteuser(this.IDuser)
-        this.compteservice.getcomptesub().subscribe((res) => { this.comptes = res ;})
-        this.banqueservice.getallbanque();
-        this.banqueservice.banquesub().subscribe((responce) => {
+        this.compteservice.getcomptesub().subscribe((res) => {
+            this.comptes = res ;
+             console.log(this.comptes)})
+       /*  this.banqueservice.getallbanque();
+       this.banqueservice.banquesub().subscribe((responce) => {
             this.banques = responce;
             this.comptes.map(c => {
                 this.banques.map(b => {
@@ -33,7 +35,7 @@ export class CompteComponent implements OnInit {
                     }
                 })
             })
-        });
+        });*/
 
 
 

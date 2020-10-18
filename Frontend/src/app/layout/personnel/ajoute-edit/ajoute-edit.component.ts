@@ -92,7 +92,6 @@ export class AjouteEditComponent implements OnInit {
             this.personnelservice
                 .getonepersonnel(this.personnelID)
                 .subscribe((res) => {
-                    console.log(res);
                     this.personnel = res.personnel;
                     const date1 = new Date(
                         this.personnel.DateDeNaissance
@@ -136,12 +135,12 @@ Login :this.personnel.Login,
     reader.readAsDataURL(file);
 }
 ajoute() {
-    console.log(this.form.value)
+
 
     if (this.form.invalid) {
         return;
     }
-    console.log(this.form.value)
+console.log(this.form.value)
     if (this.mode === 'create') {
         this.personnelservice
         .inscriptionpersonnel(
@@ -163,7 +162,7 @@ ajoute() {
         'Personnel'
         );
         } else {
-            console.log(this.form.value)
+
 this.personnelservice.updatePersonnel(this.form.value.Cin,
 this.form.value.Nom,
 this.form.value.Prenom,
@@ -182,7 +181,7 @@ this.societeId, this.personnelID);
 }
 onImagePicked(e) {
     const file = (e.target as HTMLInputElement).files[0];
-    console.log(file);
+
     this.form.patchValue({ CopierPermis: file });
     this.form.get('CopierPermis').updateValueAndValidity();
     const reader = new FileReader();

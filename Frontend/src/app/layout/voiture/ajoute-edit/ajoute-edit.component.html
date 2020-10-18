@@ -1,0 +1,104 @@
+
+<div class="container" [formGroup]="form" (ngSubmit)='enregistre()'>
+    <div class="row" *ngIf="msg !=null">
+        <div class="col-12">
+            <h4 class="alert " *ngIf="msg !=null" [ngClass]="{'alert-success':ok,'alert-danger':ok==false}">{{msg}}</h4>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 col-lg-6 col-sm-12">
+            <div class="example-container">
+                <mat-form-field appearance="fill">
+                  <mat-label>Matricule</mat-label>
+                  <input matInput placeholder="Matricule" formControlName="Matricule"  required>
+                  <mat-error ></mat-error>
+                </mat-form-field>
+              </div>
+        </div>
+        <div class="col-md-6 col-lg-6 col-sm-12">
+            <div class="example-container">
+                <mat-form-field appearance="fill" >
+                    <mat-label>Marque</mat-label>
+                    <mat-select formControlName="Marque" required>
+                      <mat-option value="primary">Primary</mat-option>
+                      <mat-option value="accent">Accent</mat-option>
+                      <mat-option value="warn">Warn</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+              </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 col-lg-6 col-sm-12">
+            <div class="example-container">
+                <mat-form-field appearance="fill">
+                  <mat-label>Type</mat-label>
+                  <input matInput placeholder="Type"  formControlName="Type"  required>
+                  <mat-error ></mat-error>
+                </mat-form-field>
+              </div>
+        </div>
+    <div class="col-md-6 col-lg-6 col-sm-12">
+        <mat-form-field appearance="fill" >
+            <mat-label>Categorie</mat-label>
+            <mat-select formControlName="Categorie" required >
+              <mat-option value="primary">Primary</mat-option>
+              <mat-option value="accent">Accent</mat-option>
+              <mat-option value="warn">Warn</mat-option>
+            </mat-select>
+          </mat-form-field>
+    </div>
+    </div>
+    <div class="row">
+<div class="col-md-6 col-lg-6 col-sm-12">
+    <div class="example-container">
+        <mat-form-field appearance="fill">
+          <mat-label>DPMC</mat-label>
+          <input type="date" matInput placeholder="DPMC" formControlName="DPMC"  required>
+          <mat-error ></mat-error>
+        </mat-form-field>
+      </div>
+</div>
+<div class="col-md-6 col-lg-6 col-sm-12">
+    <div class="example-container">
+        <mat-form-field appearance="fill">
+            <mat-label>Propritaire</mat-label>
+            <input  matInput placeholder="Propritaire" formControlName="Propritaire"  required>
+            <mat-error ></mat-error>
+          </mat-form-field>
+      </div>
+</div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 col-lg-6 col-sm-12">
+            <div class="example-container">
+                <mat-form-field appearance="fill">
+                    <mat-label>Compteur</mat-label>
+                    <input  matInput placeholder="Compteur" formControlName="Compteur"  required>
+                    <mat-error ></mat-error>
+                  </mat-form-field>
+              </div>
+        </div>
+        <div class="col-md-3 col-lg-3 col-sm-6">
+            <button (click)="cartegrisse.click()">carte grisse</button>
+            <input type="file" #cartegrisse (change)="onCategrissePicked($event)" style="visibility: hidden;">
+              <div class="image-preview" *ngIf="cartegrissePreview !== '' && cartegrissePreview && form.get('CopierCarteGrise').valid">
+                  <img [src]="cartegrissePreview" [alt]="form.value.title">
+              </div>
+        </div>
+        <div class="col-md-3 col-lg-3 col-sm-6">
+            <button (click)="CopierContrat.click()">copier contrat</button>
+            <input type="file" #CopierContrat (change)="oncopiercontratPicked($event)" style="visibility: hidden;">
+              <div class="image-preview" *ngIf="copiercontratPreview !== '' && copiercontratPreview && form.get('CopierCarteGrise').valid">
+                  <img [src]="copiercontratPreview" [alt]="form.value.title">
+              </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 ">
+            <button class="btn btn-success" (click)="enregistre()">
+enregistre
+            </button>
+        </div>
+    </div>
+</div>

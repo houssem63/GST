@@ -7,6 +7,7 @@ const comptemodel=require('./compte')
 const historiqueEmbauchesmodel=require('./historiqueEmbauche')
 const postemodel=require('./poste')
 const rolemodel=require('./role')
+const voituremodel=require('./voiture')
 
 const User =userModel(db,Sequelize)
 const Role=rolemodel(db,Sequelize)
@@ -14,6 +15,7 @@ const Banque =banqueModel(db,Sequelize)
 const Compte =comptemodel(db,Sequelize)
 const HistoriqueEmbauches=historiqueEmbauchesmodel(db,Sequelize)
 const Poste=postemodel(db,Sequelize)
+const Voiture = voituremodel(db,Sequelize)
 
 
 
@@ -32,6 +34,9 @@ HistoriqueEmbauches.belongsTo(Poste)
 //relation entre societe et poste
 User.hasMany(Poste)
 Poste.belongsTo(User)
+//relation entre societe et voiture
+User.hasMany(Voiture)
+Voiture.belongsTo(User)
 //relation entre User et role
 User.belongsToMany(Role, {
     through: "user_role",
@@ -41,15 +46,18 @@ Role.belongsToMany(User,{
     through: "user_role",
 as: "users",
 foreignKey: "role_id"})
+
+
 db.sync({force:false}).then(()=>{
     console.log('table created !!!!!!')
 })
 module.exports={
     User,
-   
+   Role,
     Poste,
     Banque,
     HistoriqueEmbauches,
-    Compte
+    Compte,
+    Voiture
 
 }

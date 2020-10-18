@@ -1,3 +1,4 @@
+import { Banque } from './banque';
 
 export interface Compte {
     ID?: string;
@@ -5,4 +6,5 @@ export interface Compte {
     userID: string;
     banqueID: string;
     banquenom?: string;
+    banque? : Banque;
 }

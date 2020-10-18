@@ -1,18 +1,18 @@
-const { User ,HistoriqueEmbauches} =require('../models/relations')
+const { User ,HistoriqueEmbauches ,Role} =require('../models/relations')
 
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken')
 module.exports={
     ajouter:async(req,res)=>{
-        console.log(req.body.Login)
+        console.log(req.body)
      global.personnelimage;
      global.copierpermis;
 //console.log(req.files['Image'][0])
 //console.log(req.files['CopierPermis'][0])
 
        const url = req.protocol + "://" + req.get("host");
-   if(!req.files['Image']){
-       
+  if(!req.files['Image']){
+        
        this.personnelimage="https://secure.gravatar.com/avatar/03723a218a9152e9bad38a84058e21d7?s=192&d=mm&r=g%202x"
        
    }else{
@@ -136,8 +136,9 @@ res.status(500).json({err:e}) }
         User.findAll({
             where :{
                 ID:req.params.id
-            }
+            },include:{ model: Role ,as :'roles'}
         }).then((responce)=>{
+            console.log(responce[0].roles)
             res.status(200).json({user :responce[0].dataValues})
         }).catch((err)=>{
             res.status(500).json({err:'error server' + err})
@@ -174,14 +175,19 @@ res.status(500).json({err:e}) }
                
            
 
-            }else{
+            }else if(this.fetchuser[0].Function ==='Admin'){
+                this.status = await User.findAll({ where :{
+                    ID: Number(this.fetchuser[0].ID    ) 
+                    }})
+            }
+            else{
                 this.status = await User.findAll({  where :{
                     ID :this.fetchuser[0].SocieteID
                 }})
               
             }
             
-            
+            console.log(this.status)
             if (this.status[0].Status===false){
                 return res.json({msg:"votre compte n'est pas activer",ok :false})
             }else{

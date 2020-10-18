@@ -6,9 +6,7 @@ btn1 {
 margin-left: 50px;
 
   }
-  table {
-    width: 100%;
-  }
+
   .coloredit {
     color: #FFD700;
   }
@@ -23,12 +21,7 @@ margin-left: 50px;
 th.mat-sort-header-sorted {
     color: red;
   }
-  table {
 
-    overflow-x: auto;
-    overflow-y: hidden;
-    min-width: 500px;
-}
 th.mat-header-cell {
 
     max-width: 300px;

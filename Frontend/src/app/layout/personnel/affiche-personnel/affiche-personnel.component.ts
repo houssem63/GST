@@ -44,6 +44,9 @@ export class AffichePersonnelComponent implements OnInit, OnDestroy {
             this.personnel = res.personnel;
         });
         this.embaucheservice.gethistoriquedeonepersonnel(this.personnelID).subscribe((res) => {
+            this.historique =res.historique;
+            console.log(this.historique)
+          /*  console.log(res)
             this.posteservice.getallposte(societeID);
 
 
@@ -61,7 +64,7 @@ export class AffichePersonnelComponent implements OnInit, OnDestroy {
 
 
 
-            });
+            });*/
         });
         this.societeID = localStorage.getItem('societeId');
 
@@ -89,12 +92,13 @@ export class AffichePersonnelComponent implements OnInit, OnDestroy {
         this.dialogRef.close();
     }
     enregiste() {
+        const compare = (this.form.get('DateEmbauche').value < this.form.get('DateSortie').value);
+        if (compare === false) {
+            this.msg = 'date embauche inferiuer de date sortie';
+        }
 
-       this.poste= this.posteservice.getpostedata();
-       console.log(this.posteselected)
-       const p= this.poste.find(p=>Number(p.ID )=== Number(this.posteselected))
-       console.log(p)
-        const historique: HistoriqueEmbauche = {
+else{
+     const historique: HistoriqueEmbauche = {
             ID: this.embauche?.ID,
             DateEmbauche: this.form.value.DateEmbauche,
             DateSortie: this.form.value.DateSortie,
@@ -102,16 +106,26 @@ export class AffichePersonnelComponent implements OnInit, OnDestroy {
             posteID: this.PosteID.value,
             PersonnelID: this.embauche.PersonnelID,
             userID: this.embauche.userID,
-           PosteNom: p.Libelle
+
         };
         console.log(historique)
-        const updateembauche = [...this.historique];
+    /*    const updateembauche = [...this.historique];
         const oldembauche = updateembauche.findIndex(p => p?.ID === this.embauche?.ID,);
         updateembauche[oldembauche] = historique;
-        this.historique = updateembauche;
-      this.historiqueservice.edit(historique, this.embauche.ID);
-      this.personnelservice.getallpersonnel(this.embauche.userID);
-      this.formactive =false;
+        this.historique = updateembauche;*/
+      this.historiqueservice.edit(historique, this.embauche.ID).subscribe(res=>{
+        const updateembauche = [...this.historique];
+        const oldembauche = updateembauche.findIndex(p => p?.ID === res.historique.ID);
+        updateembauche[oldembauche] = res.historique;
+        this.historique = updateembauche;});this.formactive =false;
+        this.personnelservice.getallpersonnel(this.societeID);
+
+}
+
+
+
+     // this.personnelservice.getallpersonnel(this.embauche.userID);
+
     }
     edit(e: HistoriqueEmbauche) {
         this.embauche = e;
