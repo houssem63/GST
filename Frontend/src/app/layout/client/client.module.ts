@@ -35,7 +35,6 @@ import { MatDialogModule } from '@angular/material/dialog';
       MatSortModule,
       MatTooltipModule,
       FormsModule, ReactiveFormsModule
-  ], exports: [
-    MatSortModule],
+  ]
 })
 export class ClientModule { }

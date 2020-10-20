@@ -8,7 +8,8 @@ const historiqueEmbauchesmodel=require('./historiqueEmbauche')
 const postemodel=require('./poste')
 const rolemodel=require('./role')
 const voituremodel=require('./voiture')
-
+const assurancemodel =require('./assurance')
+const prestataireassrancemodel=require('./prestataireassurance')
 const User =userModel(db,Sequelize)
 const Role=rolemodel(db,Sequelize)
 const Banque =banqueModel(db,Sequelize)
@@ -16,8 +17,10 @@ const Compte =comptemodel(db,Sequelize)
 const HistoriqueEmbauches=historiqueEmbauchesmodel(db,Sequelize)
 const Poste=postemodel(db,Sequelize)
 const Voiture = voituremodel(db,Sequelize)
+const Assurance = assurancemodel(db,Sequelize)
+const PrestataireAssurance = prestataireassrancemodel(db,Sequelize)
 
-
+const user_role =db.define('user_role', {})
 
 //relation entre Societe et Compte
 User.hasMany(Compte)
@@ -37,6 +40,15 @@ Poste.belongsTo(User)
 //relation entre societe et voiture
 User.hasMany(Voiture)
 Voiture.belongsTo(User)
+//relation entre assurance et voiture
+Voiture.hasMany(Assurance)
+Assurance.belongsTo(Voiture)
+//relation entre assurance et voiture
+User.hasMany(Assurance)
+Assurance.belongsTo(User)
+//relation entre assurance et prestatire_assurance
+PrestataireAssurance.hasMany(Assurance)
+Assurance.belongsTo(PrestataireAssurance)
 //relation entre User et role
 User.belongsToMany(Role, {
     through: "user_role",
@@ -58,6 +70,9 @@ module.exports={
     Banque,
     HistoriqueEmbauches,
     Compte,
-    Voiture
+    Voiture,
+    Assurance,
+    user_role,
+    PrestataireAssurance
 
 }

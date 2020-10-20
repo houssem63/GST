@@ -26,8 +26,9 @@ cancelClicked = false;
     dataSource = new MatTableDataSource<User>();
     societeID;
     constructor(private clientservice: ClientService,public dialog: MatDialog) { }
-    @ViewChild(MatSort) sort: MatSort;
-
+    @ViewChild(MatSort, {static: false}) set content(sort: MatSort) {
+        this.dataSource.sort = sort;
+      }
     ngOnInit(): void {
         this.societeID = localStorage.getItem('societeId');
         this.clientservice.getallclient(this.societeID);
@@ -38,7 +39,6 @@ cancelClicked = false;
         });
     }
     ngAfterViewInit(): void {
-        this.dataSource.sort = this.sort;
     }
     public doFilter = (value: string) => {
         this.dataSource.filter = value.trim().toLocaleLowerCase();

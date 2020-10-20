@@ -32,8 +32,9 @@ cancelClicked = false;
     files: File[] = [];
 
   constructor(private personnelservice: PerosnnelService , public dialog: MatDialog) { }
-@ViewChild(MatSort) sort: MatSort;
-  ngOnInit(): void {
+  @ViewChild(MatSort, {static: false}) set content(sort: MatSort) {
+    this.dataSource.sort = sort;
+  }  ngOnInit(): void {
 
       this.societeID = localStorage.getItem('societeId');
       this.personnelservice.getallpersonnel(this.societeID);
@@ -43,7 +44,6 @@ cancelClicked = false;
       });
   }
   ngAfterViewInit(): void {
-    this.dataSource.sort = this.sort;
 
 
 

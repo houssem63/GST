@@ -42,8 +42,7 @@ import { ConfirmationPopoverModule } from 'angular-confirmation-popover';
         MatTooltipModule,
         MatDialogModule, NgxDropzoneModule,
         PageHeaderModule],
-    exports: [
-        MatSortModule],
+
     declarations: [PersonnelComponent, AffichePersonnelComponent, AjouteHistoriqueEmbaucheComponent, AjouteEditComponent]
 })
 export class PersonnelModule { }

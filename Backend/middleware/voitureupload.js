@@ -20,10 +20,9 @@ const storage = multer.diskStorage({
       .toLowerCase()
       .split(" ")
       .join("-");
-      console.log(file)
     const ext = MIME_TYPE_MAP[file.mimetype];
     cb(null, name + "-" + Date.now() + "." + ext);
   }
 });
 
-module.exports = multer({ storage: storage }).fields([{name:"CopierContrat"},{name:"CopierCarteGrise"}]);
+module.exports = multer({ storage: storage }).fields([{name:"CopierContrat"},{name:"CopierCarteGrise"},{name:"CopierAssurance"}]);

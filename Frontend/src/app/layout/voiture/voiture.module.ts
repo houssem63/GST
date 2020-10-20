@@ -45,7 +45,6 @@ MatTableModule,
 ConfirmationPopoverModule.forRoot({
     confirmButtonType: 'danger', // set defaults here
 }),
-  ],exports: [
-    MatSortModule],
+  ]
 })
 export class VoitureModule { }

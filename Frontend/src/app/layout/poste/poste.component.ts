@@ -28,13 +28,16 @@ PosteeditID;
 private societeID;
   constructor(private posteService :PosteService ,config: NgbDropdownConfig) {    config.placement = 'left';
 }
-@ViewChild(MatSort) sort: MatSort;
-  ngOnInit(): void {
+@ViewChild(MatSort, {static: false}) set content(sort: MatSort) {
+    this.dataSource.sort = sort;
+  }
+ngOnInit(): void {
     this.societeID = localStorage.getItem('societeId');
     this.posteService.getallposte(this.societeID);
       this.posteService.getpostesub().subscribe((res) => {
           this.poste = res;
-          this.dataSource.data = this.poste;
+          this.dataSource = new MatTableDataSource(this.poste);
+
       });
       this.form = new FormGroup({
         Libelle: new FormControl(null, [
@@ -46,7 +49,7 @@ private societeID;
             ])})
   }
   ngAfterViewInit(): void {
-    this.dataSource.sort = this.sort;
+  // this.dataSource.sort = this.sort;
   }
   public doFilter = (value: string) => {
     this.dataSource.filter = value.trim().toLocaleLowerCase();

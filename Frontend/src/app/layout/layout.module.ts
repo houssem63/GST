@@ -9,6 +9,7 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { HeaderComponent } from './components/header/header.component';
 import { RoleComponent } from './role/role.component';
 import { VoitureComponent } from './voiture/voiture.component';
+import { PrestataireAssranceComponent } from './prestataire-assrance/prestataire-assrance.component';
 
 
 @NgModule({

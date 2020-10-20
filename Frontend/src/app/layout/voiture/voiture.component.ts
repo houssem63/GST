@@ -31,8 +31,9 @@ export class VoitureComponent implements OnInit ,AfterViewInit,OnDestroy {
        columnsToDisplay = ['ID', 'Matricule', 'Actions'];
   expandedElement: Voiture | null;
     constructor(private voitureservice: VoitureService) { }
-    @ViewChild(MatSort) sort: MatSort;
-
+    @ViewChild(MatSort, {static: false}) set content(sort: MatSort) {
+        this.dataSource.sort = sort;
+      }
     ngOnInit(): void {
         this.societeID = localStorage.getItem('societeId');
         this.voitureservice.getallvoitureofsociete(this.societeID);
@@ -42,8 +43,7 @@ export class VoitureComponent implements OnInit ,AfterViewInit,OnDestroy {
         });
     }
    ngAfterViewInit(): void {
-    this.dataSource.sort = this.sort;
-    console.log(this.dataSource.sort )
+
       }
       public doFilter = (value: string) => {
         this.dataSource.filter = value.trim().toLocaleLowerCase();

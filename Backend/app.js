@@ -14,8 +14,8 @@ const Banque = require('./routes/banque');
 const Compte = require('./routes/compte');
 const Client = require('./routes/client');
 const Voiture = require('./routes/voiture');
-
-
+const Assurance=require('./routes/assurance');
+const Prestataireassurance =require('./routes/prestataire_assurance')
 app.use((req, res, next) => {
     res.setHeader("Access-Control-Allow-Origin", "*");
     res.setHeader("Access-Control-Allow-Headers", " Origin , X-Requested-With, Content-Type, Accept , Authorization");
@@ -35,6 +35,8 @@ app.use((req, res, next) => {
   app.use('/api/Compte', Compte);
   app.use('/api/Client', Client);
   app.use('/api/voiture', Voiture);
+app.use('/api/assurance',Assurance);
+app.use('/api/prestataireassurance',Prestataireassurance);
 
   const server = app.listen(PORT, (req, res, next) => { console.log(`Server started on port ${PORT}`) })
   app.get('/', (req, res) => {

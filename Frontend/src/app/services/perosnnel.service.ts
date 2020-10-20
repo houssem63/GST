@@ -20,17 +20,19 @@ export class PerosnnelService {
     getallpersonnel(id) {
         this.http.get<{ personnel: User[] }>(BACKEND_URL + `getall/${id}`).subscribe((res) => {
             res.personnel.map(p => {
+                console.log(p)
                 this.embaucheservice.gethistoriquedeonepersonnel(p.ID).subscribe(his => {
                     console.log(his.historique[(his.historique.length) - 1]);
                     let tablength;
-                    console.log(his.historique.length)
                      if (his.historique.length === 0) {
-                        tablength = 0;
+                        tablength = ((his.historique.length) - 1);
                         console.log(tablength)
                     } else {
                         tablength = ((his.historique.length) - 1);
                         console.log(tablength)
                     }
+                    console.log(his.historique[tablength]?.DateSortie )
+
                     if (his.historique[tablength]?.DateSortie === null) {
                         p.Embaucheetat = false;
                     } else { p.Embaucheetat = true; }

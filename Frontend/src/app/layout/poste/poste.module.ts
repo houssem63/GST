@@ -41,8 +41,7 @@ import { PosteRoutingModule } from './poste-routing.module';
          MatTooltipModule,
          MatDialogModule,NgxDropzoneModule,
          PageHeaderModule],
-         exports: [
-            MatSortModule],
+
     declarations: [PosteComponent]
 })
 export class PosteModule {}
