@@ -17,6 +17,8 @@ export class PrestataireAssranceComponent implements OnInit, OnDestroy {
     active = false;
     mode = 'create';
     prestataireID;
+    msg;
+    ok;
     ngOnInit(): void {
         this.prestataireservice.getall();
         this.prestataireressub = this.prestataireservice.prestataireressub().subscribe((res) => {
@@ -42,6 +44,7 @@ export class PrestataireAssranceComponent implements OnInit, OnDestroy {
                 Tel: this.form.value.Tel
             };
             this.prestataireservice.ajoute(prestataire);
+            this.form.reset();
         } else {
             const prestataire: PrestataireAssurance = {
                 ID : this.prestataireID,
@@ -50,7 +53,9 @@ export class PrestataireAssranceComponent implements OnInit, OnDestroy {
                 Site: this.form.value.Site,
                 Tel: this.form.value.Tel
             };
-            this.prestataireservice.edit(prestataire, this.prestataireID)
+            this.prestataireservice.edit(prestataire, this.prestataireID);
+            this.form.resert();
+
         }
         this.active = !this.active;
 
@@ -72,6 +77,14 @@ export class PrestataireAssranceComponent implements OnInit, OnDestroy {
     }
     delete(id){
         this.prestataireservice.delete(id)
+        this.prestataireservice.getresmsh().subscribe(res=>{
+this.msg =res.msg;
+this.ok =res.ok;
+        })
+        setTimeout(() => {
+            this.msg=null;
+            this.ok =null;
+        }, 3000);
     }
     ngOnDestroy() {
         this.prestataireressub.unsubscribe();

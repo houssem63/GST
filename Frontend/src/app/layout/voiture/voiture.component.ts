@@ -5,6 +5,8 @@ import { Voiture } from 'src/app/models/voiture';
 import { routerTransition } from 'src/app/router.animations';
 import { VoitureService } from 'src/app/services/voiture.service';
 import { animate, state, style, transition, trigger } from '@angular/animations';
+import { AfficheVoitureComponent } from './affiche-voiture/affiche-voiture.component';
+import { MatDialog } from '@angular/material/dialog';
 @Component({
     selector: 'app-voiture',
     templateUrl: './voiture.component.html',
@@ -27,10 +29,11 @@ export class VoitureComponent implements OnInit ,AfterViewInit,OnDestroy {
    popoverMessage = 'Vous etes sure';
     confirmClicked = false;
        cancelClicked = false;
+       voitureID;
        dataSource = new MatTableDataSource<Voiture>();
        columnsToDisplay = ['ID', 'Matricule', 'Actions'];
   expandedElement: Voiture | null;
-    constructor(private voitureservice: VoitureService) { }
+    constructor(private voitureservice: VoitureService,public dialog: MatDialog) { }
     @ViewChild(MatSort, {static: false}) set content(sort: MatSort) {
         this.dataSource.sort = sort;
       }
@@ -57,6 +60,16 @@ affiche(e){
 
     ngOnDestroy() {
         this.voituresub.unsubscribe();
+    }
+    openDialog(voitureID): void {
+        const dialogRef = this.dialog.open(AfficheVoitureComponent, {
+          width: '650px',
+          height:'450px',
+          data: {VoitureID :voitureID}
+        });
+        dialogRef.afterClosed().subscribe(result => {
+            console.log('The dialog was closed');
+          });
     }
 
 }

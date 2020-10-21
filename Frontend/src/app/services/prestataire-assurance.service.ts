@@ -11,6 +11,7 @@ const BACKEND_URL = environment.apiUrl + '/prestataireassurance/';
 export class PrestataireAssuranceService {
     prestataires: PrestataireAssurance[] = [];
     prestatairesub = new Subject<PrestataireAssurance[]>();
+    prestatairemsgsub =new Subject<{msg:string ,ok :boolean}>()
     constructor(private http: HttpClient) { }
     ajoute(prestataire: PrestataireAssurance) {
         console.log(prestataire)
@@ -49,9 +50,16 @@ export class PrestataireAssuranceService {
     delete(id){
         this.http.delete<{msg:string,ok:boolean}>(BACKEND_URL + `delete/${id}`)
         .subscribe(res=>{
-            this.prestataires = this.prestataires.filter(v => v.ID !== id);
+            this.prestatairemsgsub.next({msg:res.msg ,ok :res.ok})
+            if(res.ok ===true){
+              this.prestataires = this.prestataires.filter(v => v.ID !== id);
             this.prestatairesub.next([...this.prestataires]);
+            }
+
 
         })
+    }
+    getresmsh(){
+        return this.prestatairemsgsub.asObservable();
     }
 }

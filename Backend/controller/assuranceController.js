@@ -49,5 +49,14 @@ module.exports ={
             console.log(error)
             res.status(500).json({error})
         }
+    },
+    delete:async(req,res)=>{
+        try {
+          await  Assurance.destroy({where:{ID:req.params.id}})
+          res.status(200).json({msg:'supprimer avec successe',ok:true})
+        } catch (error) {
+            res.status(500).json({error})
+
+        }
     }
 }

@@ -73,7 +73,7 @@ module.exports = {
          const voiture =await   Voiture.findAll({where :{
                 ID:req.params.id
             }})
-            res.status(200).json({voiture:voiture})
+            res.status(200).json({voiture:voiture[0]})
         } catch (error) {
             res.status(500).json({error})
         }

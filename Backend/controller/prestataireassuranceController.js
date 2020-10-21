@@ -1,4 +1,4 @@
-const { PrestataireAssurance } =require('../models/relations')
+const { PrestataireAssurance  ,Assurance} =require('../models/relations')
 
 module.exports={
     ajoute :async(req,res)=>{
@@ -58,10 +58,21 @@ catch (error) {
     },
     delete:async(req,res)=>{
         try {
-            await PrestataireAssurance.destroy({where :{
-                ID :req.params.id
-            }})
-            res.status(200).json({ms:'suppremer avec success',ok :true})
+            let assurance =[];
+             assurance  =await Assurance.findAll({where:{
+                prestataireassuranceID :req.params.id
+            }}) 
+            if(assurance[0] ===undefined){
+                await PrestataireAssurance.destroy({where :{
+                    ID :req.params.id
+                }}) 
+                res.status(200).json({ms:'suppremer avec success',ok :true})
+            }else{
+               
+                res.json({msg :'cette prestataire deja utilise vous navez pas le supprimer' ,ok:false})
+
+            }
+           
         } catch (error) {
             res.status(500).json({error})
 

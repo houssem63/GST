@@ -16,6 +16,8 @@ import { AssuranceComponent } from './assurance/assurance.component'
 import { MatSelectModule } from '@angular/material/select';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { VisiteComponent } from './visite/visite.component';
+import { AfficheVoitureComponent } from './affiche-voiture/affiche-voiture.component';
+import {MatDialogModule} from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
@@ -27,9 +29,11 @@ import { VisiteComponent } from './visite/visite.component';
     AssuranceComponent,
 
     VisiteComponent,
+
+    AfficheVoitureComponent,
   ],
   imports: [
-    MatSelectModule,
+    MatSelectModule,MatDialogModule,
     FormsModule,
      ReactiveFormsModule,
       CommonModule,

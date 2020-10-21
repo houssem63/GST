@@ -112,6 +112,6 @@ export class AssuranceComponent implements OnInit, AfterViewInit {
         });
     }
     supprimer(id) {
-
+this.assuranceservice.delete(id)
     }
 }

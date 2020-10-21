@@ -1,6 +1,12 @@
 <div class="container" [formGroup]="form" (ngSubmit)='enregistre()'>
     <div class="row">
         <div class="col-12">
+            <h4 class="alert " *ngIf="msg !=null" [ngClass]="{'alert-success':ok,'alert-danger':ok==false}">{{msg}}</h4>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
             <button class="btn btn-success" (click)="active = !active" *ngIf="!active">ajoute</button>
 
         </div>

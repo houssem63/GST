@@ -51,7 +51,7 @@
             <button>entretien</button>
             <button>viste</button>
             <div style="float: right;">
-            <button mat-icon-button class="btn btn-primary"   matTooltip="Afficher personnel information"
+            <button mat-icon-button class="btn btn-primary"  (click)="openDialog(element?.ID)" matTooltip="Afficher personnel information"
             >
                 <mat-icon>remove_red_eye</mat-icon>
               </button>
