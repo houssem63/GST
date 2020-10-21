@@ -10,6 +10,8 @@ const rolemodel=require('./role')
 const voituremodel=require('./voiture')
 const assurancemodel =require('./assurance')
 const prestataireassrancemodel=require('./prestataireassurance')
+const entretienmodel =require('./entretien')
+const entretienvehiculemodel =require('./entretienvehicule')
 const User =userModel(db,Sequelize)
 const Role=rolemodel(db,Sequelize)
 const Banque =banqueModel(db,Sequelize)
@@ -19,8 +21,10 @@ const Poste=postemodel(db,Sequelize)
 const Voiture = voituremodel(db,Sequelize)
 const Assurance = assurancemodel(db,Sequelize)
 const PrestataireAssurance = prestataireassrancemodel(db,Sequelize)
-
+const Entretien=entretienmodel(db,Sequelize)
+const Entretienvehicule=entretienvehiculemodel(db,Sequelize)
 const user_role =db.define('user_role', {})
+
 
 //relation entre Societe et Compte
 User.hasMany(Compte)
@@ -58,8 +62,18 @@ Role.belongsToMany(User,{
     through: "user_role",
 as: "users",
 foreignKey: "role_id"})
-
-
+//relation entre vehicule et entretien
+Voiture.belongsToMany(Entretien, {
+    through: "entretien_vehicule",
+as: "roles",
+foreignKey: "voiture_id"})
+Entretien.belongsToMany(Voiture,{
+    through: "entretien_vehicule",
+as: "users",
+foreignKey: "entretien_id"})
+//relation entre user et entretien
+User.hasMany(Entretienvehicule)
+Entretienvehicule.belongsTo(User)
 db.sync({force:false}).then(()=>{
     console.log('table created !!!!!!')
 })
@@ -73,6 +87,8 @@ module.exports={
     Voiture,
     Assurance,
     user_role,
-    PrestataireAssurance
+    PrestataireAssurance,
+    Entretien,
+    Entretienvehicule
 
 }

@@ -73,30 +73,12 @@ export class AjouteHistoriqueEmbaucheComponent implements OnInit {
             ]),
         });
 
-        /*   this.router.paramMap.subscribe((paramMap: ParamMap) => {
-               if (paramMap.has('id')) {
-                   this.mode = 'edit';
-                   this.historiqueID = paramMap.get('id'); }
-                   this.historiqueservice.getonehistorique(this.historiqueID).subscribe((res) => {
-                   this.historiqueedit = res.Historique;
-                   this.poste = this.postes.find(poste => poste.ID === res.Historique.posteID);
-                   this.personel = this.personnels.find(personnel => personnel.ID === res.Historique.personnelID);
-                   const DateEmbauche = new Date( res.Historique.DateEmbauche);
-                   const DateSortie = new Date(res.Historique.DateSortie);
-                   this.form.setValue({
-                       DateEmbauche: this.datePipe.transform( DateEmbauche , 'yyyy-MM-dd' ),
-                       DateSortie: this.datePipe.transform( DateSortie , 'yyyy-MM-dd' ),
-                       Salaire	: res.Historique.Salaire
-                      });
-                   });
-               });*/
+
     }
 
 
 
-    /*  choixposte(poste) {
-          this.poste = poste;
-      }*/
+
     enregiste() {
         if (this.PosteID.invalid) {
             return;
@@ -124,14 +106,13 @@ export class AjouteHistoriqueEmbaucheComponent implements OnInit {
                     };
 
                     this.historiqueservice.ajoute(this.historique);
-
+                    this.personelservice.editembauch(this.ID.ID, this.historique)
                     this.form.reset();
 
-                    this.personelservice.getallpersonnel(this.societeID);
 
                 }
             }
-        } else{
+        } else {
             this.historique = {
                 posteID: this.PosteID.value,
                 DateEmbauche: this.form.get('DateEmbauche').value,
@@ -144,10 +125,10 @@ export class AjouteHistoriqueEmbaucheComponent implements OnInit {
             };
 
             this.historiqueservice.ajoute(this.historique);
+            this.personelservice.editembauch(this.ID.ID, this.historique)
 
             this.form.reset();
 
-            this.personelservice.getallpersonnel(this.societeID);
         }
 
 

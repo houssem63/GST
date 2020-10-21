@@ -16,6 +16,8 @@ const Client = require('./routes/client');
 const Voiture = require('./routes/voiture');
 const Assurance=require('./routes/assurance');
 const Prestataireassurance =require('./routes/prestataire_assurance')
+const Entretien=require('./routes/entretien');
+
 app.use((req, res, next) => {
     res.setHeader("Access-Control-Allow-Origin", "*");
     res.setHeader("Access-Control-Allow-Headers", " Origin , X-Requested-With, Content-Type, Accept , Authorization");
@@ -37,6 +39,7 @@ app.use((req, res, next) => {
   app.use('/api/voiture', Voiture);
 app.use('/api/assurance',Assurance);
 app.use('/api/prestataireassurance',Prestataireassurance);
+app.use('/api/entretien',Entretien);
 
   const server = app.listen(PORT, (req, res, next) => { console.log(`Server started on port ${PORT}`) })
   app.get('/', (req, res) => {

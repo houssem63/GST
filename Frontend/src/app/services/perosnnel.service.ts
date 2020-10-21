@@ -6,6 +6,7 @@ import { environment } from 'src/environments/environment';
 import { Personnel } from '../models/personnel';
 import { User } from 'src/app/models/usermodel';
 import { HistoriqueEmbaucheService } from './historique-embauche.service';
+import { HistoriqueEmbauche } from '../models/historiqueembauche';
 
 const BACKEND_URL = environment.apiUrl + '/personnel/';
 
@@ -20,23 +21,19 @@ export class PerosnnelService {
     getallpersonnel(id) {
         this.http.get<{ personnel: User[] }>(BACKEND_URL + `getall/${id}`).subscribe((res) => {
             res.personnel.map(p => {
-                console.log(p)
+
                 this.embaucheservice.gethistoriquedeonepersonnel(p.ID).subscribe(his => {
-                    console.log(his.historique[(his.historique.length) - 1]);
+
                     let tablength;
-                     if (his.historique.length === 0) {
+                    if (his.historique.length === 0) {
                         tablength = ((his.historique.length) - 1);
-                        console.log(tablength)
                     } else {
                         tablength = ((his.historique.length) - 1);
-                        console.log(tablength)
                     }
-                    console.log(his.historique[tablength]?.DateSortie )
 
                     if (his.historique[tablength]?.DateSortie === null) {
                         p.Embaucheetat = false;
                     } else { p.Embaucheetat = true; }
-                    console.log(p)
 
 
                 });
@@ -151,6 +148,21 @@ export class PerosnnelService {
     getmsgetat() {
         return this.msg.asObservable();
     }
+    editembauch(id, embauche: HistoriqueEmbauche) {
+        const personnels = this.personnel.find(p => p.ID === id)
+        if (embauche.DateSortie === null) {
+            personnels.Embaucheetat = false;
+        } else {
+            personnels.Embaucheetat = true;
+        }
+        console.log(personnels)
+        const updatepersonnel = [...this.personnel];
+        const oldpersonnel = updatepersonnel.findIndex(p => p.ID === id);
+        updatepersonnel[oldpersonnel] = personnels;
+        this.personnel = updatepersonnel;
+        this.personnel = updatepersonnel;
+        this.subpersonnel.next([...this.personnel]);
 
+    }
 }
 

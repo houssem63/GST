@@ -1,15 +1,32 @@
-const { Voiture } = require('../models/relations')
+const { Voiture ,User } = require('../models/relations')
 module.exports = {
     getallvoiture: async (req, res) => {
         try {
-            const voiture = await Voiture.findAll({
+            const user = await User.findAll({where :{
+                ID :req.params.id
+            }})
+            console.log(user[0])
+            if(user[0].Function ==='Societe'){
+                 const voiture = await Voiture.findAll({
                 where: {
-                    userID: req.params.id
+                    userID: user[0].ID
                 }
+                
             })
-            if (voiture) {
+             if (voiture) {
                 res.json({ voiture })
             }
+            }else{
+                const voiture = await Voiture.findAll({
+                    where: {
+                        userID: user[0].SocieteID
+                    }})
+                    if (voiture) {
+                        res.json({ voiture })
+                    }
+            }
+          
+            
         } catch (error) {
             res.status(500).json({ error })
         }

@@ -10,11 +10,14 @@ import { VoitureService } from 'src/app/services/voiture.service';
 import { AssuranceService } from 'src/app/services/assurance.service';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { DatePipe } from '@angular/common';
 
 @Component({
     selector: 'app-assurance',
     templateUrl: './assurance.component.html',
-    styleUrls: ['./assurance.component.css']
+    styleUrls: ['./assurance.component.css'],
+    providers: [DatePipe]
+
 })
 export class AssuranceComponent implements OnInit, AfterViewInit {
     voitureID;
@@ -28,15 +31,19 @@ export class AssuranceComponent implements OnInit, AfterViewInit {
     popoverMessage = 'Vous etes sure';
     confirmClicked = false;
     cancelClicked = false;
+    DateOperation ;
+            DateDebutValidite;
+            DateFinValidite ;
     displayedColumns: string[] = ['Prestataire', 'DateOperation', 'DateDebutValidite', 'DateFinValidite',
         'Actions'];
     dataSource = new MatTableDataSource<Assurance>();
-    constructor(private router: ActivatedRoute, private voitureservice: VoitureService,
+    constructor(private router: ActivatedRoute, private voitureservice: VoitureService,private datePipe: DatePipe,
         private prestataireservice: PrestataireAssuranceService, private assuranceservice: AssuranceService) { }
     @ViewChild(MatSort, { static: false }) set content(sort: MatSort) {
         this.dataSource.sort = sort;
     }
     ngOnInit(): void {
+        console.log(this.DateOperation)
         this.userID = localStorage.getItem('societeId');
         this.router.paramMap.subscribe((paramMap: ParamMap) => {
             this.voitureID = paramMap.get('id');
@@ -54,16 +61,22 @@ export class AssuranceComponent implements OnInit, AfterViewInit {
             this.dataSource.data = res;
 
         });
+        this.DateOperation=this.datePipe.transform(new Date(), 'yyyy-MM-dd');
+        this.DateDebutValidite=this.datePipe.transform(new Date(), 'yyyy-MM-dd');
+        const actuelyears =new Date().getFullYear()
+        const DateFinValidite =new Date().setFullYear(actuelyears+1)
+this.DateFinValidite=this.datePipe.transform(DateFinValidite, 'yyyy-MM-dd');
         this.form = new FormGroup({
             prestataireassuranceID: new FormControl('', { validators: [Validators.required] }),
-            DateOperation: new FormControl('', { validators: [Validators.required] }),
-            DateDebutValidite: new FormControl('', { validators: [Validators.required] }),
-            DateFinValidite: new FormControl('', { validators: [Validators.required] }),
+            DateOperation: new FormControl(this.DateOperation, { validators: [Validators.required] }),
+            DateDebutValidite: new FormControl(this.DateDebutValidite, { validators: [Validators.required] }),
+            DateFinValidite: new FormControl(this.DateFinValidite, { validators: [Validators.required] }),
             CopierAssurance: new FormControl('', { validators: [Validators.required] }),
             Montant: new FormControl('', { validators: [Validators.required] }),
 
         });
 
+console.log(this.DateOperation)
     }
     ngAfterViewInit(): void {
 
@@ -106,7 +119,20 @@ export class AssuranceComponent implements OnInit, AfterViewInit {
         this.assuranceservice.ajoute(assurance);
         this.assuranceservice.getresponcesub().subscribe(res => {
             if (res.ok === true) {
-                this.form.reset();
+                this.DateOperation=this.datePipe.transform(new Date(), 'yyyy-MM-dd');
+                this.DateDebutValidite=this.datePipe.transform(new Date(), 'yyyy-MM-dd');
+                const actuelyears =new Date().getFullYear()
+                const DateFinValidite =new Date().setFullYear(actuelyears+1)
+        this.DateFinValidite=this.datePipe.transform(DateFinValidite, 'yyyy-MM-dd');
+                this.form.get('prestataireassuranceID').setValue('')
+                this.form.get('DateOperation').setValue(this.DateDebutValidite)
+                this.form.get('DateDebutValidite').setValue(this.DateDebutValidite)
+                this.form.get('DateFinValidite').setValue(this.DateFinValidite)
+                this.form.get('CopierAssurance').setValue('')
+
+               this.form.controls['prestataireassuranceID'].setErrors(null);
+               this.form.get('Montant').setValue('')
+               this.form.controls['Montant'].setErrors(null);
                 this.imagePreview = null;
             }
         });

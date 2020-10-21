@@ -30,7 +30,7 @@ export class AffichePersonnelComponent implements OnInit, OnDestroy {
     formactive = false;
     historique: HistoriqueEmbauche[] = [];
     personnelID;
-    constructor(public dialogRef: MatDialogRef<AffichePersonnelComponent>,
+    constructor(public dialogRef: MatDialogRef<AffichePersonnelComponent>, private personelservice: PerosnnelService,
         @Inject(MAT_DIALOG_DATA) public ID: any, private personnelservice: PerosnnelService, private datePipe: DatePipe,
 
         private historiqueservice: HistoriqueEmbaucheService,
@@ -44,27 +44,9 @@ export class AffichePersonnelComponent implements OnInit, OnDestroy {
             this.personnel = res.personnel;
         });
         this.embaucheservice.gethistoriquedeonepersonnel(this.personnelID).subscribe((res) => {
-            this.historique =res.historique;
+            this.historique = res.historique;
             console.log(this.historique)
-          /*  console.log(res)
-            this.posteservice.getallposte(societeID);
 
-
-            setTimeout(() => {
-                const poste = this.posteservice.getpostedata();
-                res.historique.map(h => {
-                    poste?.map(p => {
-                        if (p.ID === h.posteID) {
-                            h.PosteNom = p.Libelle;
-                            this.historique.push(h);
-                        }
-                    });
-                }, 300);
-
-
-
-
-            });*/
         });
         this.societeID = localStorage.getItem('societeId');
 
@@ -97,34 +79,37 @@ export class AffichePersonnelComponent implements OnInit, OnDestroy {
             this.msg = 'date embauche inferiuer de date sortie';
         }
 
-else{
-     const historique: HistoriqueEmbauche = {
-            ID: this.embauche?.ID,
-            DateEmbauche: this.form.value.DateEmbauche,
-            DateSortie: this.form.value.DateSortie,
-            Salaire: this.form.value.Salaire,
-            posteID: this.PosteID.value,
-            PersonnelID: this.embauche.PersonnelID,
-            userID: this.embauche.userID,
+        else {
+            const historique: HistoriqueEmbauche = {
+                ID: this.embauche?.ID,
+                DateEmbauche: this.form.value.DateEmbauche,
+                DateSortie: this.form.value.DateSortie,
+                Salaire: this.form.value.Salaire,
+                posteID: this.PosteID.value,
+                PersonnelID: this.embauche.PersonnelID,
+                userID: this.embauche.userID,
 
-        };
-        console.log(historique)
-    /*    const updateembauche = [...this.historique];
-        const oldembauche = updateembauche.findIndex(p => p?.ID === this.embauche?.ID,);
-        updateembauche[oldembauche] = historique;
-        this.historique = updateembauche;*/
-      this.historiqueservice.edit(historique, this.embauche.ID).subscribe(res=>{
-        const updateembauche = [...this.historique];
-        const oldembauche = updateembauche.findIndex(p => p?.ID === res.historique.ID);
-        updateembauche[oldembauche] = res.historique;
-        this.historique = updateembauche;});this.formactive =false;
-        this.personnelservice.getallpersonnel(this.societeID);
+            };
 
-}
+            this.historiqueservice.edit(historique, this.embauche.ID).subscribe(res => {
+                console.log(res)
+                const update = [...this.historique];
+                const old = update.findIndex(p => p?.ID === res.historique.ID);
+                update[old] = res.historique;
+                this.historique = update;
+            console.log(this.historique)
+            });
+            this.form.reset();
+
+            this.personelservice.editembauch(this.ID.ID, historique)
+            this.formactive = false;
+
+
+        }
 
 
 
-     // this.personnelservice.getallpersonnel(this.embauche.userID);
+
 
     }
     edit(e: HistoriqueEmbauche) {
@@ -149,11 +134,11 @@ else{
                 Salaire: res.Historique.Salaire
             });
         });
+
     }
     ngOnDestroy() {
     }
-    change(e){
-        console.log(e)
-this.posteselected = e;
+    change(e) {
+        this.posteselected = e;
     }
 }

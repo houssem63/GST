@@ -47,10 +47,10 @@
 
 
           <span class="example-element-description-attribution">
-              <button  [routerLink]="['/voiture/ajouteassurance/',element?.ID]" class="btn btn-primary">assurance</button>
-            <button>entretien</button>
-            <button>viste</button>
-            <div style="float: right;">
+              <button  [routerLink]="['/voiture/ajouteassurance/',element?.ID]" class="btn btn-primary btnmargin">assurance</button>
+            <button  [routerLink]="['/voiture/ajouteentretien/',element?.ID]" class="btn btn-success btnmargin">entretien</button>
+            <button class="btn btn-warning btnmargin">viste</button>
+
             <button mat-icon-button class="btn btn-primary"  (click)="openDialog(element?.ID)" matTooltip="Afficher personnel information"
             >
                 <mat-icon>remove_red_eye</mat-icon>
@@ -70,7 +70,7 @@
               aria-label="Example icon button with a home icon">
                 <mat-icon >delete</mat-icon>
               </button>
-            </div>
+
         </span>
         </div>
       </div>

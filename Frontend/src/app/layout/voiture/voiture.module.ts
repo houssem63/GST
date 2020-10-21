@@ -18,6 +18,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { VisiteComponent } from './visite/visite.component';
 import { AfficheVoitureComponent } from './affiche-voiture/affiche-voiture.component';
 import {MatDialogModule} from '@angular/material/dialog';
+import {MatGridListModule} from '@angular/material/grid-list';
 
 @NgModule({
   declarations: [
@@ -45,7 +46,7 @@ import {MatDialogModule} from '@angular/material/dialog';
       MatSortModule,
     VoitureRoutingModule,
 PageHeaderModule,
-MatTableModule,
+MatTableModule,MatGridListModule,
 ConfirmationPopoverModule.forRoot({
     confirmButtonType: 'danger', // set defaults here
 }),

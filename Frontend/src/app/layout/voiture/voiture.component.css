@@ -38,9 +38,6 @@ table {
     line-height: normal;
   }
 
-  .example-element-description {
-    padding: 16px;
-  }
 
 
   th.mat-header-cell, td.mat-cell {
@@ -48,7 +45,8 @@ table {
     border: 1px solid #CCC;
     padding: 0 !important;
 }
-.matcell{
+.btnmargin {
+    margin-left: 1%;
 }
 .mat-row:hover {
     cursor: pointer;

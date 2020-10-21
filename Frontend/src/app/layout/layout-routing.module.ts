@@ -23,6 +23,7 @@ const routes: Routes = [
             { path: 'voiture', loadChildren: () => import('./voiture/voiture.module').then(m => m.VoitureModule) },
             { path: 'prestataire-assurance', loadChildren: () => import('./prestataire-assrance/prestataire-assrance.module')
             .then(m => m.PrestataireAssranceModule) },
+            { path: 'entretien', loadChildren: () => import('./entretien/entretien.module').then(m => m.EntretienModule) },
 
 
         ]
