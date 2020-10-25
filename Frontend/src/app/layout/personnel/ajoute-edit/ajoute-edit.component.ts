@@ -65,7 +65,7 @@ export class AjouteEditComponent implements OnInit {
             Validators.email,
         ]),
         NumCNSS: new FormControl(null, {
-            validators: [ Validators.pattern('[0-9]')],
+            validators: [ Validators.pattern('[0-9]{8}')],
         }),
         CopierPermis: new FormControl(null, {
             validators: [],

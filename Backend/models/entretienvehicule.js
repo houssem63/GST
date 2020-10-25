@@ -1,17 +1,19 @@
-module.exports=(db,type)=>{
-    return db.define('entretien_vehicule',{
-        ID:{
-            type:type.INTEGER,
-            autoIncrement:true,
-            primaryKey:true
+module.exports = (db, type) => {
+    return db.define('entretien_vehicule', {
+        ID: {
+            type: type.INTEGER,
+            autoIncrement: true,
+            primaryKey: true,
         },
-        DateOperattion:{type:type.DATE},
-        PieceRechange :{type:type.STRING},
-        MontantPieceRechange :{type:type.FLOAT},
-        MainOEuvre :{type :type.FLOAT},
-        AgentEntretien:{type:type.STRING},
-        KilomettrageArret:{type:type.INTEGER},
-        KilomettrageLimite:{type:type.INTEGER},
-DateProchainEntretien:{type:type.DATE},
-Remarques:{type:type.STRING}
-    })}
+        DateOperation: { type: type.DATE },
+        PieceRechange: { type: type.STRING },
+        MontantPieceRechange: { type: type.FLOAT },
+        MainOEuvre: { type: type.FLOAT },
+        AgentEntretien: { type: type.STRING },
+        KilomettrageArret: { type: type.INTEGER },
+        KilomettrageLimite: { type: type.INTEGER },
+        DateProchainEntretien: { type: type.DATE },
+        Remarques: { type: type.STRING },
+       
+    })
+}

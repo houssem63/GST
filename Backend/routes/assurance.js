@@ -6,5 +6,6 @@ const voitureimages =require('../middleware/voitureupload')
 
 router.post('/add',voitureimages,AssuranceController.ajoute)
 router.get('/getassranceofonevoiture/:id',AssuranceController.getassranceofonevoiture)
-router.delete('/delete/:id',AssuranceController.delete)
+router.delete('/delete/:id',AssuranceController.delete);
+router.get('/getone/:id',AssuranceController.getone)
 module.exports=router

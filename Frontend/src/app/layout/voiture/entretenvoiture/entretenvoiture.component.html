@@ -1,0 +1,200 @@
+<div class="container" [formGroup]='form' (ngSubmit)="enregistre()">
+    <mat-card>
+        <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-12">
+                <mat-form-field appearance="fill">
+                    <mat-label>Entretien</mat-label>
+                    <select matNativeControl formControlName="entretien_id" required>
+                        <option *ngFor="let entretien of entretiens" [value]="entretien?.ID">{{entretien?.Libelle}}
+                        </option>
+
+
+                    </select>
+                    <mat-error *ngIf="form.get('entretien_id').hasError('required')">
+                        Entretien est <strong>obligatoire</strong>
+                    </mat-error>
+                </mat-form-field>
+
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-12">
+                <mat-form-field appearance="fill">
+                    <mat-label>Date Operation </mat-label>
+                    <input matInput type="date" formControlName="DateOperation" required>
+                    <mat-error *ngIf="form.get('DateOperation').hasError('required')">
+                        Date Operation est <strong>obligatoire</strong>
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-12">
+                <mat-form-field appearance="fill">
+                    <mat-label>Piece Rechange </mat-label>
+                    <input matInput
+                     formControlName="PieceRechange" required>
+                    <mat-error *ngIf="form.get('PieceRechange').hasError('required')">
+                        Piece Rechange est <strong>obligatoire</strong>
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-12">
+                <mat-form-field appearance="fill">
+                    <mat-label>Montant Piece Rechange</mat-label>
+                    <input matInput type="number" class="example-right-align" formControlName="MontantPieceRechange">
+                    <span matPrefix>DT&nbsp;</span>
+                    <span matSuffix>.00</span>
+                    <mat-error *ngIf="form.get('MontantPieceRechange').hasError('required')">Montant Piece Rechange est
+                        obligatoire</mat-error>
+
+                </mat-form-field>
+            </div>
+        </div>
+<div class="row">
+    <div class="col-lg-6 col-md-6 col-sm-12">
+        <mat-form-field appearance="fill">
+            <mat-label>Main OEuvre</mat-label>
+            <input matInput type="number" class="example-right-align" formControlName="MainOEuvre">
+            <span matPrefix>DT&nbsp;</span>
+            <span matSuffix>.00</span>
+            <mat-error *ngIf="form.get('MainOEuvre').hasError('required')">Main OEuvre Rechange est
+                obligatoire</mat-error>
+
+        </mat-form-field>
+    </div>
+    <div class="col-lg-6 col-md-6 col-sm-12">
+        <mat-form-field appearance="fill">
+            <mat-label>Agent Entretien </mat-label>
+            <input matInput  formControlName="AgentEntretien" required>
+            <mat-error *ngIf="form.get('AgentEntretien').hasError('required')">
+                Agent Entretienest <strong>obligatoire</strong>
+            </mat-error>
+        </mat-form-field>
+    </div>
+
+</div>
+<div class="row">
+    <div class="col-lg-6 col-md-6 col-sm-12">
+        <mat-form-field appearance="fill">
+            <mat-label>Kilomettrage Arret </mat-label>
+            <input matInput  formControlName="KilomettrageArret" required>
+            <mat-error *ngIf="form.get('KilomettrageArret').hasError('required')">
+                Kilomettrage Arret <strong>obligatoire</strong>
+            </mat-error>
+        </mat-form-field>
+    </div>
+    <div class="col-lg-6 col-md-6 col-sm-12">
+        <mat-form-field appearance="fill">
+            <mat-label>Kilomettrage Limite </mat-label>
+            <input matInput  formControlName="KilomettrageLimite" required>
+            <mat-error *ngIf="form.get('KilomettrageLimite').hasError('required')">
+                Kilomettrage Limite <strong>obligatoire</strong>
+            </mat-error>
+        </mat-form-field>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-6 col-md-6 col-sm-12">
+        <mat-form-field appearance="fill">
+            <mat-label>Date Prochain Entretien </mat-label>
+            <input matInput type="date" formControlName="DateProchainEntretien" required>
+            <mat-error *ngIf="form.get('DateProchainEntretien').hasError('required')">
+                Date Prochain Entretienest <strong>obligatoire</strong>
+            </mat-error>
+        </mat-form-field>
+    </div>
+    <div class="col-lg-6 col-md-6 col-sm-12">
+        <mat-form-field appearance="fill">
+            <mat-label>Remarques </mat-label>
+            <textarea matInput required formControlName="Remarques"></textarea>
+             <mat-error *ngIf="form.get('KilomettrageLimite').hasError('required')">
+                Kilomettrage Limite <strong>obligatoire</strong>
+            </mat-error>
+        </mat-form-field>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-12 col-md-12 col-sm-12">
+        <button  mat-button class="btn btn-success" (click)="enregistre()">
+            <mat-icon>
+                save
+            </mat-icon>
+enregistre
+        </button>
+</div>
+</div>
+    </mat-card>
+    <mat-card>
+        <mat-card *ngIf="entretiensvoiture.length ===0" style="margin-top: 4%;" class="container-fluid">
+            <h4>pas des entrtiens encore</h4>
+        </mat-card>
+        <div *ngIf="entretiensvoiture.length !=0" >
+            <mat-form-field >
+                  <input matInput type="text" (keyup)="doFilter($event.target.value)" placeholder="Filter">
+                </mat-form-field>
+         <div class="table-responsive">
+            <table mat-table [dataSource]="dataSource" matSort  class="table">
+
+                <!--- Note that these columns can be defined in any order.
+                      The actual rendered columns are set as a property on the row definition" -->
+
+                <!-- Position Column -->
+
+
+                <!-- Name Column -->
+                <ng-container matColumnDef="DateOperation">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header> DateOperation </th>
+                  <td mat-cell *matCellDef="let element"> {{element.DateOperation |date}} </td>
+                </ng-container>
+
+                <!-- Weight Column -->
+                <ng-container matColumnDef="entretien">
+                  <th mat-header-cell *matHeaderCellDef > entretien </th>
+                  <td mat-cell *matCellDef="let element"> {{element.entretien?.Libelle}} </td>
+                </ng-container>
+
+                <!-- Symbol Column -->
+                <ng-container matColumnDef="DateFinValidite">
+                  <th mat-header-cell *matHeaderCellDef> DateFinValidite </th>
+                  <td mat-cell *matCellDef="let element"> {{element.DateFinValidite |date}} </td>
+                </ng-container>
+
+
+
+
+
+                   <ng-container matColumnDef="Actions">
+                    <th mat-header-cell *matHeaderCellDef > Actions </th>
+                    <td mat-cell *matCellDef="let element">
+                        <button mat-icon-button class="btn btn-primary"  (click)="openDialog(element.ID)" matTooltip="Afficher personnel information"
+                        >
+                            <mat-icon>remove_red_eye</mat-icon>
+                          </button>
+                        <button mat-icon-button  class="btn btn-warning" matTooltip="Edit personnel information"
+                          aria-label="Example icon button with a home icon" (click)="openDialogedit(element.ID)" >
+                            <mat-icon>edit</mat-icon>
+                        </button>
+                          <button mat-icon-button  class="btn btn-danger" matTooltip="Supprimer personnel "
+
+                          mwlConfirmationPopover
+                          [popoverTitle]="popoverTitle"
+                          [popoverMessage]="popoverMessage"
+                          placement="top"
+    (confirm)="supprimer(element.ID)"
+                          (cancel)="cancelClicked = true"
+                          aria-label="Example icon button with a home icon">
+                            <mat-icon >delete</mat-icon>
+                          </button>
+
+                    </td>
+                  </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+              </table>
+        </div>
+    </div>
+    </mat-card>
+</div>

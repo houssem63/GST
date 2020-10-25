@@ -24,6 +24,8 @@ const routes: Routes = [
             { path: 'prestataire-assurance', loadChildren: () => import('./prestataire-assrance/prestataire-assrance.module')
             .then(m => m.PrestataireAssranceModule) },
             { path: 'entretien', loadChildren: () => import('./entretien/entretien.module').then(m => m.EntretienModule) },
+            { path: 'user', loadChildren: () => import('./users/users.module').then(m => m.UsersModule) },
+            { path: 'role', loadChildren: () => import('./role/role.module').then(m => m.RoleModule) },
 
 
         ]

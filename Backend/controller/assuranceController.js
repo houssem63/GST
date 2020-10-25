@@ -2,7 +2,13 @@ const { Assurance ,PrestataireAssurance }=require('../models/relations')
 module.exports ={
     ajoute:async(req, res)=>{
         try {
-                        global.CopierAssurance
+            const assuranceres= await Assurance.findAll({where :{ voitureID: req.body.voitureID,
+            }})
+            console.log(assuranceres[assuranceres.length-1].DateFinValidite )
+            if((req.body.DateDebutValidite) < (assuranceres[assuranceres.length-1].DateFinValidite) ){
+                return res.json({msg :'assurance encore valide'})
+            }
+                      global.CopierAssurance
                         
                         const url = req.protocol + "://" + req.get("host");
                         if (!req.files['CopierAssurance']) {
@@ -54,6 +60,15 @@ module.exports ={
         try {
           await  Assurance.destroy({where:{ID:req.params.id}})
           res.status(200).json({msg:'supprimer avec successe',ok:true})
+        } catch (error) {
+            res.status(500).json({error})
+
+        }
+    },
+    getone :async(req,res)=>{
+        try {
+            const assurance =await Assurance.findOne({where:{ID:req.params.id},include:[PrestataireAssurance]})
+            res.status(200).json({assurance:assurance})
         } catch (error) {
             res.status(500).json({error})
 

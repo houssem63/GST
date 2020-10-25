@@ -1,0 +1,37 @@
+<mat-card>
+    <div mat-dialog-content>
+
+<div class="row" >
+    <div class="col-6">
+      <h4><span>Prestataire assurance :</span>  {{assurance?.prestataireassurance.Libelle}}</h4>
+    </div>
+    <div class="col-6">
+        <h4> <span>Date Debut Validite :</span>  {{assurance?.DateDebutValidite|date}}</h4>
+    </div>
+</div>
+<div class="row">
+    <div class="col-6">
+      <h4><span>Date Fin Validite :</span>   {{assurance?.DateFinValidite |date}}</h4>
+    </div>
+    <div class="col-6">
+        <h4><span>Date Operation :</span> {{assurance?.DateOperation |date}}</h4>
+    </div>
+</div>
+<div class="row">
+    <div class="col-6">
+      <h4><span> Montant :</span> {{assurance?.Montant}}</h4>
+    </div>
+    <div class="col-6">
+        <span> <h4>Copier Assurance :</h4></span>
+
+           <img  class="image-preview"[src]="assurance?.CopierAssurance" >
+
+           </div>
+</div>
+    </div>
+
+
+<div mat-dialog-actions>
+    <button mat-button (click)="onNoClick()">fermer</button>
+  </div>
+</mat-card>

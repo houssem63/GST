@@ -38,7 +38,9 @@ table {
     line-height: normal;
   }
 
-
+.example-element-description-attribution{
+    padding :1%
+}
 
   th.mat-header-cell, td.mat-cell {
     text-align: center;
@@ -51,3 +53,15 @@ table {
 .mat-row:hover {
     cursor: pointer;
   }
+ul{
+    list-style-type: none;
+    display: block
+
+}
+li{
+    display: block;
+    float: left;
+    list-style-type: none;
+    margin: 10px;
+
+}

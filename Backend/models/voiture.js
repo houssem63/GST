@@ -5,6 +5,7 @@ module.exports=(db,type)=>{
             autoIncrement:true,
             primaryKey:true,
         },
+        
         Matricule :{
             type:type.STRING,
             unique :true,

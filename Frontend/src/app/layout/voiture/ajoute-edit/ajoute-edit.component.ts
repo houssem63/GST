@@ -1,12 +1,16 @@
+import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
+import { Marquevoiture } from 'src/app/models/marquevoiture';
 import { VoitureService } from 'src/app/services/voiture.service';
 
 @Component({
     selector: 'app-ajoute-edit',
     templateUrl: './ajoute-edit.component.html',
-    styleUrls: ['./ajoute-edit.component.css']
+    styleUrls: ['./ajoute-edit.component.css'],
+    providers: [DatePipe]
+
 })
 export class AjouteEditComponent implements OnInit {
     cartegrissePreview;
@@ -16,10 +20,18 @@ export class AjouteEditComponent implements OnInit {
     voitureressub;
     msg;
     ok;
-    constructor(private voitureservice: VoitureService , private route :Router) { }
+    mode = 'create'
+    marques: Marquevoiture[] = [];
+    voitureID;
+    constructor(private voitureservice: VoitureService, private datePipe: DatePipe,
+        private route: Router, private router: ActivatedRoute) { }
 
     ngOnInit(): void {
         this.userID = localStorage.getItem('societeId');
+        this.voitureservice.getallmarque();
+        this.voitureservice.marquesubscribe().subscribe(res => {
+            this.marques = res;
+        })
         this.form = new FormGroup({
             Matricule: new FormControl('', {
                 validators: [Validators.required]
@@ -32,6 +44,36 @@ export class AjouteEditComponent implements OnInit {
             Propritaire: new FormControl('', { validators: [Validators.required] }),
             CopierContrat: new FormControl('', { validators: [Validators.required] }),
             CopierCarteGrise: new FormControl('', { validators: [Validators.required] }),
+        });
+        this.router.paramMap.subscribe((paramMap: ParamMap) => {
+            if (paramMap.has('id')) {
+                this.mode = 'edit';
+                this.voitureID = paramMap.get('id');
+                this.voitureservice.getonevoiture(this.voitureID).subscribe((res) => {
+                    console.log(res)
+                    const date1 = new Date(
+                        res.voiture.DPMC
+                    );
+                    this.form.setValue({
+                        Matricule: res.voiture.Matricule,
+                        Type: res.voiture.Type,
+                        DPMC: this.datePipe.transform(
+                            date1,
+                            'yyyy-MM-dd'
+                        ),
+                        Marque: res.voiture.Marque,
+                        Categorie: res.voiture.Categorie,
+                        Compteur: res.voiture.Compteur,
+                        Propritaire: res.voiture.Propritaire,
+                        CopierContrat: res.voiture.CopierContrat,
+                        CopierCarteGrise: res.voiture.CopierCarteGrise
+                    })
+                    this.cartegrissePreview =res.voiture.CopierCarteGrise;
+                    this.copiercontratPreview =res.voiture.CopierContrat;
+                })
+
+
+            }
         });
 
     }
@@ -58,29 +100,57 @@ export class AjouteEditComponent implements OnInit {
         reader.readAsDataURL(file);
     }
     enregistre() {
+        console.log(this.form.value)
+
         if (this.form.invalid) {
             return;
         }
-        this.voitureservice.ajoute(
-            this.form.value.Matricule,
-            this.form.value.Type,
-            this.form.value.DPMC,
-            this.form.value.Marque,
-            this.form.value.Categorie,
-            this.form.value.Compteur,
-            this.form.value.Propritaire,
-            this.form.value.CopierContrat,
-            this.form.value.CopierCarteGrise,
-            this.userID);
-        this.voitureservice.voitureesponce().subscribe(res => {
-            this.msg = res.msg;
-            this.ok = res.ok;
-            if (res.ok === true) {
-                this.form.reset();
-                setTimeout(() => {
-                    this.route.navigate(['/voiture']);
-                }, 100);
-            }
-        });
+        if (this.mode === 'create') {
+            this.voitureservice.ajoute(
+                this.form.value.Matricule,
+                this.form.value.Type,
+                this.form.value.DPMC,
+                this.form.value.Marque,
+                this.form.value.Categorie,
+                this.form.value.Compteur,
+                this.form.value.Propritaire,
+                this.form.value.CopierContrat,
+                this.form.value.CopierCarteGrise,
+                this.userID);
+            this.voitureservice.voitureesponce().subscribe(res => {
+                this.msg = res.msg;
+                this.ok = res.ok;
+                if (res.ok === true) {
+                    this.form.reset();
+                    setTimeout(() => {
+                        this.route.navigate(['/voiture']);
+                    }, 100);
+                }
+            });
+        } else {
+           this.voitureservice.edit(
+                this.form.value.Matricule,
+                this.form.value.Type,
+                this.form.value.DPMC,
+                this.form.value.Marque,
+                this.form.value.Categorie,
+                this.form.value.Compteur,
+                this.form.value.Propritaire,
+                this.form.value.CopierContrat,
+                this.form.value.CopierCarteGrise,
+                this.userID,
+                this.voitureID);
+            this.voitureservice.voitureesponce().subscribe(res => {
+                this.msg = res.msg;
+                this.ok = res.ok;
+               if (res.ok === true) {
+                    this.form.reset();
+                    setTimeout(() => {
+                        this.route.navigate(['/voiture']);
+                    }, 100);
+                }
+            });
+        }
+
     }
 }

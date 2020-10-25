@@ -12,6 +12,7 @@ const BACKEND_URL = environment.apiUrl + '/user/';
 export class UserService {
     getoneUsersub = new Subject<User>();
     user: User;
+    inscriptionresponce =new Subject<{ok :boolean ,msg :string}>();
     motdepassesub = new Subject<{ msg: string, ok: boolean }>();
     constructor(private http: HttpClient, private route: Router) { }
     getallsociete() {
@@ -54,10 +55,17 @@ export class UserService {
                 societedata
             )
             .subscribe((res) => {
-                this.route.navigate(['/login']);
+                this.inscriptionresponce.next({ok :res.ok ,msg:res.msg})
+                if(res.ok ===true){
+                    this.route.navigate(['/login']);
+                }
+
 
                 console.log(res);
             });
+    }
+    getinscriptionresponce(){
+        return this.inscriptionresponce.asObservable();
     }
     inscriptionpersonnel(
         Cin: number,
@@ -104,7 +112,10 @@ export class UserService {
             )
             .subscribe((res) => {
                 console.log(res);
-                this.route.navigate(['/login']);
+                this.inscriptionresponce.next({ok :res.ok ,msg:res.msg})
+                if(res.ok ===true){
+                    this.route.navigate(['/login']);
+                }
             });
     }
     inscriptionclient(
@@ -162,7 +173,10 @@ export class UserService {
             .post<{ msg: string; ok: boolean }>(BACKEND_URL + 'add', clientdata)
             .subscribe((res) => {
                 console.log(res);
-                this.route.navigate(['/login']);
+                this.inscriptionresponce.next({ok :res.ok ,msg:res.msg})
+                if(res.ok ===true){
+                    this.route.navigate(['/login']);
+                }
             });
     }
     getOneuser(id: string) {
@@ -329,5 +343,8 @@ export class UserService {
     }
     getmotdepassesub() {
         return this.motdepassesub.asObservable();
+    }
+    getalluser(){
+      return  this.http.get<{users:User[]}>(BACKEND_URL +'getallusers');
     }
 }

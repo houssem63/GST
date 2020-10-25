@@ -2,23 +2,47 @@
     <div class="row justify-content-md-center">
         <div class="col-md-4">
             <img src="assets/images/logo.png" width="150px" class="user-avatar" />
-            <h1>SB Admin BS4 Angular8</h1>
+            <h1>GESTION SOCIETES DE TRANSPORT</h1>
             <form role="form" #loginform="ngForm" (submit)="connexion(loginform)">
-                <h4 class="alert " *ngIf="message !=null" [ngClass]="{'alert-success':etat,'alert-danger':etat==false}">{{message}}</h4>
+                <p *ngFor="let alert of alerts">
+                    <ngb-alert [type]="alert.type" (close)="close(alert)">{{ alert.message }}</ngb-alert>
+                  </p>
+
                 <div class="form-content">
                     <div class="form-group">
                         <input type="text" ng-model="name"
                         ngModel name="login" #login="ngModel"
-                        class="form-control input-underline input-lg" id="" placeholder="{{ 'Email' | translate }}">
+                        [ngClass]="{ 'is-invalid': loginform.submitted && login.invalid,
+                        'bg-danger text-white': loginform.submitted && login.invalid  }"
+
+                        class="form-control " placeholder="{{ 'Login' | translate }}" required>
+                        <div *ngIf="loginform.submitted && login.invalid" class="invalid-feedback">
+                            <div *ngIf="login.errors.required">Login est obligatoire</div>
+
+                        </div>
                     </div>
 
                     <div class="form-group">
                         <input type="password"
+                        [ngClass]="{ 'is-invalid': loginform.submitted && MotDePasse.invalid,
+                        'bg-danger text-white': loginform.submitted && MotDePasse.invalid  }"
                         ngModel name="MotDePasse" #MotDePasse="ngModel"
-                        class="form-control input-underline input-lg" id="" placeholder="{{ 'Password' | translate }}">
+                        class="form-control " placeholder="{{ 'Password' | translate }}" required>
+                        <div *ngIf="loginform.submitted && MotDePasse.invalid" class="invalid-feedback">
+                            <div *ngIf="MotDePasse.errors.required">Mot de passe est obligatoire</div>
+                        </div>
+
+                    </div>
+
+                  <div class="form-group">
+                    <re-captcha (resolved)="resolved($event)"
+
+                             ngModel name="recaptcha" #recaptcha="ngModel"
+                    siteKey="{{RECAPTCHA_SITE_Key}}"
+                      required  ></re-captcha>
                     </div>
                 </div>
-                <button class="btn rounded-btn" type="submit">{{ 'Log in' | translate }}</button>
+                <button class="btn rounded-btn" type="submit" >{{ 'Log in' | translate }}</button>
                 &nbsp;
                 <a class="btn rounded-btn" [routerLink]="['/signup']">{{ 'Register' | translate }}</a>
             </form>

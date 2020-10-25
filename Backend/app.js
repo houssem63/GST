@@ -17,6 +17,8 @@ const Voiture = require('./routes/voiture');
 const Assurance=require('./routes/assurance');
 const Prestataireassurance =require('./routes/prestataire_assurance')
 const Entretien=require('./routes/entretien');
+const Entretienvehicule=require('./routes/entretien-vehicule');
+const Role = require('./routes/role');
 
 app.use((req, res, next) => {
     res.setHeader("Access-Control-Allow-Origin", "*");
@@ -40,6 +42,8 @@ app.use((req, res, next) => {
 app.use('/api/assurance',Assurance);
 app.use('/api/prestataireassurance',Prestataireassurance);
 app.use('/api/entretien',Entretien);
+app.use('/api/entretien_vehicule',Entretienvehicule);
+app.use('/api/role', Role);
 
   const server = app.listen(PORT, (req, res, next) => { console.log(`Server started on port ${PORT}`) })
   app.get('/', (req, res) => {

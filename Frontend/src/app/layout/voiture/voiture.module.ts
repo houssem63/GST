@@ -19,6 +19,10 @@ import { VisiteComponent } from './visite/visite.component';
 import { AfficheVoitureComponent } from './affiche-voiture/affiche-voiture.component';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatGridListModule} from '@angular/material/grid-list';
+import { EntretenvoitureComponent } from './entretenvoiture/entretenvoiture.component';
+import { AfficheAssuranceComponent } from './assurance/affiche-assurance/affiche-assurance.component';
+import { AfficheEtretienComponent } from './entretenvoiture/affiche-etretien/affiche-etretien.component';
+import { EditEntretienComponent } from './entretenvoiture/edit-entretien/edit-entretien.component';
 
 @NgModule({
   declarations: [
@@ -32,6 +36,14 @@ import {MatGridListModule} from '@angular/material/grid-list';
     VisiteComponent,
 
     AfficheVoitureComponent,
+
+    EntretenvoitureComponent,
+
+    AfficheAssuranceComponent,
+
+    AfficheEtretienComponent,
+
+    EditEntretienComponent,
   ],
   imports: [
     MatSelectModule,MatDialogModule,

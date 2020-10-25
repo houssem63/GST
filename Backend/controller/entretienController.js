@@ -4,7 +4,6 @@ module.exports ={
     getall:async(req,res)=>{
 try {
     const entretien =await Entretien.findAll({})
-    console.log(entretien)
 
     if(entretien){
         res.status(200).json({entretien :entretien})

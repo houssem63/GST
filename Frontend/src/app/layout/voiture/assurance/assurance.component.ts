@@ -11,6 +11,8 @@ import { AssuranceService } from 'src/app/services/assurance.service';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { DatePipe } from '@angular/common';
+import { MatDialog } from '@angular/material/dialog';
+import { AfficheAssuranceComponent } from './affiche-assurance/affiche-assurance.component';
 
 @Component({
     selector: 'app-assurance',
@@ -37,7 +39,7 @@ export class AssuranceComponent implements OnInit, AfterViewInit {
     displayedColumns: string[] = ['Prestataire', 'DateOperation', 'DateDebutValidite', 'DateFinValidite',
         'Actions'];
     dataSource = new MatTableDataSource<Assurance>();
-    constructor(private router: ActivatedRoute, private voitureservice: VoitureService,private datePipe: DatePipe,
+    constructor(private router: ActivatedRoute,public dialog: MatDialog ,private voitureservice: VoitureService,private datePipe: DatePipe,
         private prestataireservice: PrestataireAssuranceService, private assuranceservice: AssuranceService) { }
     @ViewChild(MatSort, { static: false }) set content(sort: MatSort) {
         this.dataSource.sort = sort;
@@ -140,4 +142,16 @@ console.log(this.DateOperation)
     supprimer(id) {
 this.assuranceservice.delete(id)
     }
+    openDialog(id): void {
+        const dialogRef = this.dialog.open(AfficheAssuranceComponent, {
+            width: '650px',
+            height:'350px',
+          data: {ID: id}
+        });
+
+        dialogRef.afterClosed().subscribe(result => {
+          console.log('The dialog was closed');
+
+        });
+      }
 }

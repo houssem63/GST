@@ -1,0 +1,56 @@
+<mat-card>
+    <div mat-dialog-content>
+
+        <div class="row">
+            <div class="col-6">
+                <h4><span>Entretien :</span> {{entretienvoiture?.entretien.Libelle}}</h4>
+            </div>
+            <div class="col-6">
+                <h4> <span>AgentEntretien :</span> {{entretienvoiture?.AgentEntretien}}</h4>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <h4><span>Date Operation:</span> {{entretienvoiture?.DateOperation |date}}</h4>
+            </div>
+            <div class="col-6">
+                <h4><span>Date Prochain Entretien :</span> {{entretienvoiture?.DateProchainEntretien|date}}</h4>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <h4><span> Kilomettrage Arret :</span> {{entretienvoiture?.KilomettrageArret}}</h4>
+            </div>
+            <div class="col-6">
+
+                <h4><span> Kilomettrage Limite :</span> {{entretienvoiture?.KilomettrageLimite}}</h4>
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <h4><span> Piece Rechange :</span> {{entretienvoiture?.PieceRechange}}</h4>
+            </div>
+            <div class="col-6">
+
+                <h4><span> Montant Piece Rechange :</span> {{entretienvoiture?.MontantPieceRechange}}</h4>
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <h4><span> Remarques :</span> {{entretienvoiture?.Remarques}}</h4>
+            </div>
+            <div class="col-6">
+
+                <h4><span> Montant Piece Rechange :</span> {{entretienvoiture?.MontantPieceRechange}}</h4>
+
+            </div>
+        </div>
+    </div>
+
+
+    <div mat-dialog-actions>
+        <button mat-button (click)="onNoClick()">fermer</button>
+    </div>
+</mat-card>

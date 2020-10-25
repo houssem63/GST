@@ -13,7 +13,7 @@
 <div class="row">
     <div class="col-12">
         <mat-card *ngIf="voitures.length ===0" style="margin-top: 4%;" class="container-fluid">
-  <h4>pas des personnel encore</h4>
+  <h4>pas des voitures encore</h4>
         </mat-card>
   <mat-card  *ngIf="voitures.length !=0">
  <mat-form-field >
@@ -34,7 +34,25 @@
   <ng-container matColumnDef="Actions">
     <th mat-header-cell *matHeaderCellDef > Actions </th>
     <td mat-cell class="matcell"  *matCellDef="let element">
+        <button mat-icon-button class="btn btn-primary"  (click)="openDialog(element?.ID)" matTooltip="Afficher personnel information"
+        >
+            <mat-icon>remove_red_eye</mat-icon>
+          </button>
+        <a mat-icon-button [routerLink]="['/voiture/edit/',element?.ID]" class="btn btn-warning" matTooltip="Edit personnel information"
+         aria-label="Example icon button with a home icon">
+            <mat-icon>edit</mat-icon>
+        </a>
+          <button mat-icon-button  class="btn btn-danger" matTooltip="Supprimer personnel "
 
+          mwlConfirmationPopover
+          [popoverTitle]="popoverTitle"
+          [popoverMessage]="popoverMessage"
+          placement="top"
+          (confirm)="supprimer(element.ID)"
+          (cancel)="cancelClicked = true"
+          aria-label="Example icon button with a home icon">
+            <mat-icon >delete</mat-icon>
+          </button>
 
     </td>
   </ng-container>
@@ -44,34 +62,22 @@
            [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
 
         <div class="example-element-description">
+            <ul>
+                <li>
+                    <a  [routerLink]="['/voiture/ajouteassurance/',element?.ID]" class="btn btn-primary ">assurance</a>
+
+                </li>
+                <li>
+                    <a  [routerLink]="['/voiture/ajouteentretien/',element?.ID]" class="btn btn-success btnmargin ">entretien</a>
+
+                </li>
+                <li>
+                    <a class="btn btn-warning ">viste</a>
+
+                </li>
+            </ul>
 
 
-          <span class="example-element-description-attribution">
-              <button  [routerLink]="['/voiture/ajouteassurance/',element?.ID]" class="btn btn-primary btnmargin">assurance</button>
-            <button  [routerLink]="['/voiture/ajouteentretien/',element?.ID]" class="btn btn-success btnmargin">entretien</button>
-            <button class="btn btn-warning btnmargin">viste</button>
-
-            <button mat-icon-button class="btn btn-primary"  (click)="openDialog(element?.ID)" matTooltip="Afficher personnel information"
-            >
-                <mat-icon>remove_red_eye</mat-icon>
-              </button>
-            <a mat-icon-button [routerLink]="['/voiture/edit/',element?.ID]" class="btn btn-warning" matTooltip="Edit personnel information"
-             aria-label="Example icon button with a home icon">
-                <mat-icon>edit</mat-icon>
-            </a>
-              <button mat-icon-button  class="btn btn-danger" matTooltip="Supprimer personnel "
-
-              mwlConfirmationPopover
-              [popoverTitle]="popoverTitle"
-              [popoverMessage]="popoverMessage"
-              placement="top"
-              (confirm)="supprimer(element.ID)"
-              (cancel)="cancelClicked = true"
-              aria-label="Example icon button with a home icon">
-                <mat-icon >delete</mat-icon>
-              </button>
-
-        </span>
         </div>
       </div>
     </td>

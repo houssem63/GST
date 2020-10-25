@@ -52,7 +52,7 @@ export class VoitureComponent implements OnInit ,AfterViewInit,OnDestroy {
         this.dataSource.filter = value.trim().toLocaleLowerCase();
       }
       supprimer(id) {
-       // this.personnelservice.delete(id);
+    this.voitureservice.delete(id)
         }
 affiche(e){
     console.log(e)

@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { NgbDropdownConfig } from '@ng-bootstrap/ng-bootstrap';
 import { Entretien } from 'src/app/models/entretien';
 import { routerTransition } from 'src/app/router.animations';
 import { EntretienService } from 'src/app/services/entretien.service';
@@ -25,7 +26,7 @@ export class EntretienComponent implements OnInit {
     entretienID;
     displayedColumns: string[] = ['ID', 'Libelle', 'Actions'];
     dataSource = new MatTableDataSource<Entretien>();
-    constructor(private entretienservice: EntretienService) { }
+    constructor(private entretienservice: EntretienService,config: NgbDropdownConfig) {config.placement = 'left'; }
     @ViewChild(MatSort, { static: false }) set content(sort: MatSort) {
         this.dataSource.sort = sort;
     }
@@ -56,6 +57,9 @@ export class EntretienComponent implements OnInit {
     }
     enregiste() {
         console.log(this.form.value)
+        if(this.form.invalid){
+            return ;
+        }
         const entretien: Entretien = {
             Libelle: this.form.get('Libelle').value,
         }

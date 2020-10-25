@@ -20,9 +20,8 @@
                 <mat-form-field appearance="fill" >
                     <mat-label>Marque</mat-label>
                     <mat-select formControlName="Marque" required>
-                      <mat-option value="primary">Primary</mat-option>
-                      <mat-option value="accent">Accent</mat-option>
-                      <mat-option value="warn">Warn</mat-option>
+                      <mat-option *ngFor="let marque of marques" [value]="marque.Libelle">{{marque.Libelle}}</mat-option>
+
                     </mat-select>
                   </mat-form-field>
               </div>

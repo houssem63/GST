@@ -9,6 +9,8 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatRadioModule} from '@angular/material/radio';
 import {MatCardModule} from '@angular/material/card';
 import {MatIconModule} from '@angular/material/icon';
+import { RECAPTCHA_V3_SITE_KEY, RecaptchaModule,RecaptchaFormsModule } from 'ng-recaptcha';
+import { NgbModule  } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   imports: [
@@ -16,11 +18,12 @@ import {MatIconModule} from '@angular/material/icon';
     TranslateModule,
     SignupRoutingModule,
     ReactiveFormsModule,
-    FormsModule,
+    FormsModule,NgbModule,
     MatFormFieldModule,
     MatRadioModule,MatCardModule,
-    MatIconModule
+    MatIconModule, RecaptchaModule,RecaptchaFormsModule
   ],
-  declarations: [SignupComponent]
+  declarations: [SignupComponent],
+
 })
 export class SignupModule { }

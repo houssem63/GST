@@ -8,23 +8,31 @@
             <i class="fa fa-fw fa-bar-chart-o"></i>&nbsp;
             <span>{{ 'Charts' | translate }}</span>
         </a>
-        <a [routerLink]="['/personnel']" [routerLinkActive]="['router-link-active']" class="list-group-item">
+        <a [routerLink]="['/user']" [routerLinkActive]="['router-link-active']" *ngIf='userfunction ==="Admin"' class="list-group-item">
+            <i class="fa fa-user"></i>&nbsp;
+            <span>{{ 'User' | translate }}</span>
+        </a>
+        <a [routerLink]="['/role']" [routerLinkActive]="['router-link-active']" *ngIf='userfunction ==="Admin"' class="list-group-item">
+            <i class="fa fa-user"></i>&nbsp;
+            <span>{{ 'Role' | translate }}</span>
+        </a>
+        <a [routerLink]="['/personnel']" [routerLinkActive]="['router-link-active']" *ngIf='userfunction !="Admin"' class="list-group-item">
             <i class="fa fa-user"></i>&nbsp;
             <span>{{ 'Staff' | translate }}</span>
         </a>
-        <a [routerLink]="['/poste']" [routerLinkActive]="['router-link-active']" class="list-group-item">
+        <a [routerLink]="['/poste']" [routerLinkActive]="['router-link-active']" *ngIf='userfunction !="Admin"' class="list-group-item">
             <i class="fa fa-user"></i>&nbsp;
             <span>{{ 'Poste' | translate }}</span>
         </a>
-        <a [routerLink]="['/client']" [routerLinkActive]="['router-link-active']" class="list-group-item">
+        <a [routerLink]="['/client']" [routerLinkActive]="['router-link-active']"  *ngIf='userfunction !="Admin"' class="list-group-item">
             <i class="fa fa-user"></i>&nbsp;
             <span>{{ 'Client' | translate }}</span>
         </a>
-        <a [routerLink]="['/voiture']" [routerLinkActive]="['router-link-active']" class="list-group-item">
+        <a [routerLink]="['/voiture']" [routerLinkActive]="['router-link-active']" *ngIf='userfunction !="Admin"' class="list-group-item">
             <i class="fa fa-car"></i>&nbsp;
             <span>{{ 'Voiture' | translate }}</span>
         </a>
-        <a [routerLink]="['/prestataire-assurance']" [routerLinkActive]="['router-link-active']" class="list-group-item">
+        <a [routerLink]="['/prestataire-assurance']" [routerLinkActive]="['router-link-active']"  class="list-group-item">
             <i class="fa fa-history" aria-hidden="true"></i>
 &nbsp;
             <span>{{ 'prestataire assurance' | translate }}</span>

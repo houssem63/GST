@@ -18,31 +18,32 @@ export class LoginService {
   private societe: Societe;
   private authStatusListener = new Subject<boolean>();
 
+msg;
   constructor( private http: HttpClient, private route: Router) { }
   login( Login: string , MotDePasse: string) {
     const authdata: Authmodel = { Login  , MotDePasse };
-    this.http.post<{token: string , userData: any, userId: any,
+    this.http.post<{token: string , userFunction: any, userId: any,
          expiresIn: number, msg: string, ok: boolean}>(BACKEND_URL + 'login', authdata)
 .subscribe((response) => {
-    console.log(response)
+
     this.authmessage.next({message: response.msg , etat: response.ok});
     const token = response.token;
     this.token = token;
+
     if (token) {
       const expiresInDuration = response.expiresIn;
       this.setAuthTimer(expiresInDuration);
       this.isAuthenticated = true;
-      this.societe = response.userData;
+
      this.societeId = response.userId.id;
       this.authStatusListener.next(true);
       const now = new Date();
       const expirationDate = new Date(now.getTime() + expiresInDuration * 1000);
-      this.saveAuthData(token, expirationDate, this.societeId);
+      this.saveAuthData(token, expirationDate, this.societeId ,response.userFunction);
       setTimeout(() => {
         this.route.navigate(['/']);
       }, 3000);
      }
-    this.authmessage.next({ message : response.msg , etat : response.ok});
 
 
 });
@@ -98,10 +99,12 @@ export class LoginService {
     }, duration * 1000);
   }
 
-  private saveAuthData(token: string, expirationDate: Date, societeId: string) {
+  private saveAuthData(token: string, expirationDate: Date, societeId: string ,userfunction:string) {
     localStorage.setItem('token', token);
     localStorage.setItem('expiration', expirationDate.toISOString());
    localStorage.setItem('societeId', societeId);
+   localStorage.setItem('UserFunction', userfunction);
+
   }
 
   private clearAuthData() {
@@ -125,5 +128,12 @@ export class LoginService {
   }
   getauthmessage() {
     return  this.authmessage.asObservable();
+  }
+  msglogin(){
+      return this.msg;
+  }
+
+  sendRecaptchaToken(token){
+    return this.http.post<any>(BACKEND_URL + 'validate_captcha', {recaptcha: token});
   }
 }

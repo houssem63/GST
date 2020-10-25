@@ -10,48 +10,48 @@ const BACKEND_URL = environment.apiUrl + '/assurance/';
 })
 export class AssuranceService {
     private assurances: Assurance[] = [];
-    private assurancesub = new Subject<Assurance[]>()
-    private responcesub = new Subject<{ ok: boolean }>()
+    private assurancesub = new Subject<Assurance[]>();
+    private responcesub = new Subject<{ ok: boolean }>();
 
     constructor(private http: HttpClient) { }
     ajoute(assurance: Assurance) {
         const assurancedata = new FormData;
-        assurancedata.append('prestataireassuranceID', assurance.prestataireassuranceID)
-        assurancedata.append('DateOperation', assurance.DateOperation.toString())
-        assurancedata.append('DateDebutValidite', assurance.DateDebutValidite.toString())
-        assurancedata.append('DateFinValidite', assurance.DateFinValidite.toString())
-        assurancedata.append('CopierAssurance', assurance.CopierAssurance)
-        assurancedata.append('voitureID', assurance.voitureID)
-        assurancedata.append('Montant', assurance.Montant.toString())
-        assurancedata.append('userID', assurance.userID)
+        assurancedata.append('prestataireassuranceID', assurance.prestataireassuranceID);
+        assurancedata.append('DateOperation', assurance.DateOperation.toString());
+        assurancedata.append('DateDebutValidite', assurance.DateDebutValidite.toString());
+        assurancedata.append('DateFinValidite', assurance.DateFinValidite.toString());
+        assurancedata.append('CopierAssurance', assurance.CopierAssurance);
+        assurancedata.append('voitureID', assurance.voitureID);
+        assurancedata.append('Montant', assurance.Montant.toString());
+        assurancedata.append('userID', assurance.userID);
 
 
 
         this.http.post<{ assurance: Assurance, ok: boolean }>(BACKEND_URL + 'add', assurancedata).subscribe((res) => {
-            console.log(res)
             this.assurances.push(res.assurance);
             this.assurancesub.next([...this.assurances]);
-            this.responcesub.next({ ok: res.ok })
-        })
+            this.responcesub.next({ ok: res.ok });
+        });
     }
     getresponcesub() {
         return this.responcesub.asObservable();
     }
     getallassurance(id) {
         this.http.get<{ assurance: Assurance[] }>(BACKEND_URL + `getassranceofonevoiture/${id}`).subscribe((res) => {
-            console.log(res.assurance)
             this.assurances = res.assurance;
-            this.assurancesub.next([...this.assurances])
-        })
+            this.assurancesub.next([...this.assurances]);
+        });
     }
     getallassurancesub() {
         return this.assurancesub.asObservable();
     }
-    delete(id){
-        this.http.delete<{msg :string,ok:boolean}>(BACKEND_URL +`delete/${id}`).subscribe(res=>{
-            console.log(res)
-            this.assurances=this.assurances.filter(a=>a.ID !=id)
-            this.assurancesub.next([...this.assurances])
-        })
+    delete(id) {
+        this.http.delete<{ msg: string, ok: boolean }>(BACKEND_URL + `delete/${id}`).subscribe(res => {
+            this.assurances = this.assurances.filter(a => a.ID !== id);
+            this.assurancesub.next([...this.assurances]);
+        });
+    }
+    getoneassurance(id) {
+       return this.http.get<{assurance: Assurance}>(BACKEND_URL + `getone/${id}`);
     }
 }
